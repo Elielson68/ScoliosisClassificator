@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class CalculadorDeReta : MonoBehaviour
 {
-    public Vector3 r1, r2;
     public GameObject linhas;
     public TextMeshProUGUI anguloText;
     private LineController auxLine;
@@ -30,7 +29,7 @@ public class CalculadorDeReta : MonoBehaviour
                 
             else
             {
-                DefinePosition(pos);
+                auxLine = null;
                 UpdateStep();
                 IsLineCompleted = true;
             }
@@ -70,17 +69,7 @@ public class CalculadorDeReta : MonoBehaviour
     void CreateLine(Vector3 pos)
     {
         auxLine = Instantiate(Line, Vector3.zero, Quaternion.identity, linhas.transform).GetComponent<LineController>();
-        r1 = auxLine.Point1.transform.position = pos;
-    }
-
-    void DefinePosition(Vector3 pos)
-    {
-        if(r1 != Vector3.zero)
-        {
-            auxLine.Point2.transform.position = pos;
-            r1 = Vector3.zero;
-            auxLine = null;
-        }
+        auxLine.Point1.transform.position = pos;
     }
 
     void UpdateStep()
