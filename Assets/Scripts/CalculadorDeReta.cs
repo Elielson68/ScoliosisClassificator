@@ -8,32 +8,38 @@ using UnityEngine;
 public class CalculadorDeReta : MonoBehaviour
 {
     public Vector3 r1, r2;
-    public Material LineColor;
     public GameObject linhas;
     public TextMeshProUGUI anguloText;
-    private LineRenderer auxLine;
+    private LineController auxLine;
     public StepsController steps;
+    public GameObject Line;
+    public static bool IsLineCompleted;
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !PointController.IsMouseOnPoint)
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
             if(auxLine is null)
+            {
                 CreateLine(pos);
+                IsLineCompleted = false;
+            }
+                
             else
             {
                 DefinePosition(pos);
                 UpdateStep();
+                IsLineCompleted = true;
             }
         }
         else if(auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
-            auxLine.SetPosition(1, pos);
+            auxLine.Point2.transform.position = pos;
         }
         WriteTextAngles();
     }
@@ -63,21 +69,15 @@ public class CalculadorDeReta : MonoBehaviour
 
     void CreateLine(Vector3 pos)
     {
-        GameObject g = new();
-        auxLine = g.AddComponent<LineRenderer>();
-        auxLine.positionCount = 2;
-        auxLine.widthMultiplier = 0.05f;
-        auxLine.material = LineColor;
-        r1 = pos;
-        auxLine.SetPosition(0, pos);
-        g.transform.SetParent(linhas.transform);
+        auxLine = Instantiate(Line, Vector3.zero, Quaternion.identity, linhas.transform).GetComponent<LineController>();
+        r1 = auxLine.Point1.transform.position = pos;
     }
 
     void DefinePosition(Vector3 pos)
     {
         if(r1 != Vector3.zero)
         {
-            auxLine.SetPosition(1, pos);
+            auxLine.Point2.transform.position = pos;
             r1 = Vector3.zero;
             auxLine = null;
         }
