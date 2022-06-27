@@ -9,6 +9,8 @@ public class TakePictureReal : MonoBehaviour
     public Image imgCam;
     public Vector3 originalAngle;
     private Texture texture;
+    public StepsController stepPicture;
+    public ProgressController statePicture;
     void Start()
     {
         var devices = WebCamTexture.devices;
@@ -27,12 +29,18 @@ public class TakePictureReal : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(backCam.isPlaying)
+        if(backCam.isPlaying){
             backCam.Pause();
+            stepPicture.UpdateStep();
+            statePicture.SetState(statePicture.ProximoEstado);
+        }
+           
+
         else
         {
             backCam.Play();
             imgCam.material.SetTextureScale("_BaseMap", new Vector2(1, -1));
+
         }  
     }
 
