@@ -1897,6 +1897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgCam: {fileID: 1053354510}
   originalAngle: {x: 0, y: 0, z: 0}
+  stepPicture: {fileID: 1902485734}
+  statePicture: {fileID: 1761887217}
 --- !u!1 &1044013418
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,6 +2202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d710a29425bd64fb13247df569a886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stepPicture: {fileID: 1902485734}
+  statePicture: {fileID: 1761887217}
   image: {fileID: 1053354510}
   PathImage: 
 --- !u!61 &1170254732
