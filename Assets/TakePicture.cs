@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class TakePicture : MonoBehaviour
 {
-    public Material image;
+    public Image image;
     public string PathImage;
     private void OnMouseDown() {
         print("Meu cu fede");
-        var a = NativeGallery.GetImageFromGallery(path => image.mainTexture = NativeGallery.LoadImageAtPath(path));
-        gameObject.SetActive(false);
-        gameObject.SetActive(true);
+        var a = NativeGallery.GetImageFromGallery(path => image.material.mainTexture = NativeGallery.LoadImageAtPath(path));
+        image.mainTexture.IncrementUpdateCount();
     }
     
 }
