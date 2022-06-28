@@ -1,39 +1,74 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TakePictureReal : MonoBehaviour
 {
-    private WebCamTexture backCam;
-    public Image imgCam;
-    public Vector3 originalAngle;
-    private Texture texture;
-    void Start()
+    public static WebCamTexture backCam;
+    public RawImage imgCam;
+    public RawImage camDevice;
+    Texture2D photo;
+    
+    private void Start()
+    {
+        TakePicture.OnUploadImage += Reset;
+        SetCam();    
+    }
+
+    private void SetCam()
     {
         var devices = WebCamTexture.devices;
-        originalAngle = imgCam.rectTransform.localEulerAngles;
         foreach(var cam in devices)
         {
             if(!cam.isFrontFacing)
             {
                 // (int) imgCam.preferredHeight, (int) imgCam.preferredWidth   Screen.height, Screen.width
-                backCam = new WebCamTexture(cam.name, (int) imgCam.preferredWidth, (int) imgCam.preferredHeight);
+                backCam = new WebCamTexture(cam.name, Screen.width, Screen.height);
             }
-        }        
-        imgCam.material.mainTexture = backCam;
+        }
+        camDevice.texture = backCam;
+        camDevice.material.mainTexture = backCam;
     }
-
 
     private void OnMouseDown()
     {
         if(backCam.isPlaying)
-            backCam.Pause();
+        {
+            StartCoroutine(MakePhoto());
+        }
+            
         else
         {
+            imgCam.gameObject.SetActive(false);
+            camDevice.gameObject.SetActive(true);
             backCam.Play();
-            imgCam.material.SetTextureScale("_BaseMap", new Vector2(1, -1));
+            camDevice.rectTransform.localEulerAngles = new Vector3(0, 0, -backCam.videoRotationAngle);
         }  
+    }
+
+    IEnumerator MakePhoto()
+    {
+        yield return new WaitForEndOfFrame();
+        photo = new Texture2D(backCam.width, backCam.height);
+        photo.SetPixels(backCam.GetPixels());
+        photo.Apply();
+        yield return new WaitForEndOfFrame();
+        backCam.Stop();
+        yield return new WaitForEndOfFrame();
+        imgCam.material.mainTexture = photo;
+        imgCam.texture = photo;
+        imgCam.gameObject.SetActive(true);
+        imgCam.rectTransform.localEulerAngles = new Vector3(0, 0, 270);
+        camDevice.gameObject.SetActive(false);
+    }
+    public void Reset()
+    {
+        if(backCam is not null && backCam.isPlaying)
+        {
+            backCam.Stop();
+            camDevice.gameObject.SetActive(false);
+        }
+            
     }
 
 }
