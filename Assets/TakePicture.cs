@@ -7,13 +7,31 @@ public class TakePicture : MonoBehaviour
 {
     public StepsController stepPicture;
     public ProgressController statePicture;
-    public Image image;
-    public string PathImage;
+    public RawImage image;
+    public static System.Action OnUploadImage;
+
     private void OnMouseDown() {
-        var a = NativeGallery.GetImageFromGallery(path => image.material.mainTexture = NativeGallery.LoadImageAtPath(path));
-        image.mainTexture.IncrementUpdateCount();
+        OnUploadImage?.Invoke();
         stepPicture.UpdateStep();
         statePicture.SetState(statePicture.ProximoEstado);
+        StartCoroutine(UploadImage());
+    }
+
+    IEnumerator UploadImage()
+    {
+        image.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
+        image.texture = null;
+        image.material.mainTexture = null;
+        yield return new WaitForEndOfFrame();
+        var a = NativeGallery.GetImageFromGallery(path => {
+            var text = NativeGallery.LoadImageAtPath(path);
+            image.texture = text;
+            image.material.mainTexture = text;
+        });
+        yield return new WaitUntil(() => a == NativeGallery.Permission.Granted);
+        image.gameObject.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        image.gameObject.SetActive(true);
     }
     
 }
