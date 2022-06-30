@@ -4,15 +4,16 @@ using UnityEngine.UI;
 
 public class TakePictureReal : MonoBehaviour
 {
+    public ImageStateController imgState;
     private WebCamTexture backCam;
     public StepsController stepPicture;
     public ProgressController statePicture;
-    public RawImage imgCam;
     public RawImage camDevice;
     Texture2D photo;
     
     private void Start()
     {
+        imgState.UpdateStateImage();
         TakePicture.OnUploadImage += Reset;
         SetCam();    
     }
@@ -38,6 +39,8 @@ public class TakePictureReal : MonoBehaviour
             backCam.Pause();
             stepPicture.UpdateStep();
             statePicture.SetState(statePicture.ProximoEstado);
+            var Test = GameObject.Find("Imagens");
+            Test.transform.Find("Frontal").gameObject.SetActive(false);
         }
            
 
@@ -48,15 +51,18 @@ public class TakePictureReal : MonoBehaviour
             
         else
         {
-            imgCam.gameObject.SetActive(false);
+            RawImage StateImage = imgState.StateImage;
+            StateImage.gameObject.SetActive(false);
             camDevice.gameObject.SetActive(true);
             backCam.Play();
             camDevice.rectTransform.localEulerAngles = new Vector3(0, 0, -backCam.videoRotationAngle);
         }  
+        imgState.UpdateStateImage();
     }
 
     IEnumerator MakePhoto()
     {
+        RawImage StateImage = imgState.StateImage;
         yield return new WaitForEndOfFrame();
         photo = new Texture2D(backCam.width, backCam.height);
         photo.SetPixels(backCam.GetPixels());
@@ -64,10 +70,10 @@ public class TakePictureReal : MonoBehaviour
         yield return new WaitForEndOfFrame();
         backCam.Stop();
         yield return new WaitForEndOfFrame();
-        imgCam.material.mainTexture = photo;
-        imgCam.texture = photo;
-        imgCam.gameObject.SetActive(true);
-        imgCam.rectTransform.localEulerAngles = new Vector3(0, 0, 270);
+        StateImage.material.mainTexture = photo;
+        StateImage.texture = photo;
+        StateImage.gameObject.SetActive(true);
+        StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 270);
         camDevice.gameObject.SetActive(false);
     }
     public void Reset()

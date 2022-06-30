@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 192124887}
   m_Layer: 5
   m_Name: Lateral
-  m_TagString: Untagged
+  m_TagString: StateImage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 193757024}
   - component: {fileID: 193757023}
   - component: {fileID: 193757022}
+  - component: {fileID: 193757025}
   m_Layer: 5
   m_Name: Imagens
   m_TagString: Untagged
@@ -474,6 +475,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &193757025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193757020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31670f9a7d1c9d4d9cf77e85d26c42a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateImage: {fileID: 0}
 --- !u!1 &273721053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1130,7 @@ GameObject:
   - component: {fileID: 642438350}
   m_Layer: 5
   m_Name: Curvada
-  m_TagString: Untagged
+  m_TagString: StateImage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1890,9 +1904,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960cf337581ad6241a1804a45bbbfce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imgState: {fileID: 0}
   stepPicture: {fileID: 1902485734}
   statePicture: {fileID: 1761887217}
-  imgCam: {fileID: 1053354512}
   camDevice: {fileID: 1131133403}
 --- !u!1 &1044013418
 GameObject:
@@ -2042,7 +2056,7 @@ GameObject:
   - component: {fileID: 1053354512}
   m_Layer: 5
   m_Name: Frontal
-  m_TagString: Untagged
+  m_TagString: StateImage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2267,9 +2281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d710a29425bd64fb13247df569a886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imgState: {fileID: 0}
   stepPicture: {fileID: 1902485734}
   statePicture: {fileID: 1761887217}
-  image: {fileID: 1053354512}
 --- !u!61 &1170254732
 BoxCollider2D:
   m_ObjectHideFlags: 0

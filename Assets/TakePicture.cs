@@ -5,33 +5,39 @@ using UnityEngine.UI;
 
 public class TakePicture : MonoBehaviour
 {
+    public ImageStateController imgState;
     public StepsController stepPicture;
     public ProgressController statePicture;
-    public RawImage image;
     public static System.Action OnUploadImage;
+
+    private void Start(){
+        imgState.UpdateStateImage();
+    }
 
     private void OnMouseDown() {
         OnUploadImage?.Invoke();
         stepPicture.UpdateStep();
         statePicture.SetState(statePicture.ProximoEstado);
         StartCoroutine(UploadImage());
+        imgState.UpdateStateImage();
     }
 
     IEnumerator UploadImage()
     {
-        image.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
-        image.texture = null;
-        image.material.mainTexture = null;
+        RawImage StateImage = imgState.StateImage;
+        StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
+        StateImage.texture = null;
+        StateImage.material.mainTexture = null;
         yield return new WaitForEndOfFrame();
         var a = NativeGallery.GetImageFromGallery(path => {
             var text = NativeGallery.LoadImageAtPath(path);
-            image.texture = text;
-            image.material.mainTexture = text;
+            StateImage.texture = text;
+            StateImage.material.mainTexture = text;
         });
         yield return new WaitUntil(() => a == NativeGallery.Permission.Granted);
-        image.gameObject.SetActive(false);
+        StateImage.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
-        image.gameObject.SetActive(true);
+        StateImage.gameObject.SetActive(true);
     }
     
 }
