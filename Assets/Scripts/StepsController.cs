@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class StepsController : MonoBehaviour
 {
-    public List<string> Steps;
+    public List<string> Steps = new();
     private int _indexActualStep = 0;
 
+    public int IndexActualStep {get => _indexActualStep;}
+
     public TextMeshProUGUI actualStep;
-    public ProgressController progress;
     
     private void Start() 
     {
@@ -22,9 +23,10 @@ public class StepsController : MonoBehaviour
         {
             actualStep.text = Steps[++_indexActualStep];
         }
-        else
-        {
-            progress.SetState(progress.ProximoEstado);
-        }
+    }
+
+    public bool IsAllStepCompleted()
+    {
+        return _indexActualStep == (Steps.Count-1);
     }
 }

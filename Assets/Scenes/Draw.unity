@@ -388,7 +388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &193757021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -505,8 +505,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linhas: {fileID: 349616765}
   anguloText: {fileID: 1485833637}
-  steps: {fileID: 2045541061}
   Line: {fileID: 8977905937935012839, guid: a16c3d3dbde64ff4da5984d9df157650, type: 3}
+  States: {fileID: 726864740}
+  PairsLinesOfStatesForSteps:
+  - StateName: Frontal
+    pairs:
+    - StepName: ToracicaProximal
+      PairLines: 2
+    - StepName: ToracicaPrincipal
+      PairLines: 3
+    - StepName: Lombar
+      PairLines: 4
+  - StateName: Curvada
+    pairs:
+    - StepName: ToracicaProximalCurvada
+      PairLines: 2
+    - StepName: ToracicaPrincipalCurvada
+      PairLines: 3
+    - StepName: LombarCurvada
+      PairLines: 4
+  - StateName: Lateral
+    pairs:
+    - StepName: ToracicaProximalLateral
+      PairLines: 2
+    - StepName: ToracicaPrincipalLateral
+      PairLines: 3
+    - StepName: LombarLateral
+      PairLines: 4
 --- !u!4 &273721055
 Transform:
   m_ObjectHideFlags: 0
@@ -1232,6 +1257,23 @@ MonoBehaviour:
   - {fileID: 1822525094}
   - {fileID: 614400286}
   - {fileID: 64375396}
+  PassosPorEstado:
+  - StateName: Frontal
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Proximal"
+    - "Desenhe as linhas referente a Tor\xE1cica Principal"
+    - Desenhe as linhas referente a Lombar
+  - StateName: Curvada
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Proximal Curvada"
+    - "Desenhe as linhas referente a Tor\xE1cica Principal Curvada"
+    - Desenhe as linhas referente a Lombar Curvada
+  - StateName: Lateral
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Proximal Lateral"
+    - "Desenhe as linhas referente a Tor\xE1cica Principal Lateral"
+    - Desenhe as linhas referente a Lombar Lateral
+  StepText: {fileID: 594357075}
 --- !u!1 &738972500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,7 +2308,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1053354512}
-  PathImage: 
 --- !u!61 &1170254732
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2311,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1203928462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2747,7 +2788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1600230337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3002,6 +3043,8 @@ MonoBehaviour:
   - {fileID: 1580834588}
   - {fileID: 1857466746}
   - {fileID: 583647900}
+  PassosPorEstado: []
+  StepText: {fileID: 0}
 --- !u!224 &1761887218
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3276,7 +3319,6 @@ MonoBehaviour:
   - Insira ou bata foto do raio-x Curvado
   - Insira ou bata foto do raio-x Lateral
   actualStep: {fileID: 765745034}
-  progress: {fileID: 1761887217}
 --- !u!1 &1922914345
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,7 +3539,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2045541060}
-  - component: {fileID: 2045541061}
   m_Layer: 5
   m_Name: Passos
   m_TagString: Untagged
@@ -3526,24 +3567,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -910}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2045541061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2045541059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e30aef38864eae94f9813abc457de52d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Steps:
-  - "Desenha as linhas referente a Tor\xE1cica Proximal"
-  - "Desenha as linhas referente a Tor\xE1cica Principal"
-  - Desenha as linhas referente a Lombar
-  actualStep: {fileID: 594357075}
-  progress: {fileID: 726864740}
 --- !u!1 &2089160599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,7 +3583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2089160600
 SpriteRenderer:
   m_ObjectHideFlags: 0
