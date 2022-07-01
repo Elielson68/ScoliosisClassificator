@@ -31,8 +31,12 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     public List<PairLineStates> PairsLinesOfStatesForSteps;
+    private BoxCollider2D colider;
+    private bool firstPointCreated = false;
 
     private void Start() {
+        colider = GetComponent<BoxCollider2D>();
+        colider.size = new Vector2(Screen.width, Screen.height);
         ProgressController.OnInitChangeState += CreateData;
         ProgressController.OnInitChangeState += state => {
             foreach(Transform child in linhas.transform)
@@ -44,33 +48,42 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     void Update()
-    {
-        if(Input.GetMouseButtonDown(0) && !PointController.IsMouseOnPoint)
+    {        
+        WriteTextAngles();
+    }
+
+    private void OnMouseDown() {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        if(auxLine is null)
         {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = 0;
-            if(auxLine is null)
-            {
-                CreateLine(pos);
-                IsLineCompleted = false;
-            }
-                
-            else
-            {
-                CreateDegrees();
-                auxLine = null;
-                UpdateStep();
-                IsLineCompleted = true;
-                
-            }
+            CreateLine(pos);
+            IsLineCompleted = false;
+        }  
+        else
+        {
+            CreateDegrees();
         }
-        else if(auxLine is not null)
+    }
+    private void OnMouseDrag() {
+        if(firstPointCreated)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
             auxLine.Point2.transform.position = pos;
         }
-        WriteTextAngles();
+    }
+
+    private void OnMouseUp() {
+        if(firstPointCreated)
+        {
+            auxLine = null;
+            UpdateStep();
+            IsLineCompleted = true;
+            firstPointCreated = false;
+        }
+        if(auxLine is not null)
+            firstPointCreated = true;
     }
 
     void WriteTextAngles()
@@ -107,6 +120,7 @@ public class CalculadorDeReta : MonoBehaviour
     {
         auxLine = Instantiate(Line, Vector3.zero, Quaternion.identity, linhas.transform).GetComponent<LineController>();
         auxLine.Point1.transform.position = pos;
+        auxLine.Point2.transform.position = pos;
     }
 
     void UpdateStep()
@@ -118,7 +132,10 @@ public class CalculadorDeReta : MonoBehaviour
             {
                 foreach(var pairStep in pair.pairs)
                 {
-                    if(!_stepData.ContainsKey(pairStep.StepName) && pairStep.PairLines==linhas.transform.childCount)
+                    bool stepDataNotContainsKey = !_stepData.ContainsKey(pairStep.StepName);
+                    bool pairsLinesEqualLinesChilds = pairStep.PairLines==linhas.transform.childCount;
+                    bool degreeIsNotEmpty = _degrees.Count > 0;
+                    if(stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
                     {
                         int index = States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep;
                         _stepData.Add(pairStep.StepName, _degrees[index]);

@@ -22,7 +22,6 @@ public class ImageStateController : MonoBehaviour
                 obj.gameObject.SetActive(true);
             }
             else if (obj.gameObject.tag == "StateImage"){
-                Debug.LogWarning($"Estado: {obj.gameObject.name}");
                 obj.gameObject.SetActive(false);
             }
         }

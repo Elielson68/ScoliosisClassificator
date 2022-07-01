@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Degrees:
   - name: ToracicaProximal
-    degree: 165.79637
+    degree: 0
     lines: []
   - name: ToracicaPrincipal
-    degree: 167.43506
+    degree: 0
     lines: []
   - name: Lombar
-    degree: 179.04858
+    degree: 0
     lines: []
