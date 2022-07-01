@@ -12,7 +12,7 @@ public class StepsController : MonoBehaviour
 
     public TextMeshProUGUI actualStep;
     
-    private void Start() 
+    public void UpdateText() 
     {
         actualStep.text = Steps[_indexActualStep];    
     }

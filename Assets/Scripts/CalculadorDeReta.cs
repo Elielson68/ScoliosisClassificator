@@ -33,8 +33,8 @@ public class CalculadorDeReta : MonoBehaviour
     public List<PairLineStates> PairsLinesOfStatesForSteps;
 
     private void Start() {
-        ProgressController.OnChangeState += CreateData;
-        ProgressController.OnChangeState += state => {
+        ProgressController.OnInitChangeState += CreateData;
+        ProgressController.OnInitChangeState += state => {
             foreach(Transform child in linhas.transform)
             {
                 GameObject.Destroy(child.gameObject);

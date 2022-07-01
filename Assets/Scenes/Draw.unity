@@ -389,7 +389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &193757021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateImage: {fileID: 0}
+  progressController: {fileID: 1761887217}
 --- !u!1 &273721053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1289,9 @@ MonoBehaviour:
     - "Desenhe as linhas referente a Tor\xE1cica Principal Lateral"
     - Desenhe as linhas referente a Lombar Lateral
   StepText: {fileID: 594357075}
+  OnCompleteAllStates:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &738972500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1867,7 @@ RectTransform:
   - {fileID: 1044013419}
   - {fileID: 10503598}
   m_Father: {fileID: 1600230340}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1946,8 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960cf337581ad6241a1804a45bbbfce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgState: {fileID: 0}
-  stepPicture: {fileID: 1902485734}
+  imgState: {fileID: 193757025}
   statePicture: {fileID: 1761887217}
   camDevice: {fileID: 1131133403}
 --- !u!1 &1044013418
@@ -2266,7 +2269,7 @@ RectTransform:
   - {fileID: 738972501}
   - {fileID: 1999480164}
   m_Father: {fileID: 1600230340}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2323,8 +2326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d710a29425bd64fb13247df569a886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgState: {fileID: 0}
-  stepPicture: {fileID: 1902485734}
+  imgState: {fileID: 193757025}
   statePicture: {fileID: 1761887217}
 --- !u!61 &1170254732
 BoxCollider2D:
@@ -2370,7 +2372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1203928462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2523,37 +2525,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1251030863
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1251030864}
-  m_Layer: 0
-  m_Name: Linhas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1251030864
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1251030863}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1600230340}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1485833635
 GameObject:
@@ -2806,7 +2777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1600230337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,7 +2853,6 @@ RectTransform:
   m_Children:
   - {fileID: 1761887218}
   - {fileID: 1902485733}
-  - {fileID: 1251030864}
   - {fileID: 1170254728}
   - {fileID: 862467265}
   m_Father: {fileID: 0}
@@ -3061,8 +3031,80 @@ MonoBehaviour:
   - {fileID: 1580834588}
   - {fileID: 1857466746}
   - {fileID: 583647900}
-  PassosPorEstado: []
-  StepText: {fileID: 0}
+  PassosPorEstado:
+  - StateName: Frontal
+    Steps:
+    - "Tira foto do frontal a\xED"
+  - StateName: Curvada
+    Steps:
+    - Tira de lado agora
+  - StateName: Lateral
+    Steps:
+    - De ladin
+  StepText: {fileID: 765745034}
+  OnCompleteAllStates:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193757025}
+        m_TargetAssemblyTypeName: ImageStateController, Assembly-CSharp
+        m_MethodName: SetProgressController
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 726864740}
+          m_ObjectArgumentAssemblyTypeName: ProgressController, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1203928461}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 193757025}
+        m_TargetAssemblyTypeName: ImageStateController, Assembly-CSharp
+        m_MethodName: UpdateStateImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1131133401}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1600230336}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &1761887218
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3291,7 +3333,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1902485733}
-  - component: {fileID: 1902485734}
   m_Layer: 5
   m_Name: Passos
   m_TagString: Untagged
@@ -3320,23 +3361,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -910}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1902485734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902485732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e30aef38864eae94f9813abc457de52d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Steps:
-  - Insira ou bata foto do raio-x Frontal
-  - Insira ou bata foto do raio-x Curvado
-  - Insira ou bata foto do raio-x Lateral
-  actualStep: {fileID: 765745034}
 --- !u!1 &1922914345
 GameObject:
   m_ObjectHideFlags: 0
@@ -3601,7 +3625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2089160600
 SpriteRenderer:
   m_ObjectHideFlags: 0

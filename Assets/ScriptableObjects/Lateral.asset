@@ -10,15 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1d50836f99b11c4e8f0c4cb86b0a37c, type: 3}
-  m_Name: Frontal
+  m_Name: Lateral
   m_EditorClassIdentifier: 
   Degrees:
   - name: ToracicaProximal
-    degree: 165.79637
+    degree: 128.97751
     lines: []
   - name: ToracicaPrincipal
-    degree: 167.43506
+    degree: 170.97833
     lines: []
   - name: Lombar
-    degree: 179.04858
+    degree: 129.19287
+    lines: []
+  - name: ToracicaPrincipalCurvada
+    degree: 122.35429
+    lines: []
+  - name: LombarCurvada
+    degree: 141.7055
+    lines: []
+  - name: ToracicaPrincipalLateral
+    degree: 135.56053
+    lines: []
+  - name: LombarLateral
+    degree: 101.52606
     lines: []

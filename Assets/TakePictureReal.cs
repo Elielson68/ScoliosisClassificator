@@ -6,7 +6,6 @@ public class TakePictureReal : MonoBehaviour
 {
     public ImageStateController imgState;
     private WebCamTexture backCam;
-    public StepsController stepPicture;
     public ProgressController statePicture;
     public RawImage camDevice;
     Texture2D photo;
@@ -35,15 +34,6 @@ public class TakePictureReal : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(backCam.isPlaying){
-            backCam.Pause();
-            stepPicture.UpdateStep();
-            statePicture.SetState(statePicture.ProximoEstado);
-            var Test = GameObject.Find("Imagens");
-            Test.transform.Find("Frontal").gameObject.SetActive(false);
-        }
-           
-
         if(backCam.isPlaying)
         {
             StartCoroutine(MakePhoto());
@@ -57,7 +47,6 @@ public class TakePictureReal : MonoBehaviour
             backCam.Play();
             camDevice.rectTransform.localEulerAngles = new Vector3(0, 0, -backCam.videoRotationAngle);
         }  
-        imgState.UpdateStateImage();
     }
 
     IEnumerator MakePhoto()
@@ -75,6 +64,7 @@ public class TakePictureReal : MonoBehaviour
         StateImage.gameObject.SetActive(true);
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 270);
         camDevice.gameObject.SetActive(false);
+        statePicture.UpdateStepForActualState();
     }
     public void Reset()
     {

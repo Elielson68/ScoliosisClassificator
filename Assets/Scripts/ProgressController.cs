@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProgressController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ProgressController : MonoBehaviour
         Lateral = 2
     }
 
-    public static Estados EstadoAtual { get; private set;}
+    public Estados EstadoAtual { get; private set;}
 
     public List<Animator> EstadosAnim;
     public Estados ProximoEstado { 
@@ -29,7 +30,10 @@ public class ProgressController : MonoBehaviour
     public List<StepsForState> PassosPorEstado;
     public Dictionary<string, StepsController> StepsForStateDic = new();
     public TextMeshProUGUI StepText;
-    public static System.Action<string> OnChangeState;
+    public static System.Action<string> OnInitChangeState;
+    public static System.Action OnFinishChangeState;
+
+    public UnityEvent OnCompleteAllStates;
 
     private void Start() {
         foreach(var stepState in PassosPorEstado)
@@ -37,26 +41,40 @@ public class ProgressController : MonoBehaviour
             StepsController steps = new();
             steps.Steps = stepState.Steps;
             steps.actualStep = StepText;
+            
             StepsForStateDic.Add(stepState.StateName, steps);
         }
+        StepsForStateDic[EstadoAtual.ToString()].UpdateText();
     }
 
-    public void SetState(Estados novoEstado)
+    private void SetState(Estados novoEstado)
     {
-        OnChangeState?.Invoke(_estadoAtual.ToString());
+        OnInitChangeState?.Invoke(EstadoAtual.ToString());
         foreach(var est in EstadosAnim)
         {
             if(est.name == EstadoAtual.ToString())
                 est.SetBool("EstadoCompleto", true);
         }
         EstadoAtual = novoEstado;
+        OnFinishChangeState?.Invoke();
+    }
+
+    public bool IsLastState()
+    {
+        return EstadoAtual == Estados.Lateral;
     }
 
     public void UpdateStepForActualState()
     {
-        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted())
+        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && !IsLastState())
+        {
             SetState(ProximoEstado);
+            StepsForStateDic[EstadoAtual.ToString()].UpdateText();
+            return;
+        }
         StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
+        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && IsLastState())
+            OnCompleteAllStates?.Invoke();
     }
 
 
