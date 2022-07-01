@@ -12,8 +12,7 @@ public class ProgressController : MonoBehaviour
         Lateral = 2
     }
 
-    private Estados _estadoAtual = Estados.Frontal;
-    public Estados EstadoAtual { get; private set;}
+    public static Estados EstadoAtual { get; private set;}
 
     public List<Animator> EstadosAnim;
     public Estados ProximoEstado { 
