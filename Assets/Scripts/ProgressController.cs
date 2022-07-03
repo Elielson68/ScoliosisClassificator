@@ -26,6 +26,7 @@ public class ProgressController : MonoBehaviour
     public struct StepsForState{
         public string StateName;
         public List<string> Steps;
+        public DegreeData data;
     }
     public List<StepsForState> PassosPorEstado;
     public Dictionary<string, StepsController> StepsForStateDic = new();
@@ -34,6 +35,7 @@ public class ProgressController : MonoBehaviour
     public static System.Action OnFinishChangeState;
 
     public UnityEvent OnCompleteAllStates;
+    public UnityEvent OnCompleteAllSteps;
 
     private void Start() {
         foreach(var stepState in PassosPorEstado)
@@ -44,7 +46,7 @@ public class ProgressController : MonoBehaviour
             
             StepsForStateDic.Add(stepState.StateName, steps);
         }
-        StepsForStateDic[EstadoAtual.ToString()].UpdateText();
+        StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
     }
 
     private void SetState(Estados novoEstado)
@@ -67,14 +69,21 @@ public class ProgressController : MonoBehaviour
     public void UpdateStepForActualState()
     {
         if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && !IsLastState())
+            OnCompleteAllSteps?.Invoke();
+        else if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && IsLastState())
+            OnCompleteAllStates?.Invoke();
+
+        StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
+    }
+
+    public void UpdateState()
+    {
+        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted())
         {
             SetState(ProximoEstado);
-            StepsForStateDic[EstadoAtual.ToString()].UpdateText();
-            return;
+            StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
         }
-        StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
-        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && IsLastState())
-            OnCompleteAllStates?.Invoke();
+            
     }
 
 

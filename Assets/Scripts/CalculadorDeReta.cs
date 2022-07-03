@@ -44,7 +44,10 @@ public class CalculadorDeReta : MonoBehaviour
                 GameObject.Destroy(child.gameObject);
             }
             _degrees.Clear();
+            firstPointCreated = false;
+            auxLine = null;
         };
+        UpdateStep();
     }
 
     void Update()
@@ -53,6 +56,8 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     private void OnMouseDown() {
+        //if(States.StepsForStateDic[States.EstadoAtual.ToString()].IsAllStepCompleted()) return;
+
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
         if(auxLine is null)
@@ -60,13 +65,9 @@ public class CalculadorDeReta : MonoBehaviour
             CreateLine(pos);
             IsLineCompleted = false;
         }  
-        else
-        {
-            CreateDegrees();
-        }
     }
     private void OnMouseDrag() {
-        if(firstPointCreated)
+        if(firstPointCreated && auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
@@ -77,6 +78,7 @@ public class CalculadorDeReta : MonoBehaviour
     private void OnMouseUp() {
         if(firstPointCreated)
         {
+            CreateDegrees();
             auxLine = null;
             UpdateStep();
             IsLineCompleted = true;
@@ -138,7 +140,7 @@ public class CalculadorDeReta : MonoBehaviour
                     if(stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
                     {
                         int index = States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep;
-                        _stepData.Add(pairStep.StepName, _degrees[index]);
+                        _stepData.Add(pairStep.StepName, _degrees[index-1]);
                         States.UpdateStepForActualState();
                     } 
                 }

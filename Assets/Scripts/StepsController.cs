@@ -8,25 +8,21 @@ public class StepsController : MonoBehaviour
     public List<string> Steps = new();
     private int _indexActualStep = 0;
 
-    public int IndexActualStep {get => _indexActualStep;}
+    public int IndexActualStep => _indexActualStep;
 
     public TextMeshProUGUI actualStep;
     
-    public void UpdateText() 
-    {
-        actualStep.text = Steps[_indexActualStep];    
-    }
-    
     public void UpdateStep()
     {
-        if (_indexActualStep < Steps.Count - 1)
+        if (_indexActualStep < Steps.Count)
         {
-            actualStep.text = Steps[++_indexActualStep];
+            actualStep.text = Steps[_indexActualStep];
+            _indexActualStep++;
         }
     }
 
     public bool IsAllStepCompleted()
     {
-        return _indexActualStep == (Steps.Count-1);
+        return _indexActualStep == Steps.Count;
     }
 }

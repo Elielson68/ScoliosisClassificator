@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 
 public static class DataController
 {
@@ -21,9 +20,9 @@ public static class DataController
     public static void CreateDegreeDataAsset(DegreeData data, string name)
     {
         string path = $"Assets/ScriptableObjects/{name}.asset";
-        AssetDatabase.CreateAsset(data, path);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        EditorUtility.FocusProjectWindow();
+        // StreamingAsset
+        // AssetDatabase.CreateAsset(data, path);
+        // AssetDatabase.SaveAssets();
+        // AssetDatabase.Refresh();
     }
 }
