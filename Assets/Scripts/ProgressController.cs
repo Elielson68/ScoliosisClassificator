@@ -9,8 +9,9 @@ public class ProgressController : MonoBehaviour
     public enum Estados
     {
         Frontal = 0,
-        Curvada = 1,
-        Lateral = 2
+        InclinacaoEsquerda = 1,
+        InclinacaoDireita = 2,
+        Lateral = 3
     }
 
     public Estados EstadoAtual { get; private set;}

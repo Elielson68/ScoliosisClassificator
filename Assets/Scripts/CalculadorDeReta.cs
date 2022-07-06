@@ -33,7 +33,7 @@ public class CalculadorDeReta : MonoBehaviour
     public List<PairLineStates> PairsLinesOfStatesForSteps;
     private BoxCollider2D colider;
     private bool firstPointCreated = false;
-
+    private bool _blockCreationLine = false;
     private void Start() {
         colider = GetComponent<BoxCollider2D>();
         colider.size = new Vector2(Screen.width, Screen.height);
@@ -46,8 +46,11 @@ public class CalculadorDeReta : MonoBehaviour
             _degrees.Clear();
             firstPointCreated = false;
             auxLine = null;
+            _blockCreationLine = false;
         };
         UpdateStep();
+        States.OnCompleteAllSteps.AddListener(() => _blockCreationLine = true);
+        States.OnCompleteAllSteps.AddListener(() => _blockCreationLine = true);
     }
 
     void Update()
@@ -56,7 +59,7 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        //if(States.StepsForStateDic[States.EstadoAtual.ToString()].IsAllStepCompleted()) return;
+        if(_blockCreationLine) return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
