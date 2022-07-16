@@ -878,14 +878,6 @@ MonoBehaviour:
   Line: {fileID: 8977905937935012839, guid: a16c3d3dbde64ff4da5984d9df157650, type: 3}
   States: {fileID: 726864740}
   PairsLinesOfStatesForSteps:
-  - StateName: Frontal
-    pairs:
-    - StepName: ToracicaProximal
-      PairLines: 2
-    - StepName: ToracicaPrincipal
-      PairLines: 3
-    - StepName: Lombar
-      PairLines: 4
   - StateName: InclinacaoEsquerda
     pairs:
     - StepName: ToracicaProximalEsquerda
@@ -894,6 +886,16 @@ MonoBehaviour:
       PairLines: 3
     - StepName: LombarEsquerda
       PairLines: 4
+  - StateName: Frontal
+    pairs:
+    - StepName: ToracicaProximal
+      PairLines: 2
+    - StepName: ToracicaPrincipal
+      PairLines: 3
+    - StepName: Lombar
+      PairLines: 4
+    - StepName: LinhaSacral
+      PairLines: 5
   - StateName: InclinacaoDireita
     pairs:
     - StepName: ToracicaProximalDireita
