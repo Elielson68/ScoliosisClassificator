@@ -2940,30 +2940,32 @@ MonoBehaviour:
   - {fileID: 1402220471}
   - {fileID: 64375396}
   PassosPorEstado:
-  - StateName: Frontal
-    Steps:
-    - "Desenhe as linhas referente a Tor\xE1cica Proximal"
-    - "Desenhe as linhas referente a Tor\xE1cica Principal"
-    - Desenhe as linhas referente a Lombar
-    data: {fileID: 0}
   - StateName: InclinacaoEsquerda
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal Curvada"
     - "Desenhe as linhas referente a Tor\xE1cica Principal Curvada"
     - Desenhe as linhas referente a Lombar Curvada
-    data: {fileID: 0}
+    data: {fileID: 11400000, guid: eadbb4b75fa774f4daef44451e6d22fe, type: 2}
+  - StateName: Frontal
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Proximal"
+    - "Desenhe as linhas referente a Tor\xE1cica Principal"
+    - Desenhe as linhas referente a Lombar
+    - "Posicione a linha vertical no centro e indique o valor da classifica\xE7\xE3o
+      do Sacro"
+    data: {fileID: 11400000, guid: db729a4a37dee83478ed735242f3e966, type: 2}
   - StateName: InclinacaoDireita
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal Lateral"
     - "Desenhe as linhas referente a Tor\xE1cica Principal Lateral"
     - Desenhe as linhas referente a Lombar Lateral
-    data: {fileID: 0}
+    data: {fileID: 11400000, guid: 1f46cf305d2a5dc4aa2cfc6f4225295a, type: 2}
   - StateName: Lateral
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal Lateral"
     - "Desenhe as linhas referente a Tor\xE1cica Principal Lateral"
     - Desenhe as linhas referente a Lombar Lateral
-    data: {fileID: 0}
+    data: {fileID: 11400000, guid: ceb6bf5fbe555ea4bacce4c56afbbe67, type: 2}
   StepText: {fileID: 594357075}
   OnCompleteAllStates:
     m_PersistentCalls:

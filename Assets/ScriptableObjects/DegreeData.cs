@@ -14,4 +14,13 @@ public class DegreeData : ScriptableObject {
     }
     [Space]
     public List<DegreeCalculateData> Degrees = new();
+
+    public enum SacroTypes
+    {
+        None=-1,
+        A=0,
+        B=1,
+        C=2
+    }
+    public SacroTypes sacro = SacroTypes.None;
 }

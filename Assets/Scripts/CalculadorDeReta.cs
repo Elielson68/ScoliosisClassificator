@@ -145,6 +145,10 @@ public class CalculadorDeReta : MonoBehaviour
                         int index = States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep;
                         _stepData.Add(pairStep.StepName, _degrees[index-1]);
                         States.UpdateStepForActualState();
+                        List<GameObject> lines = new();
+                        foreach(Transform child in linhas.transform)
+                            lines.Add(child.gameObject);
+                        States.SetData(pairStep.StepName, _degrees[index-1], lines);
                     } 
                 }
             }

@@ -83,8 +83,17 @@ public class ProgressController : MonoBehaviour
         {
             SetState(ProximoEstado);
             StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
-        }
-            
+        } 
+    }
+
+    public void SetData(string name, float degree, List<GameObject> lines)
+    {
+        DegreeData data = PassosPorEstado.Find(d => d.StateName == EstadoAtual.ToString()).data;
+        data.Degrees.Add(new DegreeData.DegreeCalculateData(){
+            name = name,
+            degree = degree,
+            lines = lines
+        });
     }
 
 
