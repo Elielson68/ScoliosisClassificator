@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -94,6 +95,12 @@ public class ProgressController : MonoBehaviour
             degree = degree,
             lines = lines
         });
+    }
+
+    public void SetData(int sacroOption)
+    {
+        DegreeData data = PassosPorEstado.Find(d => d.StateName == EstadoAtual.ToString()).data;
+        data.sacro = DegreeData.SacroTypes.None + sacroOption;
     }
 
 

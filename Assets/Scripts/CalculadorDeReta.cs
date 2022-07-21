@@ -5,9 +5,12 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CalculadorDeReta : MonoBehaviour
 {
+    public bool SacroStep {get; set;}
+    public TMP_Dropdown SacroOption;
     public GameObject linhas;
     public TextMeshProUGUI anguloText;
     private LineController auxLine;
@@ -22,6 +25,7 @@ public class CalculadorDeReta : MonoBehaviour
     {
         public string StepName;
         public int PairLines;
+        public UnityEvent OnStepComplete;
     }
     [System.Serializable]
     public struct PairLineStates
@@ -33,11 +37,10 @@ public class CalculadorDeReta : MonoBehaviour
     public List<PairLineStates> PairsLinesOfStatesForSteps;
     private BoxCollider2D colider;
     private bool firstPointCreated = false;
-    private bool _blockCreationLine = false;
+    public bool BlockCreationLine {get; set;}
     private void Start() {
         colider = GetComponent<BoxCollider2D>();
         colider.size = new Vector2(Screen.width, Screen.height);
-        ProgressController.OnInitChangeState += CreateData;
         ProgressController.OnInitChangeState += state => {
             foreach(Transform child in linhas.transform)
             {
@@ -46,11 +49,11 @@ public class CalculadorDeReta : MonoBehaviour
             _degrees.Clear();
             firstPointCreated = false;
             auxLine = null;
-            _blockCreationLine = false;
+            BlockCreationLine = false;
         };
         UpdateStep();
-        States.OnCompleteAllSteps.AddListener(() => _blockCreationLine = true);
-        States.OnCompleteAllSteps.AddListener(() => _blockCreationLine = true);
+        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
+        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
     }
 
     void Update()
@@ -59,7 +62,7 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        if(_blockCreationLine) return;
+        if(BlockCreationLine) return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
@@ -128,7 +131,7 @@ public class CalculadorDeReta : MonoBehaviour
         auxLine.Point2.transform.position = pos;
     }
 
-    void UpdateStep()
+    public void UpdateStep()
     {
         
         foreach(var pair in PairsLinesOfStatesForSteps)
@@ -149,16 +152,19 @@ public class CalculadorDeReta : MonoBehaviour
                         foreach(Transform child in linhas.transform)
                             lines.Add(child.gameObject);
                         States.SetData(pairStep.StepName, _degrees[index-1], lines);
+                        pairStep.OnStepComplete?.Invoke();
                     } 
+                    if(pairStep.PairLines is -1 && SacroStep)
+                    {
+                        Debug.Log("Eae");
+                        int index = SacroOption.value;
+                        States.UpdateStepForActualState();
+                        States.SetData(index);
+                        
+                    }
                 }
             }
         }
-    }
-
-    void CreateData(string name)
-    {
-        var data = DataController.CreateDegreeData(_stepData);
-        DataController.CreateDegreeDataAsset(data, name);
     }
 
 }

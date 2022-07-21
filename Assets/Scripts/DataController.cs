@@ -16,13 +16,4 @@ public static class DataController
         }
         return data;
     }
-
-    public static void CreateDegreeDataAsset(DegreeData data, string name)
-    {
-        string path = $"Assets/ScriptableObjects/{name}.asset";
-        // StreamingAsset
-        // AssetDatabase.CreateAsset(data, path);
-        // AssetDatabase.SaveAssets();
-        // AssetDatabase.Refresh();
-    }
 }
