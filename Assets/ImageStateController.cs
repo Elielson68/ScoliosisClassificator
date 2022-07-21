@@ -6,13 +6,20 @@ using UnityEngine.UI;
 public class ImageStateController : MonoBehaviour
 {
     public RawImage StateImage;
+    public ProgressController progressController;
+
+    private void Start()
+    {
+        ProgressController.OnFinishChangeState += UpdateStateImage;
+    }
+
     public RawImage GetActualStateImage(){
         RawImage imgState = null;
         foreach (Transform obj in transform){
-            print($"Obj: {obj}");
-            if (ProgressController.EstadoAtual.ToString() == obj.gameObject.name)
+            if (progressController.EstadoAtual.ToString() == obj.gameObject.name)
             {
                 imgState = obj.GetComponent<RawImage>();
+                obj.gameObject.SetActive(true);
             }
             else if (obj.gameObject.tag == "StateImage"){
                 obj.gameObject.SetActive(false);
@@ -23,6 +30,11 @@ public class ImageStateController : MonoBehaviour
     public void UpdateStateImage(){
        
         StateImage = GetActualStateImage();
+    }
+
+    public void SetProgressController (ProgressController p)
+    {
+        progressController = p;
     }
 
 }

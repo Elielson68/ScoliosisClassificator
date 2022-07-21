@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TakePicture : MonoBehaviour
 {
     public ImageStateController imgState;
-    public StepsController stepPicture;
     public ProgressController statePicture;
     public static System.Action OnUploadImage;
 
@@ -16,10 +15,7 @@ public class TakePicture : MonoBehaviour
 
     private void OnMouseDown() {
         OnUploadImage?.Invoke();
-        stepPicture.UpdateStep();
-        statePicture.SetState(statePicture.ProximoEstado);
         StartCoroutine(UploadImage());
-        imgState.UpdateStateImage();
     }
 
     IEnumerator UploadImage()
@@ -38,6 +34,8 @@ public class TakePicture : MonoBehaviour
         StateImage.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
         StateImage.gameObject.SetActive(true);
+        StateImage.SetNativeSize();
+        statePicture.UpdateStepForActualState();
     }
     
 }

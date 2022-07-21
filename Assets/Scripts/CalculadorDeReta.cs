@@ -1,90 +1,169 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CalculadorDeReta : MonoBehaviour
 {
+    public bool SacroStep {get; set;}
+    public TMP_Dropdown SacroOption;
     public GameObject linhas;
     public TextMeshProUGUI anguloText;
     private LineController auxLine;
-    public StepsController steps;
     public GameObject Line;
     public static bool IsLineCompleted;
+    private List<float> _degrees = new();
+    private Dictionary<string, float> _stepData = new();
+    public ProgressController States;
 
-    // Update is called once per frame
-    void Update()
+    [System.Serializable]
+    public struct PairLinesForStep
     {
-        if(Input.GetMouseButtonDown(0) && !PointController.IsMouseOnPoint)
+        public string StepName;
+        public int PairLines;
+        public UnityEvent OnStepComplete;
+    }
+    [System.Serializable]
+    public struct PairLineStates
+    {
+        public string StateName;
+        public List<PairLinesForStep> pairs;
+    }
+
+    public List<PairLineStates> PairsLinesOfStatesForSteps;
+    private BoxCollider2D colider;
+    private bool firstPointCreated = false;
+    public bool BlockCreationLine {get; set;}
+    private void Start() {
+        colider = GetComponent<BoxCollider2D>();
+        colider.size = new Vector2(Screen.width, Screen.height);
+        ProgressController.OnInitChangeState += state => {
+            foreach(Transform child in linhas.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+            _degrees.Clear();
+            firstPointCreated = false;
+            auxLine = null;
+            BlockCreationLine = false;
+        };
+        UpdateStep();
+        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
+        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
+    }
+
+    void Update()
+    {        
+        WriteTextAngles();
+    }
+
+    private void OnMouseDown() {
+        if(BlockCreationLine) return;
+
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        if(auxLine is null)
         {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = 0;
-            if(auxLine is null)
-            {
-                CreateLine(pos);
-                IsLineCompleted = false;
-            }
-                
-            else
-            {
-                auxLine = null;
-                UpdateStep();
-                IsLineCompleted = true;
-            }
-        }
-        else if(auxLine is not null)
+            CreateLine(pos);
+            IsLineCompleted = false;
+        }  
+    }
+    private void OnMouseDrag() {
+        if(firstPointCreated && auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
             auxLine.Point2.transform.position = pos;
         }
-        WriteTextAngles();
+    }
+
+    private void OnMouseUp() {
+        if(firstPointCreated)
+        {
+            CreateDegrees();
+            auxLine = null;
+            UpdateStep();
+            IsLineCompleted = true;
+            firstPointCreated = false;
+        }
+        if(auxLine is not null)
+            firstPointCreated = true;
     }
 
     void WriteTextAngles()
     {
-        if(linhas.transform.childCount > 1)
+        if(_stepData.Count > 0)
         {
-            List<LineRenderer> ls = new List<LineRenderer>();
-            foreach(Transform child in linhas.transform)
-            {
-                ls.Add(child.GetComponent<LineRenderer>());
-            }
             string angulos = "Ângulos: \n";
-            for(var i=0; i < ls.Count; i++)
+            foreach(var value in _stepData)
             {
-                if(i+1 < ls.Count)
-                {
-                    float angulo = Vector3.Angle(ls[i].GetPosition(0) - ls[i].GetPosition(1), ls[i+1].GetPosition(0) - ls[i+1].GetPosition(1));
-                    angulos += $"L{i+1} e L{i+2} = {(int)angulo}°\n";
-                }
+                angulos += $"{value.Key}: {(int)value.Value}°\n";
             }
-            
             anguloText.text = angulos;
         }
     }
 
+    void CreateDegrees()
+    {
+        List<LineRenderer> ls = new List<LineRenderer>();
+        _degrees.Clear();
+        foreach(Transform child in linhas.transform)
+        {
+            ls.Add(child.GetComponent<LineRenderer>());
+        }
+        for(var i=0; i < ls.Count; i++)
+        {
+            if(i+1 < ls.Count)
+            {
+                float angulo = Vector3.Angle(ls[i].GetPosition(0) - ls[i].GetPosition(1), ls[i+1].GetPosition(0) - ls[i+1].GetPosition(1));
+                _degrees.Add(angulo);
+            }
+        }
+    }
     void CreateLine(Vector3 pos)
     {
         auxLine = Instantiate(Line, Vector3.zero, Quaternion.identity, linhas.transform).GetComponent<LineController>();
         auxLine.Point1.transform.position = pos;
+        auxLine.Point2.transform.position = pos;
     }
 
-    void UpdateStep()
+    public void UpdateStep()
     {
-        switch(linhas.transform.childCount)
+        
+        foreach(var pair in PairsLinesOfStatesForSteps)
         {
-            case 2:
-                steps.UpdateStep();
-                break;
-            case 3:
-                steps.UpdateStep();
-                break;
-            case 4:
-                steps.UpdateStep();
-                break;
+            if(States.EstadoAtual.ToString() == pair.StateName)
+            {
+                foreach(var pairStep in pair.pairs)
+                {
+                    bool stepDataNotContainsKey = !_stepData.ContainsKey(pairStep.StepName);
+                    bool pairsLinesEqualLinesChilds = pairStep.PairLines==linhas.transform.childCount;
+                    bool degreeIsNotEmpty = _degrees.Count > 0;
+                    if(stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
+                    {
+                        int index = States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep;
+                        _stepData.Add(pairStep.StepName, _degrees[index-1]);
+                        States.UpdateStepForActualState();
+                        List<GameObject> lines = new();
+                        foreach(Transform child in linhas.transform)
+                            lines.Add(child.gameObject);
+                        States.SetData(pairStep.StepName, _degrees[index-1], lines);
+                        pairStep.OnStepComplete?.Invoke();
+                    } 
+                    if(pairStep.PairLines is -1 && SacroStep)
+                    {
+                        Debug.Log("Eae");
+                        int index = SacroOption.value;
+                        States.UpdateStepForActualState();
+                        States.SetData(index);
+                        
+                    }
+                }
+            }
         }
     }
 

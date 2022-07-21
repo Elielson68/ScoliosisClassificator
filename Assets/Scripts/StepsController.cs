@@ -5,26 +5,24 @@ using UnityEngine;
 
 public class StepsController : MonoBehaviour
 {
-    public List<string> Steps;
+    public List<string> Steps = new();
     private int _indexActualStep = 0;
 
+    public int IndexActualStep => _indexActualStep;
+
     public TextMeshProUGUI actualStep;
-    public ProgressController progress;
-    
-    private void Start() 
-    {
-        actualStep.text = Steps[_indexActualStep];    
-    }
     
     public void UpdateStep()
     {
-        if (_indexActualStep < Steps.Count - 1)
+        if (_indexActualStep < Steps.Count)
         {
-            actualStep.text = Steps[++_indexActualStep];
+            actualStep.text = Steps[_indexActualStep];
+            _indexActualStep++;
         }
-        else
-        {
-            progress.SetState(progress.ProximoEstado);
-        }
+    }
+
+    public bool IsAllStepCompleted()
+    {
+        return _indexActualStep == Steps.Count;
     }
 }
