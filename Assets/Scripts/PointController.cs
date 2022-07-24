@@ -11,7 +11,11 @@ public class PointController : MonoBehaviour
     void Update()
     {
         if(IsSacralPoint is false)
-            gameObject.SetActive(DisableMove is false);
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = DisableMove is false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = DisableMove is false;
+        }
+            
     }
 
     private void OnEnable() {
