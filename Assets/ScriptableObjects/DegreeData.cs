@@ -23,4 +23,10 @@ public class DegreeData : ScriptableObject {
         C=2
     }
     public SacroTypes sacro = SacroTypes.None;
+
+    public void Reset()
+    {
+        sacro = SacroTypes.None;
+        Degrees.Clear();
+    }
 }

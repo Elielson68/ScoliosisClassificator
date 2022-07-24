@@ -37,10 +37,12 @@ public class CalculadorDeReta : MonoBehaviour
     public List<PairLineStates> PairsLinesOfStatesForSteps;
     private BoxCollider2D colider;
     private bool firstPointCreated = false;
-    public bool BlockCreationLine {get; set;}
+    public bool BlockCreationLine {get => BlockCreationLineGlobal; set => BlockCreationLineGlobal = value;}
+    public static bool BlockCreationLineGlobal;
     private void Start() {
         colider = GetComponent<BoxCollider2D>();
         colider.size = new Vector2(Screen.width, Screen.height);
+        Debug.Log($"width: {Screen.width} height: {Screen.height}");
         ProgressController.OnInitChangeState += state => {
             foreach(Transform child in linhas.transform)
             {
@@ -59,20 +61,22 @@ public class CalculadorDeReta : MonoBehaviour
     void Update()
     {        
         WriteTextAngles();
+
+        if(BlockCreationLine)
+            if(auxLine is not null && IsLineCompleted is false)
+                auxLine = null;
     }
 
     private void OnMouseDown() {
         if(BlockCreationLine) return;
-
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0;
-        if(auxLine is null)
+        if(firstPointCreated)
         {
-            CreateLine(pos);
-            IsLineCompleted = false;
-        }  
+            CreatePoint();
+        }
+ 
     }
     private void OnMouseDrag() {
+        if(BlockCreationLine) return;
         if(firstPointCreated && auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -82,6 +86,12 @@ public class CalculadorDeReta : MonoBehaviour
     }
 
     private void OnMouseUp() {
+        if(BlockCreationLine) return;
+        if(firstPointCreated is false)
+        {
+            CreatePoint(); 
+        }
+         
         if(firstPointCreated)
         {
             CreateDegrees();
@@ -92,8 +102,19 @@ public class CalculadorDeReta : MonoBehaviour
         }
         if(auxLine is not null)
             firstPointCreated = true;
+        
+        
     }
-
+    void CreatePoint()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        if(auxLine is null)
+        {
+            CreateLine(pos);
+            IsLineCompleted = false;
+        } 
+    }
     void WriteTextAngles()
     {
         if(_stepData.Count > 0)
@@ -156,7 +177,6 @@ public class CalculadorDeReta : MonoBehaviour
                     } 
                     if(pairStep.PairLines is -1 && SacroStep)
                     {
-                        Debug.Log("Eae");
                         int index = SacroOption.value;
                         States.UpdateStepForActualState();
                         States.SetData(index);
