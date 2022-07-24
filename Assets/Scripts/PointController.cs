@@ -6,7 +6,13 @@ public class PointController : MonoBehaviour
 {
     public static bool IsMouseOnPoint;
     public static bool DisableMove {get; set;}
+    private RectTransform rectTransform;
     public bool IsSacralPoint;
+
+    private void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();    
+    }
 
     void Update()
     {
@@ -35,8 +41,14 @@ public class PointController : MonoBehaviour
         {
             IsMouseOnPoint = true;
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = 0;
-            transform.position = IsSacralPoint ? Vector3.right * pos.x:pos;
+            pos.z = rectTransform.position.z;
+
+            if(IsSacralPoint)
+            { 
+                pos.y = 0;
+            }
+
+            rectTransform.SetPositionAndRotation(pos, Quaternion.identity);          
         }
     }
 }

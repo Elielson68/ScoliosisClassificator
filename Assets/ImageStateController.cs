@@ -8,6 +8,8 @@ public class ImageStateController : MonoBehaviour
     public RawImage StateImage;
     public ProgressController progressController;
 
+    public static event System.Action<RawImage> OnStateImageChange;
+
     private void Start()
     {
         ProgressController.OnFinishChangeState += UpdateStateImage;
@@ -30,6 +32,7 @@ public class ImageStateController : MonoBehaviour
     public void UpdateStateImage(){
        
         StateImage = GetActualStateImage();
+        OnStateImageChange?.Invoke(StateImage);
     }
 
     public void SetProgressController (ProgressController p)

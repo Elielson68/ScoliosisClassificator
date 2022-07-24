@@ -147,7 +147,8 @@ public class CalculadorDeReta : MonoBehaviour
     }
     void CreateLine(Vector3 pos)
     {
-        auxLine = Instantiate(Line, Vector3.zero, Quaternion.identity, linhas.transform).GetComponent<LineController>();
+        auxLine = Instantiate(Line, Vector3.back, Quaternion.identity, linhas.transform).GetComponent<LineController>();
+        auxLine.transform.localPosition = Vector3.back;
         auxLine.Point1.transform.position = pos;
         auxLine.Point2.transform.position = pos;
     }
