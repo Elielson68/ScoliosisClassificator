@@ -46,9 +46,12 @@ public class PointController : MonoBehaviour
             if(IsSacralPoint)
             { 
                 pos.y = 0;
+                rectTransform.SetPositionAndRotation(pos, Quaternion.identity); 
             }
+            else
+                transform.position = pos;
 
-            rectTransform.SetPositionAndRotation(pos, Quaternion.identity);          
+                     
         }
     }
 }

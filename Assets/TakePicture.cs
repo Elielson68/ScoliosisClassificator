@@ -34,7 +34,6 @@ public class TakePicture : MonoBehaviour
         StateImage.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
         StateImage.gameObject.SetActive(true);
-        StateImage.SetNativeSize();
         statePicture.UpdateStepForActualState();
     }
     

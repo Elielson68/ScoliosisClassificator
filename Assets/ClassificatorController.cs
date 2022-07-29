@@ -32,12 +32,12 @@ public class ClassificatorController : MonoBehaviour
         public int ToracoLombar;
     }
     public List<TipoCurva> tipoCurvas = new(){
-        new(){Tipo = 1, ToracicaProximal=0, ToraricaPrincipal=1, ToracoLombar=0},
-        new(){Tipo = 2, ToracicaProximal=1, ToraricaPrincipal=1, ToracoLombar=0},
-        new(){Tipo = 3, ToracicaProximal=0, ToraricaPrincipal=1, ToracoLombar=1},
-        new(){Tipo = 4, ToracicaProximal=1, ToraricaPrincipal=1, ToracoLombar=1},
-        new(){Tipo = 5, ToracicaProximal=0, ToraricaPrincipal=0, ToracoLombar=1},
-        new(){Tipo = 6, ToracicaProximal=0, ToraricaPrincipal=1, ToracoLombar=1}
+        new(){Tipo = 1, ToracicaProximal=0, ToraricaPrincipal=2, ToracoLombar=0},
+        new(){Tipo = 2, ToracicaProximal=1, ToraricaPrincipal=2, ToracoLombar=0},
+        new(){Tipo = 3, ToracicaProximal=0, ToraricaPrincipal=2, ToracoLombar=1},
+        new(){Tipo = 4, ToracicaProximal=1, ToraricaPrincipal=2, ToracoLombar=1},
+        new(){Tipo = 5, ToracicaProximal=0, ToraricaPrincipal=0, ToracoLombar=2},
+        new(){Tipo = 6, ToracicaProximal=0, ToraricaPrincipal=1, ToracoLombar=2}
     };
 
     private void Start()
@@ -49,29 +49,31 @@ public class ClassificatorController : MonoBehaviour
     {
         int[] classification = {0,0,0};
         TipoCurva tipoCurva = new();
-        int lateralProximal = degreeDatas[(int) Estados.Lateral].Degrees[(int) Toracica.Proximal].degree > 20f ? 1:0;
-        int lateralLombar = degreeDatas[(int) Estados.Lateral].Degrees[(int) Toracica.Lombar].degree > 20f ? 1:0;
-        
-        for(int i=1; i < (int) Estados.InclinacaoDireita; i++)
+        for(int i=0; i < (int) Estados.InclinacaoDireita + 1; i++)
         {
-            for(int ii=0; ii < (int) Toracica.Lombar; ii++)
+            for(int ii=0; ii < (int) Toracica.Lombar + 1; ii++)
             {
                 if(degreeDatas[i].Degrees[ii].degree >= 25f)
                     classification[ii] = 1;
             }
-            tipoCurva = tipoCurvas.Find(curva => 
+        }
+
+        if(degreeDatas[(int) Estados.Frontal].Degrees[(int) Toracica.Principal].degree > degreeDatas[(int) Estados.Frontal].Degrees[(int) Toracica.Lombar].degree)
+            classification[1] += 1;
+        else
+            classification[2] += 1;
+
+        tipoCurva = tipoCurvas.Find(curva => 
                 (
-                    curva.ToracicaProximal == (lateralProximal is 1 ? lateralProximal : classification[0]) &&
+                    curva.ToracicaProximal == classification[0] &&
                     curva.ToraricaPrincipal == classification[1] &&
-                    curva.ToracoLombar == (lateralLombar is 1 ? lateralLombar : classification[2])
+                    curva.ToracoLombar == classification[2]
                 )
             );
-            classification[0] = classification[1] = classification[2] = 0;
-        }
-        float degreeLombar = degreeDatas[(int) Estados.Lateral].Degrees[(int) Toracica.Principal].degree;
-        string modificadorSagitalToracico =  degreeLombar < 10f ? "-" : (degreeLombar >= 10f && degreeLombar <= 40f) ? "N" : "+";
+        float modificadorToracicoSagital = degreeDatas[(int) Estados.Lateral].Degrees[0].degree;
+        string modificadorSagitalToracico =  modificadorToracicoSagital < 10f ? "-" : (modificadorToracicoSagital >= 10f && modificadorToracicoSagital <= 40f) ? "N" : "+";
         string sacro = degreeDatas[(int) Estados.Frontal].sacro.ToString();
-        classificationText.text = $"A classificação é do tipo:\n\n{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
+        classificationText.text = $"A classificação é do tipo:\n\n{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico} | classificaiton: {classification[0]} {classification[1]} {classification[2]}";
         foreach(DegreeData data in degreeDatas)
             data.Reset();
     }

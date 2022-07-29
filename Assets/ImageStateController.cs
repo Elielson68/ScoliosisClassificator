@@ -32,6 +32,7 @@ public class ImageStateController : MonoBehaviour
     public void UpdateStateImage(){
        
         StateImage = GetActualStateImage();
+        StateImage.SetNativeSize();
         OnStateImageChange?.Invoke(StateImage);
     }
 
