@@ -140,7 +140,24 @@ public class CalculadorDeReta : MonoBehaviour
         {
             if(i+1 < ls.Count)
             {
-                float angulo = Vector3.Angle(ls[i].GetPosition(0) - ls[i].GetPosition(1), ls[i+1].GetPosition(0) - ls[i+1].GetPosition(1));
+                var firstLinePointOne = ls[i].GetPosition(0);
+
+                var firstLinePointTwo = ls[i].GetPosition(1);
+
+                var secondLinePointOne = ls[i+1].GetPosition(0);
+
+                var secondLinePointTwo = ls[i+1].GetPosition(1);
+
+                var v1 =  (firstLinePointOne - firstLinePointTwo);
+                var v2 =  (secondLinePointOne - secondLinePointTwo);
+
+                var directionPointOne = Vector3.ProjectOnPlane(v1, Vector3.zero).x;
+                var directionPointTwo = Vector3.ProjectOnPlane(v2, Vector3.zero).x;
+
+                if((directionPointOne < 0 && directionPointTwo > 0) || (directionPointOne > 0 && directionPointTwo < 0))
+                    v2 = secondLinePointTwo - secondLinePointOne;
+    
+                float angulo = Vector3.Angle(v1, v2);
                 _degrees.Add(angulo);
             }
         }
