@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Frontal
   m_EditorClassIdentifier: 
   Degrees: []
-  sacro: -1
+  sacro: 1

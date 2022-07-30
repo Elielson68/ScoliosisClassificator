@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,14 +50,26 @@ public class ClassificatorController : MonoBehaviour
     {
         int[] classification = {0,0,0};
         TipoCurva tipoCurva = new();
-        for(int i=0; i < (int) Estados.InclinacaoDireita + 1; i++)
+
+        for(int i=0; i < degreeDatas[0].Degrees.Count; i++)
         {
-            for(int ii=0; ii < (int) Toracica.Lombar + 1; ii++)
-            {
-                if(degreeDatas[i].Degrees[ii].degree >= 25f)
-                    classification[ii] = 1;
-            }
+            if(degreeDatas[0].Degrees[i].degree >= 25f)
+                classification[i] = 1;
         }
+
+        float grauPrincipalEsquerda = degreeDatas[(int) Estados.InclinacaoEsquerda].Degrees[0].degree;
+
+        float grauProximalDireita = degreeDatas[(int) Estados.InclinacaoDireita].Degrees[0].degree;
+        float grauLombarDireita = degreeDatas[(int) Estados.InclinacaoDireita].Degrees[1].degree;
+
+        if(grauPrincipalEsquerda >= 25f)
+            classification[(int) Toracica.Principal] = 1;
+        
+        if(grauProximalDireita >= 25f)
+            classification[(int) Toracica.Proximal] = 1;
+        
+        if(grauLombarDireita >= 25f)
+            classification[(int) Toracica.Lombar] = 1;
 
         if(degreeDatas[(int) Estados.Frontal].Degrees[(int) Toracica.Principal].degree > degreeDatas[(int) Estados.Frontal].Degrees[(int) Toracica.Lombar].degree)
             classification[1] += 1;
@@ -73,7 +86,8 @@ public class ClassificatorController : MonoBehaviour
         float modificadorToracicoSagital = degreeDatas[(int) Estados.Lateral].Degrees[0].degree;
         string modificadorSagitalToracico =  modificadorToracicoSagital < 10f ? "-" : (modificadorToracicoSagital >= 10f && modificadorToracicoSagital <= 40f) ? "N" : "+";
         string sacro = degreeDatas[(int) Estados.Frontal].sacro.ToString();
-        classificationText.text = $"A classificação é do tipo:\n\n{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico} | classificaiton: {classification[0]} {classification[1]} {classification[2]}";
+        classificationText.text = $"A classificação é do tipo:\n\n{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
+        Debug.Log($"classifição: {classification[0]} {classification[1]} {classification[2]}");
         foreach(DegreeData data in degreeDatas)
             data.Reset();
     }

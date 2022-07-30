@@ -1128,18 +1128,8 @@ MonoBehaviour:
           m_Calls: []
   - StateName: InclinacaoEsquerda
     pairs:
-    - StepName: ToracicaProximalEsquerda
-      PairLines: 2
-      OnStepComplete:
-        m_PersistentCalls:
-          m_Calls: []
     - StepName: ToracicaPrincipalEsquerda
-      PairLines: 3
-      OnStepComplete:
-        m_PersistentCalls:
-          m_Calls: []
-    - StepName: LombarEsquerda
-      PairLines: 4
+      PairLines: 2
       OnStepComplete:
         m_PersistentCalls:
           m_Calls: []
@@ -1147,11 +1137,6 @@ MonoBehaviour:
     pairs:
     - StepName: ToracicaProximalDireita
       PairLines: 2
-      OnStepComplete:
-        m_PersistentCalls:
-          m_Calls: []
-    - StepName: ToracicaPrincipalDireita
-      PairLines: 3
       OnStepComplete:
         m_PersistentCalls:
           m_Calls: []
@@ -3815,12 +3800,6 @@ MonoBehaviour:
   - {fileID: 1402220471}
   - {fileID: 64375396}
   PassosPorEstado:
-  - StateName: InclinacaoEsquerda
-    Steps:
-    - "Desenhe as linhas referente a Tor\xE1cica Proximal"
-    - "Desenhe as linhas referente a Tor\xE1cica Principal"
-    - Desenhe as linhas referente a Toraco-Lombar
-    data: {fileID: 11400000, guid: eadbb4b75fa774f4daef44451e6d22fe, type: 2}
   - StateName: Frontal
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal"
@@ -3828,10 +3807,13 @@ MonoBehaviour:
     - Desenhe as linhas referente a Toraco-Lombar
     - Posicione a linha vertical no centro e indique o valor do Modificador Lombar
     data: {fileID: 11400000, guid: db729a4a37dee83478ed735242f3e966, type: 2}
+  - StateName: InclinacaoEsquerda
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Principal"
+    data: {fileID: 11400000, guid: eadbb4b75fa774f4daef44451e6d22fe, type: 2}
   - StateName: InclinacaoDireita
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal"
-    - "Desenhe as linhas referente a Tor\xE1cica Principal"
     - Desenhe as linhas referente a Toraco-Lombar
     data: {fileID: 11400000, guid: 1f46cf305d2a5dc4aa2cfc6f4225295a, type: 2}
   - StateName: Lateral
@@ -5234,7 +5216,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: d45e8b0eafc45404e999211e35dbdb8f, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
