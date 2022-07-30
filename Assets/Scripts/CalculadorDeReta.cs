@@ -6,13 +6,14 @@ using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static TMPro.TMP_Dropdown;
 
 public class CalculadorDeReta : MonoBehaviour
 {
     public bool SacroStep {get; set;}
     public TMP_Dropdown SacroOption;
     public GameObject linhas;
-    public TextMeshProUGUI anguloText;
+    public TMP_Dropdown angulosDropDown;
     private LineController auxLine;
     public GameObject Line;
     public static bool IsLineCompleted;
@@ -60,8 +61,8 @@ public class CalculadorDeReta : MonoBehaviour
 
     void Update()
     {        
-        WriteTextAngles();
-
+        
+        angulosDropDown.captionText.text = "Ângulos";
         if(BlockCreationLine)
             if(auxLine is not null && IsLineCompleted is false)
                 auxLine = null;
@@ -117,15 +118,16 @@ public class CalculadorDeReta : MonoBehaviour
     }
     void WriteTextAngles()
     {
-        if(_stepData.Count > 0)
+        
+        angulosDropDown.ClearOptions();
+        var dataState = States.PassosPorEstado.Find(state => state.StateName == States.EstadoAtual.ToString());
+        List<OptionData> options = new();
+        foreach(var value in dataState.data.Degrees)
         {
-            string angulos = "Ângulos: \n";
-            foreach(var value in _stepData)
-            {
-                angulos += $"{value.Key}: {(int)value.Value}°\n";
-            }
-            anguloText.text = angulos;
+            options.Add(new OptionData($"{value.name}: {(int) value.degree}°\n"));
         }
+        angulosDropDown.AddOptions(options);
+        angulosDropDown.captionText.text = "Ângulos";
     }
 
     void CreateDegrees()
@@ -162,6 +164,7 @@ public class CalculadorDeReta : MonoBehaviour
             }
         }
     }
+
     void CreateLine(Vector3 pos)
     {
         auxLine = Instantiate(Line, Vector3.back, Quaternion.identity, linhas.transform).GetComponent<LineController>();
@@ -203,6 +206,7 @@ public class CalculadorDeReta : MonoBehaviour
                 }
             }
         }
+        WriteTextAngles();
     }
 
 }
