@@ -14,21 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Degrees:
   - name: ToracicaProximal
-    degree: 25.075928
+    degree: 45.40428
     lines:
-    - {fileID: 0}
-    - {fileID: 0}
+    - Point1: {x: -0.94017076, y: -0.35612524, z: 0}
+      Point2: {x: -0.7122506, y: 1.0683763, z: 0}
   - name: ToracicaPrincipal
-    degree: 33.066467
+    degree: 35.753864
     lines:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - Point1: {x: -0.08546977, y: -1.267806, z: 0}
+      Point2: {x: 0.28490055, y: -0.15669495, z: 0}
   - name: Lombar
-    degree: 82.00074
+    degree: 12.804244
     lines:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  sacro: 1
+    - Point1: {x: -1.1680912, y: -1.6666664, z: 0}
+      Point2: {x: -0.34188005, y: -1.5242162, z: 0}
+  sacro: -1

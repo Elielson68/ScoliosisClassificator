@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineController : MonoBehaviour
+public class LineController : LineBase
 {
     private LineRenderer line;
-    [HideInInspector] public Transform Point1, Point2;
     
     private void OnEnable() {
         line = GetComponent<LineRenderer>();

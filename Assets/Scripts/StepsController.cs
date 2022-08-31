@@ -25,4 +25,9 @@ public class StepsController : MonoBehaviour
     {
         return _indexActualStep == Steps.Count;
     }
+
+    public void ResetStep()
+    {
+        _indexActualStep = 0;
+    }
 }

@@ -6,11 +6,18 @@ using UnityEngine;
 public class DegreeData : ScriptableObject {
 
     [System.Serializable]
+    public struct Line
+    {
+        public Vector3 Point1;
+        public Vector3 Point2;
+    }
+
+    [System.Serializable]
     public struct DegreeCalculateData
     {
         public string name;
         public float degree;
-        public List<GameObject> lines;
+        public List<Line> lines;
     }
     [Space]
     public List<DegreeCalculateData> Degrees = new();
@@ -23,4 +30,10 @@ public class DegreeData : ScriptableObject {
         C=2
     }
     public SacroTypes sacro = SacroTypes.None;
+
+    public void Reset()
+    {
+        sacro = SacroTypes.None;
+        Degrees.Clear();
+    }
 }
