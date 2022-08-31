@@ -8,10 +8,12 @@ public class PointController : MonoBehaviour
     public static bool DisableMove {get; set;}
     private RectTransform rectTransform;
     public bool IsSacralPoint;
+    private CalculadorDeReta retaController;
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();    
+        rectTransform = GetComponent<RectTransform>(); 
+        retaController = FindObjectOfType<CalculadorDeReta>();   
     }
 
     void Update()
@@ -35,6 +37,8 @@ public class PointController : MonoBehaviour
     private void OnMouseUp() {
         if(CalculadorDeReta.IsLineCompleted || IsSacralPoint)
             IsMouseOnPoint = false;
+        if(IsSacralPoint is false)
+            retaController.UpdateDegrees();
     }
     private void OnMouseDrag() {
         if(CalculadorDeReta.IsLineCompleted || IsSacralPoint)

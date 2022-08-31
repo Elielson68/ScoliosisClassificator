@@ -56,9 +56,14 @@ public class CalculadorDeReta : MonoBehaviour
         };
         UpdateStep();
         States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
-        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
     }
-
+    private void OnEnable()
+    {
+        _stepData.Clear();
+        _stepData = new();
+        SacroStep = false;
+        //UpdateStep();
+    }
     void Update()
     {        
         
@@ -187,13 +192,16 @@ public class CalculadorDeReta : MonoBehaviour
                     bool degreeIsNotEmpty = _degrees.Count > 0;
                     if(stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
                     {
-                        int index = States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep;
-                        _stepData.Add(pairStep.StepName, _degrees[index-1]);
+                        _stepData.Add(pairStep.StepName, _degrees[_degrees.Count-1]);
                         States.UpdateStepForActualState();
-                        List<GameObject> lines = new();
-                        foreach(Transform child in linhas.transform)
-                            lines.Add(child.gameObject);
-                        States.SetData(pairStep.StepName, _degrees[index-1], lines);
+                        Debug.Log($"Atualizou o estado: {States.EstadoAtual.ToString()} está no passo: {States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep}");
+                        List<DegreeData.Line> lines = new();
+                        DegreeData.Line newLine = new(){
+                            Point1 = linhas.transform.GetChild(linhas.transform.childCount-1).GetComponent<LineRenderer>().GetPosition(0),
+                            Point2 = linhas.transform.GetChild(linhas.transform.childCount-2).GetComponent<LineRenderer>().GetPosition(1)
+                        };
+                        lines.Add(newLine);
+                        States.SetData(pairStep.StepName, _degrees[_degrees.Count-1], lines);
                         pairStep.OnStepComplete?.Invoke();
                     } 
                     if(pairStep.PairLines is -1 && SacroStep)
@@ -202,6 +210,28 @@ public class CalculadorDeReta : MonoBehaviour
                         States.UpdateStepForActualState();
                         States.SetData(index);
                         
+                    }
+                }
+            }
+        }
+        WriteTextAngles();
+    }
+
+    public void UpdateDegrees()
+    {
+        foreach(var pair in PairsLinesOfStatesForSteps)
+        {
+            if(States.EstadoAtual.ToString() == pair.StateName)
+            {
+                foreach(var pairStep in pair.pairs)
+                {
+                    CreateDegrees();
+                    var dataState = States.PassosPorEstado.Find(s => s.StateName == States.EstadoAtual.ToString()).data;
+                    for(int i=0;i < dataState.Degrees.Count; i++)
+                    {
+                        var degree = dataState.Degrees[i];
+                        degree.degree = _degrees[i];
+                        dataState.Degrees[i] = degree;
                     }
                 }
             }

@@ -15,6 +15,11 @@ public class ImageStateController : MonoBehaviour
         ProgressController.OnFinishChangeState += UpdateStateImage;
     }
 
+    private void OnEnable()
+    {
+        UpdateStateImage();
+    }
+
     public RawImage GetActualStateImage(){
         RawImage imgState = null;
         foreach (Transform obj in transform){
@@ -29,7 +34,8 @@ public class ImageStateController : MonoBehaviour
         }
         return imgState;
     }
-    public void UpdateStateImage(){
+    public void UpdateStateImage()
+    {
        
         StateImage = GetActualStateImage();
         StateImage.SetNativeSize();
