@@ -4552,10 +4552,6 @@ MonoBehaviour:
   - {fileID: 1402220471}
   - {fileID: 64375396}
   PassosPorEstado:
-  - StateName: InclinacaoEsquerda
-    Steps:
-    - "Desenhe as linhas referente a Tor\xE1cica Principal"
-    data: {fileID: 11400000, guid: eadbb4b75fa774f4daef44451e6d22fe, type: 2}
   - StateName: Frontal
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal"
@@ -4564,6 +4560,10 @@ MonoBehaviour:
     - Posicione a linha vertical sacral central e indique o valor do Modificador
       Lombar
     data: {fileID: 11400000, guid: db729a4a37dee83478ed735242f3e966, type: 2}
+  - StateName: InclinacaoEsquerda
+    Steps:
+    - "Desenhe as linhas referente a Tor\xE1cica Principal"
+    data: {fileID: 11400000, guid: eadbb4b75fa774f4daef44451e6d22fe, type: 2}
   - StateName: InclinacaoDireita
     Steps:
     - "Desenhe as linhas referente a Tor\xE1cica Proximal"
@@ -5045,10 +5045,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52
+  m_fontSize: 72
   m_fontSizeBase: 52
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -5081,7 +5081,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -487.67044, y: -127.55505, z: -439.24548, w: -22.510265}
+  m_margin: {x: -487.67044, y: -57.183502, z: -439.24548, w: -80.56678}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9791,11 +9791,13 @@ MonoBehaviour:
     data: {fileID: 0}
   - StateName: InclinacaoEsquerda
     Steps:
-    - "Insira ou Fotografe o raio-x com inclina\xE7\xE3o para a esquerda"
+    - "Insira ou Fotografe o raio-x com a Inclina\xE7\xE3o em que diminui o \xE2ngulo
+      da tor\xE1cica principal"
     data: {fileID: 0}
   - StateName: InclinacaoDireita
     Steps:
-    - "Insira ou Fotografe o raio-x com inclina\xE7\xE3o para a direita"
+    - "Insira ou Fotografe o raio-x  em que diminua o \xE2ngulo da tor\xE1cica proximal
+      e da toraco-lombar lombar"
     data: {fileID: 0}
   - StateName: Lateral
     Steps:
