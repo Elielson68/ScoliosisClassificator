@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ToggleExtension : Toggle
 {
-    
+
     public override void OnPointerDown(PointerEventData eventData)
     {
         ImageManipulation.DisableImageManipulation = true;

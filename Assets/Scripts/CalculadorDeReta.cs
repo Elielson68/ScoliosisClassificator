@@ -10,7 +10,7 @@ using static TMPro.TMP_Dropdown;
 
 public class CalculadorDeReta : MonoBehaviour
 {
-    public bool SacroStep {get; set;}
+    public static bool SacroStep { get; set; }
     public TMP_Dropdown SacroOption;
     public GameObject linhas;
     public TMP_Dropdown angulosDropDown;
@@ -38,25 +38,36 @@ public class CalculadorDeReta : MonoBehaviour
     public List<PairLineStates> PairsLinesOfStatesForSteps;
     private BoxCollider2D colider;
     private bool firstPointCreated = false;
-    public bool BlockCreationLine {get => BlockCreationLineGlobal; set => BlockCreationLineGlobal = value;}
-    public static bool BlockCreationLineGlobal;
-    private void Start() {
+    public static bool BlockCreationLineGlobal { get; set; } = false;
+
+    public bool isFinishedAllStepOrStates { get; set; }
+    private void Start()
+    {
         colider = GetComponent<BoxCollider2D>();
         colider.size = new Vector2(Screen.width, Screen.height);
         Debug.Log($"width: {Screen.width} height: {Screen.height}");
-        ProgressController.OnInitChangeState += state => {
-            foreach(Transform child in linhas.transform)
+        ProgressController.OnInitChangeState += state =>
+        {
+            foreach (Transform child in linhas.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
             _degrees.Clear();
             firstPointCreated = false;
             auxLine = null;
-            BlockCreationLine = false;
+            BlockCreationLineGlobal = false;
+            Debug.LogWarning("Passou aqui");
         };
         UpdateStep();
-        States.OnCompleteAllSteps.AddListener(() => BlockCreationLine = true);
+        States.OnCompleteAllSteps.AddListener(() => isFinishedAllStepOrStates = true);
+        States.OnCompleteAllStates.AddListener(() => isFinishedAllStepOrStates = true);
     }
+
+    public void DisableBlockCreation()
+    {
+        BlockCreationLineGlobal = false;
+    }
+
     private void OnEnable()
     {
         _stepData.Clear();
@@ -65,25 +76,26 @@ public class CalculadorDeReta : MonoBehaviour
         //UpdateStep();
     }
     void Update()
-    {        
-        
+    {
         angulosDropDown.captionText.text = "Ângulos";
-        if(BlockCreationLine)
-            if(auxLine is not null && IsLineCompleted is false)
+        if (BlockCreationLineGlobal)
+            if (auxLine is not null && IsLineCompleted is false)
                 auxLine = null;
     }
 
-    private void OnMouseDown() {
-        if(BlockCreationLine) return;
-        if(firstPointCreated)
+    private void OnMouseDown()
+    {
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+        if (firstPointCreated)
         {
             CreatePoint();
         }
- 
+
     }
-    private void OnMouseDrag() {
-        if(BlockCreationLine) return;
-        if(firstPointCreated && auxLine is not null)
+    private void OnMouseDrag()
+    {
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+        if (firstPointCreated && auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
@@ -91,14 +103,15 @@ public class CalculadorDeReta : MonoBehaviour
         }
     }
 
-    private void OnMouseUp() {
-        if(BlockCreationLine) return;
-        if(firstPointCreated is false)
+    private void OnMouseUp()
+    {
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+        if (firstPointCreated is false)
         {
-            CreatePoint(); 
+            CreatePoint();
         }
-         
-        if(firstPointCreated)
+
+        if (firstPointCreated)
         {
             CreateDegrees();
             auxLine = null;
@@ -106,30 +119,28 @@ public class CalculadorDeReta : MonoBehaviour
             IsLineCompleted = true;
             firstPointCreated = false;
         }
-        if(auxLine is not null)
+        if (auxLine is not null)
             firstPointCreated = true;
-        
-        
     }
     void CreatePoint()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
-        if(auxLine is null)
+        if (auxLine is null)
         {
             CreateLine(pos);
             IsLineCompleted = false;
-        } 
+        }
     }
     void WriteTextAngles()
     {
-        
+
         angulosDropDown.ClearOptions();
         var dataState = States.PassosPorEstado.Find(state => state.StateName == States.EstadoAtual.ToString());
         List<OptionData> options = new();
-        foreach(var value in dataState.data.Degrees)
+        foreach (var value in dataState.data.Degrees)
         {
-            options.Add(new OptionData($"{value.name}: {(int) value.degree}°\n"));
+            options.Add(new OptionData($"{value.name}: {(int)value.degree}°\n"));
         }
         angulosDropDown.AddOptions(options);
         angulosDropDown.captionText.text = "Ângulos";
@@ -139,31 +150,31 @@ public class CalculadorDeReta : MonoBehaviour
     {
         List<LineRenderer> ls = new List<LineRenderer>();
         _degrees.Clear();
-        foreach(Transform child in linhas.transform)
+        foreach (Transform child in linhas.transform)
         {
             ls.Add(child.GetComponent<LineRenderer>());
         }
-        for(var i=0; i < ls.Count; i++)
+        for (var i = 0; i < ls.Count; i++)
         {
-            if(i+1 < ls.Count)
+            if (i + 1 < ls.Count)
             {
                 var firstLinePointOne = ls[i].GetPosition(0);
 
                 var firstLinePointTwo = ls[i].GetPosition(1);
 
-                var secondLinePointOne = ls[i+1].GetPosition(0);
+                var secondLinePointOne = ls[i + 1].GetPosition(0);
 
-                var secondLinePointTwo = ls[i+1].GetPosition(1);
+                var secondLinePointTwo = ls[i + 1].GetPosition(1);
 
-                var v1 =  (firstLinePointOne - firstLinePointTwo);
-                var v2 =  (secondLinePointOne - secondLinePointTwo);
+                var v1 = (firstLinePointOne - firstLinePointTwo);
+                var v2 = (secondLinePointOne - secondLinePointTwo);
 
                 var directionPointOne = Vector3.ProjectOnPlane(v1, Vector3.zero).x;
                 var directionPointTwo = Vector3.ProjectOnPlane(v2, Vector3.zero).x;
 
-                if((directionPointOne < 0 && directionPointTwo > 0) || (directionPointOne > 0 && directionPointTwo < 0))
+                if ((directionPointOne < 0 && directionPointTwo > 0) || (directionPointOne > 0 && directionPointTwo < 0))
                     v2 = secondLinePointTwo - secondLinePointOne;
-    
+
                 float angulo = Vector3.Angle(v1, v2);
                 _degrees.Add(angulo);
             }
@@ -180,36 +191,37 @@ public class CalculadorDeReta : MonoBehaviour
 
     public void UpdateStep()
     {
-        
-        foreach(var pair in PairsLinesOfStatesForSteps)
+
+        foreach (var pair in PairsLinesOfStatesForSteps)
         {
-            if(States.EstadoAtual.ToString() == pair.StateName)
+            if (States.EstadoAtual.ToString() == pair.StateName)
             {
-                foreach(var pairStep in pair.pairs)
+                foreach (var pairStep in pair.pairs)
                 {
                     bool stepDataNotContainsKey = !_stepData.ContainsKey(pairStep.StepName);
-                    bool pairsLinesEqualLinesChilds = pairStep.PairLines==linhas.transform.childCount;
+                    bool pairsLinesEqualLinesChilds = pairStep.PairLines == linhas.transform.childCount;
                     bool degreeIsNotEmpty = _degrees.Count > 0;
-                    if(stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
+                    if (stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
                     {
-                        _stepData.Add(pairStep.StepName, _degrees[_degrees.Count-1]);
+                        _stepData.Add(pairStep.StepName, _degrees[_degrees.Count - 1]);
                         States.UpdateStepForActualState();
                         Debug.Log($"Atualizou o estado: {States.EstadoAtual.ToString()} está no passo: {States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep}");
                         List<DegreeData.Line> lines = new();
-                        DegreeData.Line newLine = new(){
-                            Point1 = linhas.transform.GetChild(linhas.transform.childCount-1).GetComponent<LineRenderer>().GetPosition(0),
-                            Point2 = linhas.transform.GetChild(linhas.transform.childCount-2).GetComponent<LineRenderer>().GetPosition(1)
+                        DegreeData.Line newLine = new()
+                        {
+                            Point1 = linhas.transform.GetChild(linhas.transform.childCount - 1).GetComponent<LineRenderer>().GetPosition(0),
+                            Point2 = linhas.transform.GetChild(linhas.transform.childCount - 2).GetComponent<LineRenderer>().GetPosition(1)
                         };
                         lines.Add(newLine);
-                        States.SetData(pairStep.StepName, _degrees[_degrees.Count-1], lines);
+                        States.SetData(pairStep.StepName, _degrees[_degrees.Count - 1], lines);
                         pairStep.OnStepComplete?.Invoke();
-                    } 
-                    if(pairStep.PairLines is -1 && SacroStep)
+                    }
+                    if (pairStep.PairLines is -1 && SacroStep)
                     {
                         int index = SacroOption.value;
                         States.UpdateStepForActualState();
                         States.SetData(index);
-                        
+
                     }
                 }
             }
@@ -219,15 +231,15 @@ public class CalculadorDeReta : MonoBehaviour
 
     public void UpdateDegrees()
     {
-        foreach(var pair in PairsLinesOfStatesForSteps)
+        foreach (var pair in PairsLinesOfStatesForSteps)
         {
-            if(States.EstadoAtual.ToString() == pair.StateName)
+            if (States.EstadoAtual.ToString() == pair.StateName)
             {
-                foreach(var pairStep in pair.pairs)
+                foreach (var pairStep in pair.pairs)
                 {
                     CreateDegrees();
                     var dataState = States.PassosPorEstado.Find(s => s.StateName == States.EstadoAtual.ToString()).data;
-                    for(int i=0;i < dataState.Degrees.Count; i++)
+                    for (int i = 0; i < dataState.Degrees.Count; i++)
                     {
                         var degree = dataState.Degrees[i];
                         degree.degree = _degrees[i];
