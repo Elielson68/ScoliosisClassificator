@@ -57,7 +57,6 @@ public class CalculadorDeReta : MonoBehaviour
             firstPointCreated = false;
             auxLine = null;
             BlockCreationLineGlobal = false;
-            Debug.LogWarning("Passou aqui");
         };
         UpdateStep();
         States.OnCompleteAllSteps.AddListener(() => isFinishedAllStepOrStates = true);

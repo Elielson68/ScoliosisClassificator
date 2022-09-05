@@ -16,17 +16,10 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
     public UnityEvent OnClick;
     public TMP_Text texto;
 
-    private void Start(){
+    private void Start()
+    {
         imgState.UpdateStateImage();
     }
-
-    // private void OnMouseDown() {
-    //     OnUploadImage?.Invoke();
-    //     //StartCoroutine(UploadImage());
-    //     //var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false);
-    //     //Debug.Log(paths[0]);
-    //     OnClick?.Invoke();
-    // }
 
     IEnumerator UploadImage()
     {
@@ -35,7 +28,8 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
         StateImage.texture = null;
         StateImage.material.mainTexture = null;
         yield return new WaitForEndOfFrame();
-        var a = NativeGallery.GetImageFromGallery(path => {
+        var a = NativeGallery.GetImageFromGallery(path =>
+        {
             var text = NativeGallery.LoadImageAtPath(path);
             StateImage.texture = text;
             StateImage.material.mainTexture = text;
@@ -62,9 +56,6 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
         StateImage.gameObject.SetActive(true);
         statePicture.UpdateStepForActualState();
     }
-
-
-
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
