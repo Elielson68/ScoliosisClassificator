@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using static TMPro.TMP_Dropdown;
-
+using UnityEngine.EventSystems;
 public class CalculadorDeReta : MonoBehaviour
 {
     public static bool SacroStep { get; set; }
@@ -41,6 +41,7 @@ public class CalculadorDeReta : MonoBehaviour
     public static bool BlockCreationLineGlobal { get; set; } = false;
 
     public bool isFinishedAllStepOrStates { get; set; }
+    private bool isClickOnUIElement;
     private void Start()
     {
         colider = GetComponent<BoxCollider2D>();
@@ -81,11 +82,16 @@ public class CalculadorDeReta : MonoBehaviour
         if (BlockCreationLineGlobal)
             if (auxLine is not null && IsLineCompleted is false)
                 auxLine = null;
+        if (EventSystem.current.currentSelectedGameObject is not null)
+            isClickOnUIElement = true;
+        else
+            isClickOnUIElement = false;
     }
 
     private void OnMouseDown()
     {
-        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates || isClickOnUIElement) return;
         if (firstPointCreated)
         {
             CreatePoint();
@@ -94,7 +100,7 @@ public class CalculadorDeReta : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates || isClickOnUIElement) return;
         if (firstPointCreated && auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -105,7 +111,7 @@ public class CalculadorDeReta : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates) return;
+        if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates || isClickOnUIElement) return;
         if (firstPointCreated is false)
         {
             CreatePoint();
