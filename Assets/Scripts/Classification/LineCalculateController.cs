@@ -8,12 +8,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using static TMPro.TMP_Dropdown;
 using UnityEngine.EventSystems;
-public class CalculadorDeReta : MonoBehaviour
+public class LineCalculateController : MonoBehaviour
 {
     public static bool SacroStep { get; set; }
     public TMP_Dropdown SacroOption;
-    public GameObject linhas;
-    public TMP_Dropdown angulosDropDown;
+    public GameObject lineParent;
+    public TMP_Dropdown degreesDropDown;
     private LineController auxLine;
     public GameObject Line;
     public static bool IsLineCompleted;
@@ -49,7 +49,7 @@ public class CalculadorDeReta : MonoBehaviour
         Debug.Log($"width: {Screen.width} height: {Screen.height}");
         ProgressController.OnInitChangeState += state =>
         {
-            foreach (Transform child in linhas.transform)
+            foreach (Transform child in lineParent.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -73,11 +73,10 @@ public class CalculadorDeReta : MonoBehaviour
         _stepData.Clear();
         _stepData = new();
         SacroStep = false;
-        //UpdateStep();
     }
     void Update()
     {
-        angulosDropDown.captionText.text = "Ângulos";
+        degreesDropDown.captionText.text = "Ângulos";
         if (BlockCreationLineGlobal)
             if (auxLine is not null && IsLineCompleted is false)
                 auxLine = null;
@@ -140,22 +139,22 @@ public class CalculadorDeReta : MonoBehaviour
     void WriteTextAngles()
     {
 
-        angulosDropDown.ClearOptions();
+        degreesDropDown.ClearOptions();
         var dataState = States.PassosPorEstado.Find(state => state.StateName == States.EstadoAtual.ToString());
         List<OptionData> options = new();
         foreach (var value in dataState.data.Degrees)
         {
             options.Add(new OptionData($"{value.name}: {(int)value.degree}°\n"));
         }
-        angulosDropDown.AddOptions(options);
-        angulosDropDown.captionText.text = "Ângulos";
+        degreesDropDown.AddOptions(options);
+        degreesDropDown.captionText.text = "Ângulos";
     }
 
     void CreateDegrees()
     {
         List<LineRenderer> ls = new List<LineRenderer>();
         _degrees.Clear();
-        foreach (Transform child in linhas.transform)
+        foreach (Transform child in lineParent.transform)
         {
             ls.Add(child.GetComponent<LineRenderer>());
         }
@@ -188,7 +187,7 @@ public class CalculadorDeReta : MonoBehaviour
 
     void CreateLine(Vector3 pos)
     {
-        auxLine = Instantiate(Line, Vector3.back, Quaternion.identity, linhas.transform).GetComponent<LineController>();
+        auxLine = Instantiate(Line, Vector3.back, Quaternion.identity, lineParent.transform).GetComponent<LineController>();
         auxLine.transform.localPosition = Vector3.back;
         auxLine.Point1.transform.position = pos;
         auxLine.Point2.transform.position = pos;
@@ -204,7 +203,7 @@ public class CalculadorDeReta : MonoBehaviour
                 foreach (var pairStep in pair.pairs)
                 {
                     bool stepDataNotContainsKey = !_stepData.ContainsKey(pairStep.StepName);
-                    bool pairsLinesEqualLinesChilds = pairStep.PairLines == linhas.transform.childCount;
+                    bool pairsLinesEqualLinesChilds = pairStep.PairLines == lineParent.transform.childCount;
                     bool degreeIsNotEmpty = _degrees.Count > 0;
                     if (stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
                     {
@@ -214,8 +213,8 @@ public class CalculadorDeReta : MonoBehaviour
                         List<DegreeData.Line> lines = new();
                         DegreeData.Line newLine = new()
                         {
-                            Point1 = linhas.transform.GetChild(linhas.transform.childCount - 1).GetComponent<LineRenderer>().GetPosition(0),
-                            Point2 = linhas.transform.GetChild(linhas.transform.childCount - 2).GetComponent<LineRenderer>().GetPosition(1)
+                            Point1 = lineParent.transform.GetChild(lineParent.transform.childCount - 1).GetComponent<LineRenderer>().GetPosition(0),
+                            Point2 = lineParent.transform.GetChild(lineParent.transform.childCount - 2).GetComponent<LineRenderer>().GetPosition(1)
                         };
                         lines.Add(newLine);
                         States.SetData(pairStep.StepName, _degrees[_degrees.Count - 1], lines);

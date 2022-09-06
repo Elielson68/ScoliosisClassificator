@@ -1249,8 +1249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SacroOption: {fileID: 408193987}
-  linhas: {fileID: 349616765}
-  angulosDropDown: {fileID: 1608986775}
+  lineParent: {fileID: 349616765}
+  degreesDropDown: {fileID: 1608986775}
   Line: {fileID: 8977905937935012839, guid: a16c3d3dbde64ff4da5984d9df157650, type: 3}
   States: {fileID: 726864740}
   PairsLinesOfStatesForSteps:

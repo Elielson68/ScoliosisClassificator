@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TakePicture : MonoBehaviour, IPointerDownHandler
+public class UploadImage : MonoBehaviour, IPointerDownHandler
 {
     public ImageStateController imgState;
     public ProgressController statePicture;
@@ -21,7 +21,7 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
         imgState.UpdateStateImage();
     }
 
-    IEnumerator UploadImage()
+    IEnumerator Upload()
     {
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
@@ -41,7 +41,7 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
         statePicture.UpdateStepForActualState();
     }
 
-    IEnumerator UploadImage(string url)
+    IEnumerator Upload(string url)
     {
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
@@ -68,13 +68,13 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
 
     public void OnFileUpload(string url) {
         texto.text = $"\n{url}\n";
-        StartCoroutine(UploadImage(url));
+        StartCoroutine(Upload(url));
     }
 #else
     public void OnPointerDown(PointerEventData eventData)
     {
         OnUploadImage?.Invoke();
-        StartCoroutine(UploadImage());
+        StartCoroutine(Upload());
     }
 #endif
 }
