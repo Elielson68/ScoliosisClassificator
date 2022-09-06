@@ -46,6 +46,10 @@ public class PhoneCamera : MonoBehaviour
             camDevice.gameObject.SetActive(true);
             backCam.Play();
             camDevice.rectTransform.localEulerAngles = new Vector3(0, 0, -backCam.videoRotationAngle);
+            var size = camDevice.rectTransform.sizeDelta;
+            size.x = Screen.height;
+            size.y = Screen.width;
+            camDevice.rectTransform.sizeDelta = size;
         }
     }
 
@@ -64,6 +68,10 @@ public class PhoneCamera : MonoBehaviour
         StateImage.gameObject.SetActive(true);
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 270);
         camDevice.gameObject.SetActive(false);
+        var size = StateImage.rectTransform.sizeDelta;
+        size.x = Screen.height;
+        size.y = Screen.width;
+        StateImage.rectTransform.sizeDelta = size;
         statePicture.UpdateStepForActualState();
     }
     public void Reset()

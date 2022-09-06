@@ -26,7 +26,6 @@ public class UploadImage : MonoBehaviour, IPointerDownHandler
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
         yield return new WaitForEndOfFrame();
-        bool imageChoose = false;
         var a = NativeGallery.GetImageFromGallery(path =>
         {
             if (path is not null)
@@ -35,14 +34,11 @@ public class UploadImage : MonoBehaviour, IPointerDownHandler
                 StateImage.texture = text;
                 StateImage.material.mainTexture = text;
                 imageChoose = true;
+                StateImage.gameObject.SetActive(false);
+                StateImage.gameObject.SetActive(true);
+                statePicture.UpdateStepForActualState();
             }
         });
-        yield return new WaitUntil(() => a == NativeGallery.Permission.Granted);
-        StateImage.gameObject.SetActive(false);
-        yield return new WaitForEndOfFrame();
-        StateImage.gameObject.SetActive(true);
-        if (imageChoose)
-            statePicture.UpdateStepForActualState();
     }
 
     IEnumerator Upload(string url)
