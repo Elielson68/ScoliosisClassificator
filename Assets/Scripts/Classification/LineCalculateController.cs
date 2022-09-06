@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class LineCalculateController : MonoBehaviour
 {
     public static bool SacroStep { get; set; }
-    public TMP_Dropdown SacroOption;
+    public TMP_Dropdown SacroDropDown;
     public GameObject lineParent;
     public TMP_Dropdown degreesDropDown;
     private LineController auxLine;
@@ -73,6 +73,7 @@ public class LineCalculateController : MonoBehaviour
         _stepData.Clear();
         _stepData = new();
         SacroStep = false;
+        SacroDropDown.onValueChanged.AddListener(val => OnUpdateSacroDropDown(val));
     }
 
     private void OnDisable()
@@ -86,6 +87,7 @@ public class LineCalculateController : MonoBehaviour
         if (BlockCreationLineGlobal)
             if (auxLine is not null && IsLineCompleted is false)
                 auxLine = null;
+
         if (EventSystem.current.currentSelectedGameObject is not null)
             isClickOnUIElement = true;
         else
@@ -99,7 +101,6 @@ public class LineCalculateController : MonoBehaviour
         {
             CreatePoint();
         }
-
     }
     private void OnMouseDrag()
     {
@@ -225,16 +226,27 @@ public class LineCalculateController : MonoBehaviour
                         States.SetData(pairStep.StepName, _degrees[_degrees.Count - 1], lines);
                         pairStep.OnStepComplete?.Invoke();
                     }
-                    if (pairStep.IndexDegree is -1 && SacroStep)
-                    {
-                        int index = SacroOption.value;
-                        States.UpdateStepForActualState();
-                        States.SetData(index);
-                    }
                 }
             }
         }
         WriteTextAngles();
+    }
+
+
+    private void OnUpdateSacroDropDown(int val)
+    {
+        if (val == 0) return;
+
+        if (BlockCreationLineGlobal is false)
+            PointController.DisableMove = false;
+        States.UpdateStepForActualState();
+        States.SetData(val);
+    }
+
+    public void OnSelectDefaultValueDropDown(GameObject obj)
+    {
+        if (SacroDropDown.value == 0)
+            obj.SetActive(false);
     }
 
     public void UpdateDegrees()
