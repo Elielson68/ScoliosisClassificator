@@ -33,7 +33,6 @@ public class UploadImage : MonoBehaviour, IPointerDownHandler
                 var text = NativeGallery.LoadImageAtPath(path);
                 StateImage.texture = text;
                 StateImage.material.mainTexture = text;
-                imageChoose = true;
                 StateImage.gameObject.SetActive(false);
                 StateImage.gameObject.SetActive(true);
                 statePicture.UpdateStepForActualState();
