@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TakePicture : MonoBehaviour, IPointerDownHandler
+public class UploadImage : MonoBehaviour, IPointerDownHandler
 {
     public ImageStateController imgState;
     public ProgressController statePicture;
@@ -16,38 +16,31 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
     public UnityEvent OnClick;
     public TMP_Text texto;
 
-    private void Start(){
+    private void Start()
+    {
         imgState.UpdateStateImage();
     }
 
-    // private void OnMouseDown() {
-    //     OnUploadImage?.Invoke();
-    //     //StartCoroutine(UploadImage());
-    //     //var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false);
-    //     //Debug.Log(paths[0]);
-    //     OnClick?.Invoke();
-    // }
-
-    IEnumerator UploadImage()
+    IEnumerator Upload()
     {
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
-        StateImage.texture = null;
-        StateImage.material.mainTexture = null;
         yield return new WaitForEndOfFrame();
-        var a = NativeGallery.GetImageFromGallery(path => {
-            var text = NativeGallery.LoadImageAtPath(path);
-            StateImage.texture = text;
-            StateImage.material.mainTexture = text;
+        var a = NativeGallery.GetImageFromGallery(path =>
+        {
+            if (path is not null)
+            {
+                var text = NativeGallery.LoadImageAtPath(path);
+                StateImage.texture = text;
+                StateImage.material.mainTexture = text;
+                StateImage.gameObject.SetActive(false);
+                StateImage.gameObject.SetActive(true);
+                statePicture.UpdateStepForActualState();
+            }
         });
-        yield return new WaitUntil(() => a == NativeGallery.Permission.Granted);
-        StateImage.gameObject.SetActive(false);
-        yield return new WaitForEndOfFrame();
-        StateImage.gameObject.SetActive(true);
-        statePicture.UpdateStepForActualState();
     }
 
-    IEnumerator UploadImage(string url)
+    IEnumerator Upload(string url)
     {
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
@@ -63,9 +56,6 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
         statePicture.UpdateStepForActualState();
     }
 
-
-
-
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
@@ -77,13 +67,13 @@ public class TakePicture : MonoBehaviour, IPointerDownHandler
 
     public void OnFileUpload(string url) {
         texto.text = $"\n{url}\n";
-        StartCoroutine(UploadImage(url));
+        StartCoroutine(Upload(url));
     }
 #else
     public void OnPointerDown(PointerEventData eventData)
     {
         OnUploadImage?.Invoke();
-        StartCoroutine(UploadImage());
+        StartCoroutine(Upload());
     }
 #endif
 }

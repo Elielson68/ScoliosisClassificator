@@ -15,21 +15,24 @@ public class ProgressController : MonoBehaviour
         InclinacaoDireita = 2,
         Lateral = 3
     }
-    [SerializeField] private Estados _estadoAtual; 
+    [SerializeField] private Estados _estadoAtual;
 
-    public Estados EstadoAtual {get => _estadoAtual; private set => _estadoAtual = value;}
+    public Estados EstadoAtual { get => _estadoAtual; private set => _estadoAtual = value; }
 
     public int ActualStep;
 
     public List<Animator> EstadosAnim;
-    public Estados ProximoEstado { 
-        get {
+    public Estados ProximoEstado
+    {
+        get
+        {
             return EstadoAtual + 1;
-        } 
+        }
     }
     [System.Serializable]
 
-    public struct StepsForState{
+    public struct StepsForState
+    {
         public string StateName;
         public List<string> Steps;
         public DegreeData data;
@@ -43,15 +46,16 @@ public class ProgressController : MonoBehaviour
     public UnityEvent OnCompleteAllStates;
     public UnityEvent OnCompleteAllSteps;
 
-    private void OnEnable() 
+
+    private void OnEnable()
     {
         StepsForStateDic.Clear();
-        foreach(var stepState in PassosPorEstado)
+        foreach (var stepState in PassosPorEstado)
         {
             StepsController steps = new();
             steps.Steps = stepState.Steps;
             steps.actualStep = StepText;
-            
+
             StepsForStateDic.Add(stepState.StateName, steps);
             stepState.data?.Reset();
         }
@@ -62,9 +66,9 @@ public class ProgressController : MonoBehaviour
     private void SetState(Estados novoEstado)
     {
         OnInitChangeState?.Invoke(EstadoAtual.ToString());
-        foreach(var est in EstadosAnim)
+        foreach (var est in EstadosAnim)
         {
-            if(est.name == EstadoAtual.ToString())
+            if (est.name == EstadoAtual.ToString())
                 est.SetBool("EstadoCompleto", true);
         }
         EstadoAtual = novoEstado;
@@ -79,10 +83,15 @@ public class ProgressController : MonoBehaviour
 
     public void UpdateStepForActualState()
     {
-        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && !IsLastState())
+        if (StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && !IsLastState())
+        {
             OnCompleteAllSteps?.Invoke();
-        else if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && IsLastState())
+        }
+        else if (StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted() && IsLastState())
+        {
             OnCompleteAllStates?.Invoke();
+        }
+
 
         StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
         ActualStep = StepsForStateDic[EstadoAtual.ToString()].IndexActualStep;
@@ -90,18 +99,19 @@ public class ProgressController : MonoBehaviour
 
     public void UpdateState()
     {
-        if(StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted())
+        if (StepsForStateDic[EstadoAtual.ToString()].IsAllStepCompleted())
         {
             SetState(ProximoEstado);
             StepsForStateDic[EstadoAtual.ToString()].UpdateStep();
-        } 
+        }
         ActualStep = StepsForStateDic[EstadoAtual.ToString()].IndexActualStep;
     }
 
     public void SetData(string name, float degree, List<DegreeData.Line> lines)
     {
         DegreeData data = PassosPorEstado.Find(d => d.StateName == EstadoAtual.ToString()).data;
-        data.Degrees.Add(new DegreeData.DegreeCalculateData(){
+        data.Degrees.Add(new DegreeData.DegreeCalculateData()
+        {
             name = name,
             degree = degree,
             lines = lines
@@ -117,7 +127,7 @@ public class ProgressController : MonoBehaviour
     public void ResetProgress()
     {
         EstadoAtual = Estados.Frontal;
-        foreach(var step in StepsForStateDic)
+        foreach (var step in StepsForStateDic)
         {
             step.Value.ResetStep();
         }
