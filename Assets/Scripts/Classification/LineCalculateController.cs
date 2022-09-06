@@ -74,6 +74,12 @@ public class LineCalculateController : MonoBehaviour
         _stepData = new();
         SacroStep = false;
     }
+
+    private void OnDisable()
+    {
+        isFinishedAllStepOrStates = false;
+        BlockCreationLineGlobal = false;
+    }
     void Update()
     {
         degreesDropDown.captionText.text = "Ângulos";
@@ -88,7 +94,6 @@ public class LineCalculateController : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         if (BlockCreationLineGlobal || SacroStep || isFinishedAllStepOrStates || isClickOnUIElement) return;
         if (firstPointCreated)
         {
