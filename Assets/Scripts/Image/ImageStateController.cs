@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ImageStateController : MonoBehaviour
 {
+    public Texture2D DefaultImage;
     public RawImage StateImage;
     public ProgressController progressController;
 
@@ -20,15 +21,18 @@ public class ImageStateController : MonoBehaviour
         UpdateStateImage();
     }
 
-    public RawImage GetActualStateImage(){
+    public RawImage GetActualStateImage()
+    {
         RawImage imgState = null;
-        foreach (Transform obj in transform){
+        foreach (Transform obj in transform)
+        {
             if (progressController.EstadoAtual.ToString() == obj.gameObject.name)
             {
                 imgState = obj.GetComponent<RawImage>();
                 obj.gameObject.SetActive(true);
             }
-            else if (obj.gameObject.tag == "StateImage"){
+            else if (obj.gameObject.tag == "StateImage")
+            {
                 obj.gameObject.SetActive(false);
             }
         }
@@ -36,15 +40,26 @@ public class ImageStateController : MonoBehaviour
     }
     public void UpdateStateImage()
     {
-       
+
         StateImage = GetActualStateImage();
         StateImage.SetNativeSize();
         OnStateImageChange?.Invoke(StateImage);
     }
 
-    public void SetProgressController (ProgressController p)
+    public void SetProgressController(ProgressController p)
     {
         progressController = p;
+    }
+
+    private void OnDisable()
+    {
+        foreach (Transform obj in transform)
+        {
+            if (obj.gameObject.tag == "StateImage")
+            {
+                obj.GetComponent<RawImage>().texture = DefaultImage;
+            }
+        }
     }
 
 }

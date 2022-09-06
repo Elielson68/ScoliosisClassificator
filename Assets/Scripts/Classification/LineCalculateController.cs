@@ -25,7 +25,7 @@ public class LineCalculateController : MonoBehaviour
     public struct PairLinesForStep
     {
         public string StepName;
-        public int PairLines;
+        public int IndexDegree;
         public UnityEvent OnStepComplete;
     }
     [System.Serializable]
@@ -203,13 +203,13 @@ public class LineCalculateController : MonoBehaviour
                 foreach (var pairStep in pair.pairs)
                 {
                     bool stepDataNotContainsKey = !_stepData.ContainsKey(pairStep.StepName);
-                    bool pairsLinesEqualLinesChilds = pairStep.PairLines == lineParent.transform.childCount;
-                    bool degreeIsNotEmpty = _degrees.Count > 0;
-                    if (stepDataNotContainsKey && pairsLinesEqualLinesChilds && degreeIsNotEmpty)
+                    bool degreeHaveIndex = pairStep.IndexDegree is -1 ? false : _degrees.Count > pairStep.IndexDegree;
+                    if (stepDataNotContainsKey && degreeHaveIndex)
                     {
-                        _stepData.Add(pairStep.StepName, _degrees[_degrees.Count - 1]);
+                        _stepData.Add(pairStep.StepName, _degrees[pairStep.IndexDegree]);
                         States.UpdateStepForActualState();
                         Debug.Log($"Atualizou o estado: {States.EstadoAtual.ToString()} está no passo: {States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep}");
+                        Debug.Log($"Foi utilizado o Index: {pairStep.IndexDegree}");
                         List<DegreeData.Line> lines = new();
                         DegreeData.Line newLine = new()
                         {
@@ -220,12 +220,11 @@ public class LineCalculateController : MonoBehaviour
                         States.SetData(pairStep.StepName, _degrees[_degrees.Count - 1], lines);
                         pairStep.OnStepComplete?.Invoke();
                     }
-                    if (pairStep.PairLines is -1 && SacroStep)
+                    if (pairStep.IndexDegree is -1 && SacroStep)
                     {
                         int index = SacroOption.value;
                         States.UpdateStepForActualState();
                         States.SetData(index);
-
                     }
                 }
             }
@@ -239,16 +238,19 @@ public class LineCalculateController : MonoBehaviour
         {
             if (States.EstadoAtual.ToString() == pair.StateName)
             {
+                int indexData = 0;
                 foreach (var pairStep in pair.pairs)
                 {
                     CreateDegrees();
                     var dataState = States.PassosPorEstado.Find(s => s.StateName == States.EstadoAtual.ToString()).data;
-                    for (int i = 0; i < dataState.Degrees.Count; i++)
+                    if (pairStep.IndexDegree is not -1)
                     {
-                        var degree = dataState.Degrees[i];
-                        degree.degree = _degrees[i];
-                        dataState.Degrees[i] = degree;
+                        Debug.LogWarning($"Nome passo: {dataState.name}");
+                        var degree = dataState.Degrees[indexData];
+                        degree.degree = _degrees[pairStep.IndexDegree];
+                        dataState.Degrees[indexData] = degree;
                     }
+                    indexData++;
                 }
             }
         }
