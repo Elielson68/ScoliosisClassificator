@@ -25,20 +25,24 @@ public class UploadImage : MonoBehaviour, IPointerDownHandler
     {
         RawImage StateImage = imgState.StateImage;
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
-        StateImage.texture = null;
-        StateImage.material.mainTexture = null;
         yield return new WaitForEndOfFrame();
+        bool imageChoose = false;
         var a = NativeGallery.GetImageFromGallery(path =>
         {
-            var text = NativeGallery.LoadImageAtPath(path);
-            StateImage.texture = text;
-            StateImage.material.mainTexture = text;
+            if (path is not null)
+            {
+                var text = NativeGallery.LoadImageAtPath(path);
+                StateImage.texture = text;
+                StateImage.material.mainTexture = text;
+                imageChoose = true;
+            }
         });
         yield return new WaitUntil(() => a == NativeGallery.Permission.Granted);
         StateImage.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
         StateImage.gameObject.SetActive(true);
-        statePicture.UpdateStepForActualState();
+        if (imageChoose)
+            statePicture.UpdateStepForActualState();
     }
 
     IEnumerator Upload(string url)

@@ -260,9 +260,8 @@ public class LineCalculateController : MonoBehaviour
                 {
                     CreateDegrees();
                     var dataState = States.PassosPorEstado.Find(s => s.StateName == States.EstadoAtual.ToString()).data;
-                    if (pairStep.IndexDegree is not -1)
+                    if (pairStep.IndexDegree is not -1 && _degrees.Count > pairStep.IndexDegree && dataState.Degrees.Count > indexData)
                     {
-                        Debug.LogWarning($"Nome passo: {dataState.name}");
                         var degree = dataState.Degrees[indexData];
                         degree.degree = _degrees[pairStep.IndexDegree];
                         dataState.Degrees[indexData] = degree;
