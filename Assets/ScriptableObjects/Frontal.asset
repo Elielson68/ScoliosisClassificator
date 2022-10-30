@@ -12,20 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d50836f99b11c4e8f0c4cb86b0a37c, type: 3}
   m_Name: Frontal
   m_EditorClassIdentifier: 
-  Degrees:
-  - name: ToracicaProximal
-    degree: 45.40428
-    lines:
-    - Point1: {x: -0.94017076, y: -0.35612524, z: 0}
-      Point2: {x: -0.7122506, y: 1.0683763, z: 0}
-  - name: ToracicaPrincipal
-    degree: 35.753864
-    lines:
-    - Point1: {x: -0.08546977, y: -1.267806, z: 0}
-      Point2: {x: 0.28490055, y: -0.15669495, z: 0}
-  - name: Lombar
-    degree: 12.804244
-    lines:
-    - Point1: {x: -1.1680912, y: -1.6666664, z: 0}
-      Point2: {x: -0.34188005, y: -1.5242162, z: 0}
+  Degrees: []
   sacro: -1
