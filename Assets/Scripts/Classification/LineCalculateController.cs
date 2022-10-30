@@ -42,6 +42,8 @@ public class LineCalculateController : MonoBehaviour
 
     public bool isFinishedAllStepOrStates { get; set; }
     private bool isClickOnUIElement;
+    public ImageStateController imgStateController;
+
     private void Start()
     {
         colider = GetComponent<BoxCollider2D>();
@@ -199,6 +201,19 @@ public class LineCalculateController : MonoBehaviour
         auxLine.Point2.transform.position = pos;
     }
 
+    public void ChangeLinesParent(bool isDrawLine)
+    {
+        (Transform removeChildFrom, Transform addChild) = isDrawLine ? (imgStateController.StateImage.transform, lineParent.transform) : (lineParent.transform, imgStateController.StateImage.transform);
+
+        if (addChild.childCount == 0 && removeChildFrom.childCount != 0)
+        {
+            foreach (Transform child in removeChildFrom)
+            {
+                child.SetParent(addChild);
+            }
+        }
+    }
+
     public void UpdateStep()
     {
 
@@ -231,7 +246,6 @@ public class LineCalculateController : MonoBehaviour
         }
         WriteTextAngles();
     }
-
 
     private void OnUpdateSacroDropDown(int val)
     {
