@@ -13,7 +13,7 @@ public class PhoneCamera : MonoBehaviour
     private void Start()
     {
         imgState.UpdateStateImage();
-        UploadImage.OnUploadImage += Reset;
+        UploadImage.OnCompletedUploadImage += Reset;
         SetCam();
     }
 
