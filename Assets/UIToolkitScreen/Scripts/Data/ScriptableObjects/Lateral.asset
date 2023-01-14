@@ -15,9 +15,5 @@ MonoBehaviour:
   Lines: []
   Image: {fileID: 0}
   Rules:
-  - Name: Proximal
-    Lines: 0000000001000000
   - Name: Principal
-    Lines: 0100000002000000
-  - Name: ToracoLombar
-    Lines: 0200000003000000
+    Lines: 0000000001000000

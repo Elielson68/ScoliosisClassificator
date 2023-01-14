@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StateController : MonoBehaviour
 {
     public List<string> StateFileList;
-    public States CurrentState = States.Front;
+    public static States CurrentState = States.Front;
     public int CurrentStep;
     public int CurrentStateFile;
     public List<StateInfo> Data = new List<StateInfo>();
-    public static event System.Action<States, string> OnChangeState;
+    public static event System.Action<States, string> OnUpdateState;
+    public static event System.Action OnChangeState;
+
+    public UnityEvent<string> OnChangeFile;
 
     private void Start()
     {
         photoInsertionController.OnFowardButtonClick += UpdateState;
+        DrawLinesController.OnCompleteRule += UpdateState;
         ResetStateController();
     }
 
@@ -33,14 +38,16 @@ public class StateController : MonoBehaviour
             if(IsAllStatesDone)
             {
                 UpdateStateFile();
+                OnChangeFile?.Invoke(StateFileList[CurrentStateFile]);
             }
             else
             {
                 CurrentState++;
+                OnChangeState?.Invoke();
             }
         }
 
-        OnChangeState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
+        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
         CurrentStep++;
     }
 
@@ -50,7 +57,7 @@ public class StateController : MonoBehaviour
         CurrentStep = 0;
         CurrentStateFile = 0;
         UpdateFile();
-        OnChangeState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
+        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
         CurrentStep++;
     }
     
