@@ -12,6 +12,7 @@ public class UploadImage : MonoBehaviour
 {
     public RawImage StateImage;
     public static System.Action OnCompletedUploadImage;
+    public static System.Action<Texture> OnChangeImage;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class UploadImage : MonoBehaviour
                 var text = NativeGallery.LoadImageAtPath(path);
                 StateImage.texture = text;
                 StateImage.material.mainTexture = text;
+                OnChangeImage?.Invoke(text);
                 StateImage.gameObject.SetActive(false);
                 StateImage.gameObject.SetActive(true);
                 OnCompletedUploadImage?.Invoke();

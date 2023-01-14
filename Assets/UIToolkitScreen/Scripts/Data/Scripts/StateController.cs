@@ -11,7 +11,7 @@ public class StateController : MonoBehaviour
     public int CurrentStep;
     public int CurrentStateFile;
     public List<StateInfo> Data = new List<StateInfo>();
-    public static event System.Action<string> OnChangeState;
+    public static event System.Action<States, string> OnChangeState;
 
     private void Start()
     {
@@ -40,7 +40,7 @@ public class StateController : MonoBehaviour
             }
         }
 
-        OnChangeState?.Invoke(Data[(int)CurrentState].content[CurrentStep]);
+        OnChangeState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
         CurrentStep++;
     }
 
@@ -50,7 +50,7 @@ public class StateController : MonoBehaviour
         CurrentStep = 0;
         CurrentStateFile = 0;
         UpdateFile();
-        OnChangeState?.Invoke(Data[(int)CurrentState].content[CurrentStep]);
+        OnChangeState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
         CurrentStep++;
     }
     
@@ -63,7 +63,7 @@ public class StateController : MonoBehaviour
 
     private void UpdateFile()
     {
-        string text = File.ReadAllText("./Assets/UIToolkitScreen/Scripts/Data/" + StateFileList[CurrentStateFile] + ".json");
+        string text = File.ReadAllText("./Assets/UIToolkitScreen/Scripts/Data/Json/" + StateFileList[CurrentStateFile] + ".json");
         Data = JsonConvert.DeserializeObject<List<StateInfo>>(text);
     }
 

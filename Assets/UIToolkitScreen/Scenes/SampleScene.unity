@@ -344,6 +344,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 546593416}
+  classifications:
+  - State: 0
+    classification: {fileID: 11400000, guid: 85c94ed00d335b94bab521a248fc64c0, type: 2}
+  - State: 1
+    classification: {fileID: 11400000, guid: ad073565f4665d44796e968cddb24c31, type: 2}
+  - State: 2
+    classification: {fileID: 11400000, guid: 0bbb3e638fabf7644900949bc6dfd626, type: 2}
+  - State: 3
+    classification: {fileID: 11400000, guid: ae8a64c3cc070a54cac6558484021ad7, type: 2}
 --- !u!114 &546593419
 MonoBehaviour:
   m_ObjectHideFlags: 0

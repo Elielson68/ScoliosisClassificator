@@ -11,6 +11,13 @@ public class photoInsertionController : MonoBehaviour
     public static event System.Action OnFowardButtonClick;
     public static event System.Action OnUploadButtonClick;
     private Label content;
+    [System.Serializable]
+    public struct ClassificationData
+    {
+        public States State;
+        public Classification classification;
+    }
+    public List<ClassificationData> classifications;
 
     void Start()
     {
@@ -23,6 +30,8 @@ public class photoInsertionController : MonoBehaviour
         StateController.OnChangeState += UpdateTextOnChangeState;
 
         UploadImage.OnCompletedUploadImage += () => fowardButton.RemoveFromClassList("element-hidden");
+        UploadImage.OnChangeImage += classifications[0].classification.SetImage;
+        
     }
 
     void FowardButton(ClickEvent evt)
@@ -37,9 +46,20 @@ public class photoInsertionController : MonoBehaviour
         OnUploadButtonClick?.Invoke();
     }
 
-    private void UpdateTextOnChangeState(string contentState)
+    private void UpdateTextOnChangeState(States state, string contentState)
     {
         content.text = contentState;
+        foreach(ClassificationData cd in classifications)
+        {
+            if(cd.State == state)
+            {
+                UploadImage.OnChangeImage += cd.classification.SetImage;
+            }
+            else
+            {
+                UploadImage.OnChangeImage -= cd.classification.SetImage;
+            }
+        }
     }
 
 

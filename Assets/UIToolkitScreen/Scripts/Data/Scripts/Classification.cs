@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,24 @@ public class Classification : ScriptableObject
         public Vector3 Point1;
         public Vector3 Point2;
     }
-    public List<Line> Lines;
-    public RawImage image;
 
+    [Serializable]
+    public struct Rule
+    {
+        public string Name;
+        public int[] Lines;
+    }
+
+    public List<Line> Lines;
+    public Texture Image;
+
+
+    public List<Rule> Rules;
+
+    public void SetImage(Texture image)
+    {
+        Image = image;
+    }
 
     public void ExportJson() { }
 
