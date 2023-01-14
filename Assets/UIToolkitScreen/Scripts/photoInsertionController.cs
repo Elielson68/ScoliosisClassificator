@@ -20,7 +20,7 @@ public class photoInsertionController : MonoBehaviour
 
         uploadButton.RegisterCallback<ClickEvent>(UploadButton);
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
-        InsertImageState.OnChangeState += UpdateTextOnChangeState;
+        StateController.OnChangeState += UpdateTextOnChangeState;
 
         UploadImage.OnCompletedUploadImage += () => fowardButton.RemoveFromClassList("element-hidden");
     }
@@ -37,9 +37,9 @@ public class photoInsertionController : MonoBehaviour
         OnUploadButtonClick?.Invoke();
     }
 
-    private void UpdateTextOnChangeState(string titleState, List<string> contentState)
+    private void UpdateTextOnChangeState(string contentState)
     {
-        content.text = contentState[0];
+        content.text = contentState;
     }
 
 

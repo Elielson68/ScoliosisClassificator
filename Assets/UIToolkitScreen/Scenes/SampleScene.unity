@@ -353,11 +353,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 546593415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8351652700b55b4182b20ecee0c2e0e, type: 3}
+  m_Script: {fileID: 11500000, guid: c50ce923a8064aa49936023836563609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InsertImageInfoFileName: InsetImageInfo
+  StateFileList:
+  - InsetImageInfo
+  - DrawImageInfo
   CurrentState: 0
+  CurrentStep: 0
+  CurrentStateFile: 0
 --- !u!114 &546593420
 MonoBehaviour:
   m_ObjectHideFlags: 0
