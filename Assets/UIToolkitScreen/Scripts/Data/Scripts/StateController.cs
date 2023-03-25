@@ -4,9 +4,11 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class StateController : MonoBehaviour
 {
+    public UIDocument document;
     public List<string> StateFileList;
     public static States CurrentState = States.Front;
     public int CurrentStep;
@@ -14,13 +16,18 @@ public class StateController : MonoBehaviour
     public List<StateInfo> Data = new List<StateInfo>();
     public static event System.Action<States, string> OnUpdateState;
     public static event System.Action OnChangeState;
-
     public UnityEvent<string> OnChangeFile;
+
+    private Button fowardButton;
+    public static event System.Action OnFowardButtonClick;
 
     private void Start()
     {
-        photoInsertionController.OnFowardButtonClick += UpdateState;
+        fowardButton = document.rootVisualElement.Q<Button>("foward-button");
+
+        OnFowardButtonClick += UpdateState;
         DrawLinesController.OnCompleteRule += UpdateState;
+        fowardButton.RegisterCallback<ClickEvent>(FowardButton);
         ResetStateController();
     }
 
@@ -74,7 +81,21 @@ public class StateController : MonoBehaviour
         Data = JsonConvert.DeserializeObject<List<StateInfo>>(text);
     }
 
-    
+    void FowardButton(ClickEvent evt)
+    {
+        OnFowardButtonClick?.Invoke();
+        HideFowardButton();
+    }
+
+    public void ShowFowardButton()
+    {
+        fowardButton.RemoveFromClassList("element-hidden");
+    }
+
+    public void HideFowardButton()
+    {
+        fowardButton.AddToClassList("element-hidden");
+    }
 
     private bool IsAllStatesDone => (int)CurrentState == Data.Count-1;
 

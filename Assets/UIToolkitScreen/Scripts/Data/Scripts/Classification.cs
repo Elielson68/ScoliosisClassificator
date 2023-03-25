@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Classification", menuName = "EscolioseClassificator/Classification", order = 0)]
 public class Classification : ScriptableObject
 {
-
+    public States State;
     [System.Serializable]
     public struct Line
     {
@@ -19,7 +19,7 @@ public class Classification : ScriptableObject
     public struct Rule
     {
         public string Name;
-        public int[] Lines;
+        public int TotalLines;
     }
 
     public List<Line> Lines;
@@ -27,7 +27,7 @@ public class Classification : ScriptableObject
 
 
     public List<Rule> Rules;
-
+    public int CurrentRule;
     public void SetImage(Texture image)
     {
         Image = image;

@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 public class photoInsertionController : MonoBehaviour
 {
     public UIDocument document;
+    public StateController StateControll;
     private Button uploadButton;
-    private Button fowardButton;
-    public static event System.Action OnFowardButtonClick;
+    
     public static event System.Action OnUploadButtonClick;
     private Label content;
     
@@ -22,16 +22,15 @@ public class photoInsertionController : MonoBehaviour
 
     void Start()
     {
-        fowardButton = document.rootVisualElement.Q<Button>("foward-button");
         content = document.rootVisualElement.Q<Label>("content");
         uploadButton = document.rootVisualElement.Q<Button>("upload-button");
 
         uploadButton.RegisterCallback<ClickEvent>(UploadButton);
-        fowardButton.RegisterCallback<ClickEvent>(FowardButton);
+        
         StateController.OnUpdateState += UpdateTextOnChangeState;
 
-        UploadImage.OnCompletedUploadImage += () => fowardButton.RemoveFromClassList("element-hidden");
-        DrawLinesController.OnAllRulesDone += () => fowardButton.RemoveFromClassList("element-hidden");
+        UploadImage.OnCompletedUploadImage +=  StateControll.ShowFowardButton;
+        DrawLinesController.OnAllRulesDone +=  StateControll.ShowFowardButton;
         
         UploadImage.OnChangeImage += classifications[0].classification.SetImage;
         
@@ -40,13 +39,6 @@ public class photoInsertionController : MonoBehaviour
     public void HiddenButtons()
     {
         uploadButton.AddToClassList("element-hidden");
-    }
-
-    void FowardButton(ClickEvent evt)
-    {
-        OnFowardButtonClick?.Invoke();
-        fowardButton.AddToClassList("element-hidden");
-
     }
 
     private void UploadButton(ClickEvent evt)
@@ -69,7 +61,4 @@ public class photoInsertionController : MonoBehaviour
             }
         }
     }
-
-
-
 }

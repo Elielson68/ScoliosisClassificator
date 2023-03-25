@@ -344,6 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 546593416}
+  StateControll: {fileID: 546593419}
   classifications:
   - State: 0
     classification: {fileID: 11400000, guid: 85c94ed00d335b94bab521a248fc64c0, type: 2}
@@ -365,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50ce923a8064aa49936023836563609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  document: {fileID: 546593416}
   StateFileList:
   - InsetImageInfo
   - DrawImageInfo
@@ -527,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a848166db566094d85bd4fae99af2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StateControll: {fileID: 546593419}
   lineParent: {fileID: 1923411372}
   Line: {fileID: 8977905937935012839, guid: a16c3d3dbde64ff4da5984d9df157650, type: 3}
   Classifications:
