@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d318547e2e13733419519eaf86a975e0, type: 3}
   m_Name: Front
   m_EditorClassIdentifier: 
+  State: 0
   Lines: []
   Image: {fileID: 0}
   Rules:
   - Name: Proximal
-    Lines: 0000000001000000
+    TotalLines: 2
   - Name: Principal
-    Lines: 0100000002000000
+    TotalLines: 3
   - Name: ToracoLombar
-    Lines: 0200000003000000
+    TotalLines: 4
+  CurrentRule: 0

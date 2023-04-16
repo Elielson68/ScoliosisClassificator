@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d318547e2e13733419519eaf86a975e0, type: 3}
   m_Name: RightInclination
   m_EditorClassIdentifier: 
+  State: 0
   Lines: []
   Image: {fileID: 0}
   Rules:
   - Name: Principal
-    Lines: 0000000001000000
+    TotalLines: 2
+  CurrentRule: 0
