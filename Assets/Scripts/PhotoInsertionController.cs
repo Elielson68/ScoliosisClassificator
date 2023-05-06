@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -31,6 +30,15 @@ public class PhotoInsertionController : MonoBehaviour
     {
         uploadButton.AddToClassList("element-hidden");
         document.rootVisualElement.Q<Button>("picture-button").AddToClassList("element-hidden");
+    }
+
+    public void ShowButtons()
+    {
+        uploadButton.RemoveFromClassList("element-hidden");
+        document.rootVisualElement.Q<Button>("picture-button").RemoveFromClassList("element-hidden");
+
+        uploadButton.style.display = DisplayStyle.Flex;
+        document.rootVisualElement.Q<Button>("picture-button").style.display = DisplayStyle.Flex;
     }
 
     private void UploadButton(ClickEvent evt)

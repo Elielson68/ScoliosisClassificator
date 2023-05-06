@@ -114,3 +114,39 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.report-title-label {
+    font-size: 60px;
+    -unity-font-style: bold;
+    color: rgba(255, 255, 255, 255);
+    -unity-text-align: middle-center;
+    border-left-color: rgba(125, 112, 112, 255);
+    border-right-color: rgba(125, 112, 112, 255);
+    border-top-color: rgba(125, 112, 112, 255);
+    border-bottom-color: rgba(125, 112, 112, 255);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgba(77, 62, 62, 255);
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.report-title-label:hover {
+    background-color: rgba(202, 202, 202, 255);
+}
+
+.report-title-label:active {
+    background-color: rgb(255, 0, 0);
+}
+
+.report-title-label:focus {
+    background-color: rgb(255, 0, 0);
+}

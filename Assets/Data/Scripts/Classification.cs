@@ -52,4 +52,11 @@ public class Classification : ScriptableObject
         Lines = obj.Lines;
         Image = obj.Image;
     }
+
+    [ContextMenu("Reset Values")]
+    public void Reset()
+    {
+        Lines = new List<Line>();
+        Image = new byte[0];
+    }
 }

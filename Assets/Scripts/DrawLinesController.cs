@@ -1,13 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using static TMPro.TMP_Dropdown;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class DrawLinesController : MonoBehaviour
@@ -21,21 +14,26 @@ public class DrawLinesController : MonoBehaviour
     public static System.Action OnAllRulesDone;
     public List<ClassificationData> Classifications;
     public int CurrentRule;
-
+    public RawImage Image;
+    
     private LineController _auxLine;
     private List<float> _degrees = new();
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
     private bool _isClickOnUIElement;
-
+    private RawImageController _rawImageController;
     private void Start()
     {
+        _rawImageController = new RawImageController();
         _collider = GetComponent<BoxCollider2D>();
         _collider.size = new Vector2(Screen.width, Screen.height);
-        Classifications.ForEach(c => c.classification.CurrentRule = 0);
+        _rawImageController.Image = Image;
+
+        Classifications.ForEach(c => { c.classification.CurrentRule = 0; });
         //StateController.OnChangeState += () => { CurrentRule = 0; BlockCreationLineGlobal = false; ClearLines(); };
         StateController.OnFowardButtonClick += ClearLines;
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick += UpdateImageOnChangeState;
         Debug.Log($"width: {Screen.width} height: {Screen.height}");
     }
 
@@ -44,6 +42,13 @@ public class DrawLinesController : MonoBehaviour
         if (BlockCreationLineGlobal)
             if (_auxLine is not null && IsLineCompleted is false)
                 _auxLine = null;
+    }
+
+    private void UpdateImageOnChangeState()
+    {
+        ClassificationData cls = Classifications[(int) StateController.CurrentState];
+        Texture2D text = _rawImageController.GetTexture2D(cls);
+        _rawImageController.UpdateTexturePanel(text);
     }
 
     private void ClearLines()

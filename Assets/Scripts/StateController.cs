@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -16,6 +15,7 @@ public class StateController : MonoBehaviour
     public List<StateInfo> Data = new List<StateInfo>();
     public static event System.Action<States, string> OnUpdateState;
     public static event System.Action OnChangeState;
+    public UnityEvent ExecuteOnStart;
     public List<EnterNewFileExecute> ExecuteOnChangeFile;
     private Button fowardButton;
     public static event System.Action OnFowardButtonClick;
@@ -31,6 +31,8 @@ public class StateController : MonoBehaviour
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
 
         ResetStateController();
+
+        ExecuteOnStart?.Invoke();
     }
 
     public void UpdateState()
