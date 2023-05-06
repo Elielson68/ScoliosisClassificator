@@ -1,25 +1,25 @@
 [
     {
         "title": "Frontal",
-        "content": [
+        "contents": [
             "Inserir radiografia frontal"
         ]
     },
     {
         "title": "Inclinação para a esquerda",
-        "content": [
+        "contents": [
             "Inserir radiografia inclinada à esquerda"
         ]
     },
     {
         "title": "Inclinação para a direita",
-        "content": [
+        "contents": [
             "Inserir radiografia inclinada à direita"
         ]
     },
     {
         "title": "Inclinação lateral",
-        "content": [
+        "contents": [
             "Inserir radiografia lateral"
         ]
     }

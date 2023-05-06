@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   Lines: []
-  Image: {fileID: 0}
+  Image: 
   Rules:
   - Name: Proximal
     TotalLines: 2

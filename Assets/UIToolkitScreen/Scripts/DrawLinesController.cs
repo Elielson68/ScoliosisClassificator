@@ -12,12 +12,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DrawLinesController : MonoBehaviour
 {
-    [System.Serializable]
-    public struct ClassificationData
-    {
-        public States State;
-        public Classification Classification;
-    }
     public StateController StateControll;
     public GameObject lineParent;
     public GameObject Line;
@@ -38,7 +32,7 @@ public class DrawLinesController : MonoBehaviour
     {
         _collider = GetComponent<BoxCollider2D>();
         _collider.size = new Vector2(Screen.width, Screen.height);
-        Classifications.ForEach(c => c.Classification.CurrentRule = 0);
+        Classifications.ForEach(c => c.classification.CurrentRule = 0);
         //StateController.OnChangeState += () => { CurrentRule = 0; BlockCreationLineGlobal = false; ClearLines(); };
         StateController.OnFowardButtonClick += ClearLines;
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
@@ -126,15 +120,24 @@ public class DrawLinesController : MonoBehaviour
         {
             ls.Add(child.GetComponent<LineRenderer>());
         }
+        Vector3 point1, point2 = point1 =  Vector3.zero;
         for (var i = 0; i < ls.Count; i++)
         {
-            if (i + 1 < ls.Count)
+            int ii = i + 1;
+            if(i == ls.Count - 1)
+            {
+                point1 = ls[i].GetPosition(0);
+                point2 = ls[i].GetPosition(1);
+            }
+            if (ii < ls.Count)
             {
                 var firstLinePointOne = ls[i].GetPosition(0);
                 var firstLinePointTwo = ls[i].GetPosition(1);
 
                 var secondLinePointOne = ls[i + 1].GetPosition(0);
                 var secondLinePointTwo = ls[i + 1].GetPosition(1);
+
+                
 
                 var v1 = (firstLinePointOne - firstLinePointTwo);
                 var v2 = (secondLinePointOne - secondLinePointTwo);
@@ -149,37 +152,35 @@ public class DrawLinesController : MonoBehaviour
                 _degrees.Add(angulo);
             }
         }
-        UpdateRule();
+        UpdateRule(point1, point2);
     }
     
 
-    private void UpdateRule()
+    private void UpdateRule(Vector3 point1, Vector3 point2)
     {
         Classifications.ForEach(cd =>
         {
             if(cd.State == StateController.CurrentState)
             {
-                if(cd.Classification.CurrentRule > cd.Classification.Rules.Count - 1 && cd.State == States.Lateral)
+                if(cd.classification.CurrentRule > cd.classification.Rules.Count - 1 && cd.State == States.Lateral)
                 {
                     OnAllRulesDone?.Invoke();
                     BlockCreationLineGlobal = true;
                     Debug.LogWarning($"Todas as regras foram feitas!");
                     return;
                 }
-                Classification.Rule rule = cd.Classification.Rules[cd.Classification.CurrentRule];
+                Classification.Rule rule = cd.classification.Rules[cd.classification.CurrentRule];
+                cd.classification.Lines.Add(new Line(point1, point2));
                 if(rule.TotalLines == lineParent.transform.childCount)
                 {
-                    cd.Classification.Lines.Add(new Classification.Line(){ Point1 = Vector3.left, Point2 = Vector3.back  });
-                    cd.Classification.CurrentRule++;
-                    if(cd.Classification.CurrentRule > cd.Classification.Rules.Count - 1)
+                    cd.classification.CurrentRule++;
+                    if(cd.classification.CurrentRule > cd.classification.Rules.Count - 1)
                     {
                         StateControll.ShowFowardButton();
                         BlockCreationLineGlobal = true;
-                        Debug.LogWarning($"Mostrou Foward");
                         return;
                     }
-                    OnCompleteRule?.Invoke();
-                    Debug.LogWarning($"Passou pra próxima regra! - cd.State: {cd.State} - CurrentRule: {cd.Classification.CurrentRule} - TotalLines: {rule.TotalLines}");
+                    StateControll.UpdateState();
                 }
             }
         });
@@ -193,19 +194,4 @@ public class DrawLinesController : MonoBehaviour
         _auxLine.Point1.transform.position = pos;
         _auxLine.Point2.transform.position = pos;
     }
-
-    public void ChangeLinesParent(bool isDrawLine)
-    {
-        //(Transform removeChildFrom, Transform addChild) = isDrawLine ? (imgStateController.StateImage.transform, lineParent.transform) : (lineParent.transform, imgStateController.StateImage.transform);
-
-        // if (addChild.childCount == 0 && removeChildFrom.childCount != 0)
-        // {
-        //     foreach (Transform child in removeChildFrom)
-        //     {
-        //         child.SetParent(addChild);
-        //     }
-        // }
-    }
-
-
 }

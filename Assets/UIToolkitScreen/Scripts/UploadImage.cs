@@ -7,13 +7,14 @@ using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Linq;
+using Newtonsoft.Json;
 
 public class UploadImage : MonoBehaviour
 {
     public RawImage StateImage;
     public static System.Action OnCompletedUploadImage;
-    public static System.Action<Texture> OnChangeImage;
-
+    public static System.Action<byte[]> OnChangeImage;
     void Start()
     {
         photoInsertionController.OnUploadButtonClick += Init;
@@ -27,10 +28,10 @@ public class UploadImage : MonoBehaviour
         {
             if (path is not null)
             {
-                var text = NativeGallery.LoadImageAtPath(path);
+                var text = NativeGallery.LoadImageAtPath(path, markTextureNonReadable: false);
                 StateImage.texture = text;
                 StateImage.material.mainTexture = text;
-                OnChangeImage?.Invoke(text);
+                OnChangeImage?.Invoke(text.EncodeToJPG());
                 StateImage.gameObject.SetActive(false);
                 StateImage.gameObject.SetActive(true);
                 OnCompletedUploadImage?.Invoke();

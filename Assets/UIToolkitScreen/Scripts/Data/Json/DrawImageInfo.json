@@ -1,7 +1,7 @@
 [
     {
         "title": "Frontal",
-        "content": [
+        "contents": [
             "Frontal - Desenhe as linhas referente a Torácica Proximal",
             "Frontal - Desenhe as linhas referente a Torácica Principal",
             "Frontal - Desenhe as linhas referente a Toraco-Lombar"
@@ -9,20 +9,22 @@
     },
     {
         "title": "Inclinação para a esquerda",
-        "content": [
-            "Inclinação-Esquerda - Desenhe as linhas referente a Torácica Principal"
-        ]
-    },
-    {
-        "title": "Inclinação para a direita",
-        "content": [
+        "contents": [
             "Inclinação-Direita - Desenhe as linhas referente a Torácica Proximal",
             "Inclinação-Direita - Desenhe as linhas referente a Toraco-Lombar"
         ]
+        
+    },
+    {
+        "title": "Inclinação para a direita",
+        "contents": [
+            "Inclinação-Esquerda - Desenhe as linhas referente a Torácica Principal"
+        ]
+        
     },
     {
         "title": "Inclinação lateral",
-        "content": [
+        "contents": [
             "Lateral - Desenhe as linhas referente a Torácica Principal"
         ]
     }

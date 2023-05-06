@@ -14,21 +14,46 @@ public class StateController : MonoBehaviour
     public int CurrentStep;
     public int CurrentStateFile;
     public List<StateInfo> Data = new List<StateInfo>();
+    public List<ReportInfo> DataReport = new List<ReportInfo>();
     public static event System.Action<States, string> OnUpdateState;
     public static event System.Action OnChangeState;
-    public UnityEvent<string> OnChangeFile;
-
+    public UnityEngine.UI.RawImage ReportImage;
+    [System.Serializable]
+    public struct EnterNewFileExecute
+    {
+        public string FileName;
+        public UnityEvent Execute;
+    }
+    
+    public List<EnterNewFileExecute> ExecuteOnChangeFile;
     private Button fowardButton;
     public static event System.Action OnFowardButtonClick;
 
+    public bool IsReportState {get; set;}
+    public List<ClassificationData> Classifications;
+
+    public VisualElement ReportButtonsContent;
+    public RadioButton FrontalReportButton;
+    public RadioButton LeftInclinationReportButton;
+    public RadioButton RightInclinationReportButton;
+    public RadioButton LateralReportButton;
+    public Dictionary<States, RadioButton> radioButtons = new Dictionary<States, RadioButton>();
+
+    public GameObject LineParent;
+    public GameObject LinePrefab;
     private void Start()
     {
         fowardButton = document.rootVisualElement.Q<Button>("foward-button");
 
         OnFowardButtonClick += UpdateState;
-        DrawLinesController.OnCompleteRule += UpdateState;
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
         ResetStateController();
+
+        ReportButtonsContent = document.rootVisualElement.Q("report-content");
+        radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
+        radioButtons.Add(States.LeftInclination, ReportButtonsContent.Q<RadioButton>("LeftInclination"));
+        radioButtons.Add(States.RightInclination, ReportButtonsContent.Q<RadioButton>("RightInclination"));
+        radioButtons.Add(States.Lateral, ReportButtonsContent.Q<RadioButton>("Lateral"));
     }
 
     public void UpdateState()
@@ -45,7 +70,12 @@ public class StateController : MonoBehaviour
             if(IsAllStatesDone)
             {
                 UpdateStateFile();
-                OnChangeFile?.Invoke(StateFileList[CurrentStateFile]);
+                ExecuteOnChangeFile.ForEach(actionEx => {
+                    if(actionEx.FileName == StateFileList[CurrentStateFile])
+                    {
+                        actionEx.Execute?.Invoke();
+                    }
+                });
             }
             else
             {
@@ -54,7 +84,13 @@ public class StateController : MonoBehaviour
             }
         }
 
-        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
+        if(IsReportState)
+        {
+            UpdateFile();
+            OnUpdateState?.Invoke(CurrentState, DataReport[(int)CurrentState].contents[CurrentStep]);
+            return;
+        }
+        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].contents[CurrentStep]);
         CurrentStep++;
     }
 
@@ -64,7 +100,7 @@ public class StateController : MonoBehaviour
         CurrentStep = 0;
         CurrentStateFile = 0;
         UpdateFile();
-        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].content[CurrentStep]);
+        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].contents[CurrentStep]);
         CurrentStep++;
     }
     
@@ -78,6 +114,12 @@ public class StateController : MonoBehaviour
     private void UpdateFile()
     {
         string text = File.ReadAllText("./Assets/UIToolkitScreen/Scripts/Data/Json/" + StateFileList[CurrentStateFile] + ".json");
+        if(IsReportState)
+        {
+            Data = null;
+            DataReport = JsonConvert.DeserializeObject<List<ReportInfo>>(text);
+            return;
+        }
         Data = JsonConvert.DeserializeObject<List<StateInfo>>(text);
     }
 
@@ -97,9 +139,60 @@ public class StateController : MonoBehaviour
         fowardButton.AddToClassList("element-hidden");
     }
 
+    public void ShowReportButtons()
+    {
+        ReportButtonsContent.style.display = DisplayStyle.Flex;
+        foreach(var classification in Classifications)
+        {
+            radioButtons[classification.State].style.backgroundImage = new StyleBackground(GetTexture2D(classification));
+            radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
+            radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
+        }
+    }
+
+    public Texture2D GetTexture2D(ClassificationData cls)
+    {
+        Texture2D text = new Texture2D(2, 2);
+        text.LoadImage(cls.classification.Image);
+        text.Apply();
+        return text;
+
+    }
+
+    public void UpdateTexturePanel(ClickEvent evt)
+    {
+        RadioButton button = evt.currentTarget as RadioButton;
+        ReportImage.texture = button.style.backgroundImage.value.texture;
+        ReportImage.material.mainTexture = button.style.backgroundImage.value.texture;
+        ReportImage.gameObject.SetActive(false);
+        ReportImage.gameObject.SetActive(true);
+    }
+
+    public void DrawLine(ClickEvent evt, List<Line> lines)
+    {
+        foreach(Transform child in LineParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        foreach(Line line in lines)
+        {
+            DrawLine(line.Point1, line.Point2);
+        }
+        PointController.DisableMove = true;
+    }
+
+    public void DrawLine(Vector3 position1, Vector3 position2)
+    {
+        var _auxLine = Instantiate(LinePrefab, Vector3.back, Quaternion.identity, LineParent.transform).GetComponent<LineController>();
+        _auxLine.transform.localPosition = Vector3.back;
+        _auxLine.Point1.transform.position = position1;
+        _auxLine.Point2.transform.position = position2;
+    }
+
     private bool IsAllStatesDone => (int)CurrentState == Data.Count-1;
 
-    private bool IsAllStepsDone => CurrentStep > Data[(int)CurrentState].content.Count-1;
+    private bool IsAllStepsDone => CurrentStep > Data[(int)CurrentState].contents.Count-1;
 
     private bool IsAllStatesFileReaded => IsAllStepsDone && IsAllStatesDone && CurrentStateFile == StateFileList.Count - 1;
 }

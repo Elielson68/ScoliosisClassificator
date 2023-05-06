@@ -12,14 +12,8 @@ public class photoInsertionController : MonoBehaviour
     public static event System.Action OnUploadButtonClick;
     private Label content;
     
-    [System.Serializable]
-    public struct ClassificationData
-    {
-        public States State;
-        public Classification classification;
-    }
-    public List<ClassificationData> classifications;
 
+    public List<ClassificationData> classifications;
     void Start()
     {
         content = document.rootVisualElement.Q<Label>("content");
@@ -30,15 +24,13 @@ public class photoInsertionController : MonoBehaviour
         StateController.OnUpdateState += UpdateTextOnChangeState;
 
         UploadImage.OnCompletedUploadImage +=  StateControll.ShowFowardButton;
-        DrawLinesController.OnAllRulesDone +=  StateControll.ShowFowardButton;
-        
-        UploadImage.OnChangeImage += classifications[0].classification.SetImage;
-        
+        UploadImage.OnChangeImage += WriteImage;
     }
 
     public void HiddenButtons()
     {
         uploadButton.AddToClassList("element-hidden");
+        document.rootVisualElement.Q<Button>("picture-button").AddToClassList("element-hidden");
     }
 
     private void UploadButton(ClickEvent evt)
@@ -58,6 +50,18 @@ public class photoInsertionController : MonoBehaviour
             else
             {
                 UploadImage.OnChangeImage -= cd.classification.SetImage;
+            }
+        }
+    }
+
+    private void WriteImage(byte[] txt)
+    {
+        foreach(ClassificationData cd in classifications)
+        {
+            if(cd.State == StateController.CurrentState)
+            {
+                cd.classification.SetImage(txt);
+                break;
             }
         }
     }

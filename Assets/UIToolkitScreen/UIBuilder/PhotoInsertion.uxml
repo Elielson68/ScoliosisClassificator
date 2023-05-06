@@ -9,6 +9,14 @@
             <ui:VisualElement name="foward" style="width: 90%; height: 10%; flex-direction: row; justify-content: flex-end; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
                 <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo element-hidden" style="background-image: url(&apos;project://database/Assets/UIToolkitScreen/Sprites/icone%20seta.png?fileID=21300000&amp;guid=0a077cdc7242cab47bca953921cd0a43&amp;type=3#icone seta&apos;); margin-right: 36px; width: 1%; height: 35%; margin-top: 30px;" />
             </ui:VisualElement>
+            <ui:VisualElement name="report-content" style="display: none;">
+                <ui:RadioButtonGroup value="-1" name="report-image-buttons" style="flex-direction: row;">
+                    <ui:RadioButton label="Frontal" name="Frontal" class="report-button" style="background-image: url(&apos;project://database/Assets/TWD/background.png?fileID=2800000&amp;guid=a093780a76b8e8c4c8b121e123d21a82&amp;type=3#background&apos;);" />
+                    <ui:RadioButton label="LeftInclination" name="LeftInclination" class="report-button" style="background-image: url(&apos;project://database/Assets/TWD/background.png?fileID=2800000&amp;guid=a093780a76b8e8c4c8b121e123d21a82&amp;type=3#background&apos;);" />
+                    <ui:RadioButton label="RightInclination" name="RightInclination" class="report-button" style="background-image: url(&apos;project://database/Assets/TWD/background.png?fileID=2800000&amp;guid=a093780a76b8e8c4c8b121e123d21a82&amp;type=3#background&apos;);" />
+                    <ui:RadioButton label="Lateral" name="Lateral" class="report-button" style="background-image: url(&apos;project://database/Assets/TWD/background.png?fileID=2800000&amp;guid=a093780a76b8e8c4c8b121e123d21a82&amp;type=3#background&apos;);" />
+                </ui:RadioButtonGroup>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="footer" style="align-items: center; justify-content: space-around; width: 100%; height: 10%; flex-direction: row;">
             <ui:Button display-tooltip-when-elided="true" enable-rich-text="true" name="upload-button" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/UIToolkitScreen/Sprites/galery%20icon.png?fileID=21300000&amp;guid=9b9d92349ff32ac42a9932287532743e&amp;type=3#galery icon&apos;);" />

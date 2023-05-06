@@ -229,8 +229,6 @@ public class LineCalculateController : MonoBehaviour
                     {
                         _stepData.Add(pairStep.StepName, _degrees[pairStep.IndexDegree]);
                         States.UpdateStepForActualState();
-                        Debug.Log($"Atualizou o estado: {States.EstadoAtual.ToString()} está no passo: {States.StepsForStateDic[States.EstadoAtual.ToString()].IndexActualStep}");
-                        Debug.Log($"Foi utilizado o Index: {pairStep.IndexDegree}");
                         List<DegreeData.Line> lines = new();
                         DegreeData.Line newLine = new()
                         {
