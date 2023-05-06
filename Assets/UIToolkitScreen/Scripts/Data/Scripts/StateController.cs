@@ -147,6 +147,7 @@ public class StateController : MonoBehaviour
             radioButtons[classification.State].style.backgroundImage = new StyleBackground(GetTexture2D(classification));
             radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
             radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
+            classification.classification.ExportJson();
         }
     }
 
