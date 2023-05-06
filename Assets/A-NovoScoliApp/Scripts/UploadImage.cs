@@ -17,7 +17,7 @@ public class UploadImage : MonoBehaviour
     public static System.Action<byte[]> OnChangeImage;
     void Start()
     {
-        photoInsertionController.OnUploadButtonClick += Init;
+        PhotoInsertionController.OnUploadButtonClick += Init;
     }
 
     IEnumerator Upload()

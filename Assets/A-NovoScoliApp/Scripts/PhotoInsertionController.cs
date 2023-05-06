@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class photoInsertionController : MonoBehaviour
+public class PhotoInsertionController : MonoBehaviour
 {
     public UIDocument document;
     public StateController StateControll;

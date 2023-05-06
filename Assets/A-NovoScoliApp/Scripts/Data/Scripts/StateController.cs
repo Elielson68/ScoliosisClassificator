@@ -113,7 +113,7 @@ public class StateController : MonoBehaviour
 
     private void UpdateFile()
     {
-        string text = File.ReadAllText("./Assets/UIToolkitScreen/Scripts/Data/Json/" + StateFileList[CurrentStateFile] + ".json");
+        string text = File.ReadAllText($"{Application.streamingAssetsPath}/StatesFiles/{StateFileList[CurrentStateFile]}.json");
         if(IsReportState)
         {
             Data = null;

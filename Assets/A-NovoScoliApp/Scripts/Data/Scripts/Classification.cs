@@ -28,15 +28,15 @@ public class Classification : ScriptableObject
         Image = image;
     }
 
-    private string PathFolderFile => $"{Application.streamingAssetsPath}/{"{0}"}";
+    private string PathFolderFile => $"{Application.streamingAssetsPath}/Reports/{"{0}"}";
     private string FileName => $"{PathFolderFile}/{State.ToString()}.json";
     private string FolderName => DateTime.Now.ToString("dd-MM-yyyy_HH.mm");
     private string DefinedFolderFilePath => string.Format(PathFolderFile, FolderName);
     private string DefinedFilePath => string.Format(FileName, FolderName);
+    
     public void ExportJson() 
     {
         string serialized = JsonUtility.ToJson(this, prettyPrint: true);
-        Debug.LogWarning(serialized);
         if(Directory.Exists(DefinedFolderFilePath) is false)
         {
             Directory.CreateDirectory(DefinedFolderFilePath);
