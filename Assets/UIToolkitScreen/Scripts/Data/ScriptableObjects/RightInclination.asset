@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d318547e2e13733419519eaf86a975e0, type: 3}
   m_Name: RightInclination
   m_EditorClassIdentifier: 
-  State: 0
+  State: 2
   Lines: []
   Image: 
   Rules:
