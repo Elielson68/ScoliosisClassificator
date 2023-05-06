@@ -7,14 +7,8 @@ public class ImageStateController : MonoBehaviour
 {
     public Texture2D DefaultImage;
     public RawImage StateImage;
-    public ProgressController progressController;
 
     public static event System.Action<RawImage> OnStateImageChange;
-
-    private void Start()
-    {
-        ProgressController.OnFinishChangeState += UpdateStateImage;
-    }
 
     private void OnEnable()
     {
@@ -26,7 +20,7 @@ public class ImageStateController : MonoBehaviour
         RawImage imgState = null;
         foreach (Transform obj in transform)
         {
-            if (progressController.EstadoAtual.ToString() == obj.gameObject.name)
+            if (StateController.CurrentState.ToString() == obj.gameObject.name)
             {
                 imgState = obj.GetComponent<RawImage>();
                 obj.gameObject.SetActive(true);
@@ -44,11 +38,6 @@ public class ImageStateController : MonoBehaviour
         StateImage = GetActualStateImage();
         StateImage.SetNativeSize();
         OnStateImageChange?.Invoke(StateImage);
-    }
-
-    public void SetProgressController(ProgressController p)
-    {
-        progressController = p;
     }
 
     private void OnDisable()
