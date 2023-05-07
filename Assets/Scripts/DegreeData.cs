@@ -4,14 +4,6 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "DegreeData", menuName = "EscolioseClassificator/DegreeData", order = 0)]
 public class DegreeData : ScriptableObject {
-
-    [System.Serializable]
-    public struct Line
-    {
-        public Vector3 Point1;
-        public Vector3 Point2;
-    }
-
     [System.Serializable]
     public struct DegreeCalculateData
     {

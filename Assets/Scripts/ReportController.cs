@@ -13,7 +13,7 @@ public class ReportController : MonoBehaviour
     public GameObject LineParent;
     public GameObject LinePrefab;
     public UnityEngine.UI.RawImage ReportImage;
-    private RawImageController _rawImageController;
+    private ImageStateController imgStateController;
     private Button _backButton;
     private Button _backToInitialButton;
     private void Start() {
@@ -23,7 +23,7 @@ public class ReportController : MonoBehaviour
     public void StartReport()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
-        _rawImageController = new RawImageController();
+        imgStateController = FindObjectOfType<ImageStateController>();
         ReportButtonsContent = document.rootVisualElement.Q("Report");
         _backButton = ReportButtonsContent.Q<Button>(BackButton);
         _backToInitialButton = document.rootVisualElement.Q<Button>(BackToInitialButton);
@@ -36,7 +36,7 @@ public class ReportController : MonoBehaviour
             radioButtons.Add(States.Lateral, ReportButtonsContent.Q<RadioButton>("Lateral"));
         }
         
-        _rawImageController.Image = ReportImage;
+        imgStateController.SetStateImage(ReportImage);
 
         _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
         {
@@ -50,7 +50,7 @@ public class ReportController : MonoBehaviour
         
         foreach(var classification in _classifications)
         {
-            radioButtons[classification.State].style.backgroundImage = new StyleBackground(_rawImageController.GetTexture2D(classification));
+            radioButtons[classification.State].style.backgroundImage = new StyleBackground(imgStateController.GetStateImage(classification.State));
             radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
             radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
             
@@ -59,12 +59,8 @@ public class ReportController : MonoBehaviour
             {
                 classification.classification.ExportJson();
             }
-
-            if(classification.State == States.Front)
-            {
-                _rawImageController.UpdateTexturePanel(_rawImageController.GetTexture2D(classification));
-            } 
         }
+        imgStateController.UpdateImageToState(States.Front);
     }
 
     public void DisplayBackButton(bool show)
@@ -88,7 +84,7 @@ public class ReportController : MonoBehaviour
     public void UpdateTexturePanel(ClickEvent evt)
     {
         RadioButton button = evt.currentTarget as RadioButton;
-        _rawImageController.UpdateTexturePanel(button.style.backgroundImage.value.texture);
+        imgStateController.UpdateImageToState(button.style.backgroundImage.value.texture);
     }
 
     public void DrawLine(ClickEvent evt, List<Line> lines)

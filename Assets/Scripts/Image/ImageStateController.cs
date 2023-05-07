@@ -5,50 +5,40 @@ using UnityEngine.UI;
 
 public class ImageStateController : MonoBehaviour
 {
-    public Texture2D DefaultImage;
-    public RawImage StateImage;
+    private RawImageController _rawImageController;
+    private List<ClassificationData> _classifications;
 
-    public static event System.Action<RawImage> OnStateImageChange;
-
-    private void OnEnable()
+    public void Start()
     {
-        UpdateStateImage();
+        _rawImageController = new RawImageController();
+        _classifications = FindObjectOfType<Classifications>()[0];
     }
 
-    public RawImage GetActualStateImage()
+    public void UpdateImageOnChangeState()
     {
-        RawImage imgState = null;
-        foreach (Transform obj in transform)
-        {
-            if (StateController.CurrentState.ToString() == obj.gameObject.name)
-            {
-                imgState = obj.GetComponent<RawImage>();
-                obj.gameObject.SetActive(true);
-            }
-            else if (obj.gameObject.tag == "StateImage")
-            {
-                obj.gameObject.SetActive(false);
-            }
-        }
-        return imgState;
-    }
-    public void UpdateStateImage()
-    {
-
-        StateImage = GetActualStateImage();
-        StateImage.SetNativeSize();
-        OnStateImageChange?.Invoke(StateImage);
+        UpdateImageToState(StateController.CurrentState);
     }
 
-    private void OnDisable()
+    public void UpdateImageToState(States state)
     {
-        foreach (Transform obj in transform)
-        {
-            if (obj.gameObject.tag == "StateImage")
-            {
-                obj.GetComponent<RawImage>().texture = DefaultImage;
-            }
-        }
+        ClassificationData cls = _classifications[(int) state];
+        Texture2D text = _rawImageController.GetTexture2D(cls);
+        _rawImageController.UpdateTexturePanel(text);
     }
 
+    public void UpdateImageToState(Texture2D img)
+    {
+        _rawImageController.UpdateTexturePanel(img);
+    }
+
+    public Texture2D GetStateImage(States state)
+    {
+        ClassificationData cls = _classifications[(int) state];
+        return _rawImageController.GetTexture2D(cls);
+    }
+
+    public void SetStateImage(RawImage image)
+    {
+        _rawImageController.Image = image;
+    }
 }

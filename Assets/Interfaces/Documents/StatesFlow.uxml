@@ -12,6 +12,7 @@
     <ui:VisualElement name="footer" style="align-items: center; justify-content: space-around; width: 100%; height: 10%; flex-direction: row; display: flex;">
         <ui:Button display-tooltip-when-elided="true" enable-rich-text="true" name="upload-button" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/Design/Icons/galery%20icon.png?fileID=21300000&amp;guid=9b9d92349ff32ac42a9932287532743e&amp;type=3#galery icon&apos;); display: flex;" />
         <ui:Button display-tooltip-when-elided="true" name="picture-button" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/Design/Icons/camera%20icon.png?fileID=21300000&amp;guid=6e9f6aa99c884cd49aa041a189168c53&amp;type=3#camera icon&apos;); display: flex;" />
+        <ui:DropdownField label="SacroType" index="0" choices="Escolha...,Esquerda,Direita,Paralelo" name="sacro-dropdown" style="width: 600px; height: 100px; align-items: stretch; -unity-font-style: bold; font-size: 32px; -unity-text-align: middle-center; display: none; margin-top: 85px; margin-left: -885px;" />
         <ui:Button display-tooltip-when-elided="true" name="back-initial" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/Design/Icons/icone%20seta.png?fileID=21300000&amp;guid=0a077cdc7242cab47bca953921cd0a43&amp;type=3#icone seta&apos;); display: none;" />
         <ui:Instance template="Report" name="Report" style="display: none;" />
     </ui:VisualElement>

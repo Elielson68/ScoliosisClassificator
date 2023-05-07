@@ -15,7 +15,7 @@ public class ImageManipulation : MonoBehaviour
 
     private void Start()
     {
-        ImageStateController.OnStateImageChange += img => imagem = img;
+        //ImageStateController.OnStateImageChange += img => imagem = img;
     }
 
     private void Update()

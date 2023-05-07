@@ -20,12 +20,9 @@ public class StateController : MonoBehaviour
     private Button fowardButton;
     public static event System.Action OnFowardButtonClick;
 
-    private ReportController _reportController;
-
     private void Start()
     {
         fowardButton = document.rootVisualElement.Q<Button>("foward-button");
-        _reportController = GetComponent<ReportController>();
 
         OnFowardButtonClick += UpdateState;
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
@@ -55,6 +52,7 @@ public class StateController : MonoBehaviour
                         actionEx.Execute?.Invoke();
                     }
                 });
+                Debug.Log("Executou as actions do "+StateFileList[CurrentStateFile]);
             }
             else
             {

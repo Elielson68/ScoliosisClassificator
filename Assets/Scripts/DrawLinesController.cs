@@ -20,22 +20,22 @@ public class DrawLinesController : MonoBehaviour
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
     private bool _isClickOnUIElement;
-    private RawImageController _rawImageController;
-
     private List<ClassificationData> _classifications;
     private void Start()
     {
-        _rawImageController = new RawImageController();
         _collider = GetComponent<BoxCollider2D>();
         _collider.size = new Vector2(Screen.width, Screen.height);
-        _rawImageController.Image = Image;
         _classifications = FindObjectOfType<Classifications>()[0];
-        
+        ImageStateController imgStateController = FindObjectOfType<ImageStateController>();
+
         _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
-        //StateController.OnChangeState += () => { CurrentRule = 0; BlockCreationLineGlobal = false; ClearLines(); };
+
         StateController.OnFowardButtonClick += ClearLines;
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
-        StateController.OnFowardButtonClick += UpdateImageOnChangeState;
+        StateController.OnFowardButtonClick += imgStateController.UpdateImageOnChangeState;
+        
+        imgStateController.SetStateImage(Image);
+        imgStateController.UpdateImageOnChangeState();
         Debug.Log($"width: {Screen.width} height: {Screen.height}");
     }
 
@@ -44,13 +44,6 @@ public class DrawLinesController : MonoBehaviour
         if (BlockCreationLineGlobal)
             if (_auxLine is not null && IsLineCompleted is false)
                 _auxLine = null;
-    }
-
-    private void UpdateImageOnChangeState()
-    {
-        ClassificationData cls = _classifications[(int) StateController.CurrentState];
-        Texture2D text = _rawImageController.GetTexture2D(cls);
-        _rawImageController.UpdateTexturePanel(text);
     }
 
     private void ClearLines()
