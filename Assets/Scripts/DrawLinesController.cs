@@ -12,7 +12,6 @@ public class DrawLinesController : MonoBehaviour
     public static bool BlockCreationLineGlobal { get; set; }
     public static System.Action OnCompleteRule;
     public static System.Action OnAllRulesDone;
-    public List<ClassificationData> Classifications;
     public int CurrentRule;
     public RawImage Image;
     
@@ -22,14 +21,17 @@ public class DrawLinesController : MonoBehaviour
     private bool _firstPointCreated = false;
     private bool _isClickOnUIElement;
     private RawImageController _rawImageController;
+
+    private List<ClassificationData> _classifications;
     private void Start()
     {
         _rawImageController = new RawImageController();
         _collider = GetComponent<BoxCollider2D>();
         _collider.size = new Vector2(Screen.width, Screen.height);
         _rawImageController.Image = Image;
-
-        Classifications.ForEach(c => { c.classification.CurrentRule = 0; });
+        _classifications = FindObjectOfType<Classifications>()[0];
+        
+        _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
         //StateController.OnChangeState += () => { CurrentRule = 0; BlockCreationLineGlobal = false; ClearLines(); };
         StateController.OnFowardButtonClick += ClearLines;
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
@@ -46,7 +48,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void UpdateImageOnChangeState()
     {
-        ClassificationData cls = Classifications[(int) StateController.CurrentState];
+        ClassificationData cls = _classifications[(int) StateController.CurrentState];
         Texture2D text = _rawImageController.GetTexture2D(cls);
         _rawImageController.UpdateTexturePanel(text);
     }
@@ -162,7 +164,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void UpdateRule(Vector3 point1, Vector3 point2)
     {
-        Classifications.ForEach(cd =>
+        _classifications.ForEach(cd =>
         {
             if(cd.State == StateController.CurrentState)
             {

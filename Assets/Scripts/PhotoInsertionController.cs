@@ -12,9 +12,10 @@ public class PhotoInsertionController : MonoBehaviour
     private Label content;
     
 
-    public List<ClassificationData> classifications;
+    private List<ClassificationData> _classifications;
     void Start()
     {
+        _classifications = FindObjectOfType<Classifications>()[0];
         content = document.rootVisualElement.Q<Label>("content");
         uploadButton = document.rootVisualElement.Q<Button>("upload-button");
 
@@ -49,7 +50,7 @@ public class PhotoInsertionController : MonoBehaviour
     private void UpdateTextOnChangeState(States state, string contentState)
     {
         content.text = contentState;
-        foreach(ClassificationData cd in classifications)
+        foreach(ClassificationData cd in _classifications)
         {
             if(cd.State == state)
             {
@@ -64,7 +65,7 @@ public class PhotoInsertionController : MonoBehaviour
 
     private void WriteImage(byte[] txt)
     {
-        foreach(ClassificationData cd in classifications)
+        foreach(ClassificationData cd in _classifications)
         {
             if(cd.State == StateController.CurrentState)
             {

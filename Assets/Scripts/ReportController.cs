@@ -5,16 +5,17 @@ using UnityEngine.UIElements;
 public class ReportController : MonoBehaviour
 {
     public UIDocument document;
-    public List<ClassificationData> Classifications;
+    private List<ClassificationData> _classifications;
     public VisualElement ReportButtonsContent;
     public Dictionary<States, RadioButton> radioButtons = new Dictionary<States, RadioButton>();
     public GameObject LineParent;
     public GameObject LinePrefab;
-    public bool IsReportState {get; set;}
     public UnityEngine.UI.RawImage ReportImage;
     private RawImageController _rawImageController;
+    
     private void Start()
     {
+        _classifications = FindObjectOfType<Classifications>()[0];
         _rawImageController = new RawImageController();
         ReportButtonsContent = document.rootVisualElement.Q("report-content");
         radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
@@ -27,7 +28,7 @@ public class ReportController : MonoBehaviour
     public void ShowReportButtons(bool exportJsonOnShowButtons = true)
     {
         ReportButtonsContent.style.display = DisplayStyle.Flex;
-        foreach(var classification in Classifications)
+        foreach(var classification in _classifications)
         {
             radioButtons[classification.State].style.backgroundImage = new StyleBackground(_rawImageController.GetTexture2D(classification));
             radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);

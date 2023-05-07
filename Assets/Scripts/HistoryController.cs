@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class HistoryController : MonoBehaviour
 {
-    public List<ClassificationData> Classifications;
+    private List<ClassificationData> _classifications;
 
     private const string HistoryContent = "history-content";
     private const string BackButton = "back-history";
@@ -17,10 +17,14 @@ public class HistoryController : MonoBehaviour
     private Button _backButton;
     private void Start()
     {
+        _classifications = FindObjectOfType<Classifications>()[0];
+        _document = FindObjectOfType<UIDocument>();
         _reportController = GetComponent<ReportController>();
-        _document = GetComponent<UIDocument>();
         HistoryContentVE = _document.rootVisualElement.Q(HistoryContent);
         _backButton = _document.rootVisualElement.Q<Button>(BackButton);
+
+        _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
+
         foreach(string dir in Directory.GetDirectories(Application.streamingAssetsPath+"/Reports/"))
         {
             Button reportFolder = new Button();
@@ -30,13 +34,12 @@ public class HistoryController : MonoBehaviour
             reportFolder.RegisterCallback<ClickEvent>(SetReportData);
             reportFolder.AddToClassList(ReportTitleStyle);
         }
-        _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
     }
 
     private void SetReportData(ClickEvent evt)
     {
         Button label = evt.target as Button;
-        foreach(var cls in Classifications)
+        foreach(var cls in _classifications)
         {
             cls.classification.ImportJson(label.text);
         }
