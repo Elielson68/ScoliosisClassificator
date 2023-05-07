@@ -13,7 +13,7 @@ public class PhotoInsertionController : MonoBehaviour
     
 
     private List<ClassificationData> _classifications;
-    void Start()
+    public void StartClass()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         content = document.rootVisualElement.Q<Label>("content");

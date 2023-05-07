@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class StateInfo
 {
@@ -26,4 +27,18 @@ public struct EnterNewFileExecute
 {
     public string FileName;
     public UnityEvent Execute;
+}
+
+public enum Screens
+{
+    Initial,
+    States,
+    History
+}
+
+[System.Serializable]
+public struct ScreenAsset
+{
+    public VisualTreeAsset Screen;
+    public UnityEvent OnOpenScreen;
 }

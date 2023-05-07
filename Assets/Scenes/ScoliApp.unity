@@ -483,10 +483,6 @@ PrefabInstance:
       propertyPath: ExecuteOnChangeFile.Array.data[2].Execute.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1327235495}
-    - target: {fileID: 4097609821578259432, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4097609821578259434, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StateImage
       value: 
@@ -551,17 +547,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7547162754156928389, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      value: 
+      objectReference: {fileID: 1327235495}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7866277195674785876, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: m_Name
       value: '[Controllers]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8634009620287364085, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}

@@ -8,22 +8,30 @@ public class HistoryController : MonoBehaviour
     private List<ClassificationData> _classifications;
 
     private const string HistoryContent = "history-content";
-    private const string BackButton = "back-history";
+    private const string BackHistoryButton = "back-history";
+    private const string BackInitialButton = "back-initial";
     private const string ReportTitleStyle = "report-title-label";
 
     private ReportController _reportController;
     private UIDocument _document;
     private VisualElement HistoryContentVE;
-    private Button _backButton;
-    private void Start()
+    private Button _backToHistoryButton;
+    private Button _backToInitialButton;
+
+    public void StartHistory()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         _document = FindObjectOfType<UIDocument>();
         _reportController = GetComponent<ReportController>();
         HistoryContentVE = _document.rootVisualElement.Q(HistoryContent);
-        _backButton = _document.rootVisualElement.Q<Button>(BackButton);
+        _backToHistoryButton = _document.rootVisualElement.Q<Button>(BackHistoryButton);
+        _backToInitialButton = _document.rootVisualElement.Q<Button>(BackInitialButton);
 
-        _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
+        _backToHistoryButton.RegisterCallback<ClickEvent>(BackButtonAction);
+        _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
+        {
+            FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
+        });
 
         foreach(string dir in Directory.GetDirectories(Application.streamingAssetsPath+"/Reports/"))
         {

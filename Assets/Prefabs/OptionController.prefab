@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1482050002911611934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8288173752077107070}
+  - component: {fileID: 5844806196184839208}
+  - component: {fileID: 4346884835800245666}
+  m_Layer: 0
+  m_Name: OptionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8288173752077107070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482050002911611934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5844806196184839208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482050002911611934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e6de246c67daa48b7b0cc1ae0a906f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialScreen:
+    Screen: {fileID: 9197481963319205126, guid: 813cc3e2545afe441b4cb38636da948b, type: 3}
+    OnOpenScreen:
+      m_PersistentCalls:
+        m_Calls: []
+  StatesFlow:
+    Screen: {fileID: 9197481963319205126, guid: 421be474193a83c49b02fc01790932a9, type: 3}
+    OnOpenScreen:
+      m_PersistentCalls:
+        m_Calls: []
+  HistoryScreen:
+    Screen: {fileID: 9197481963319205126, guid: 0abe29f531ed9bd4c8f1c065410c29df, type: 3}
+    OnOpenScreen:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &4346884835800245666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482050002911611934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3127dce242c08449f47e40463a8bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

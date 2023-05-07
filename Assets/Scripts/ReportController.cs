@@ -12,12 +12,12 @@ public class ReportController : MonoBehaviour
     public GameObject LinePrefab;
     public UnityEngine.UI.RawImage ReportImage;
     private RawImageController _rawImageController;
-    
-    private void Start()
+
+    public void StartReport()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         _rawImageController = new RawImageController();
-        ReportButtonsContent = document.rootVisualElement.Q("report-content");
+        ReportButtonsContent = document.rootVisualElement.Q("Report");
         radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
         radioButtons.Add(States.LeftInclination, ReportButtonsContent.Q<RadioButton>("LeftInclination"));
         radioButtons.Add(States.RightInclination, ReportButtonsContent.Q<RadioButton>("RightInclination"));
