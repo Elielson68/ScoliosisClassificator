@@ -652,6 +652,10 @@ PrefabInstance:
       propertyPath: Image
       value: 
       objectReference: {fileID: 28304435}
+    - target: {fileID: 7069481855465312204, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: LineParent
+      value: 
+      objectReference: {fileID: 1923411372}
     - target: {fileID: 7866277195674785876, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: m_Name
       value: '[Controllers]'

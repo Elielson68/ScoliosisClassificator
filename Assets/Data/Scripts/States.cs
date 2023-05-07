@@ -5,3 +5,9 @@ public enum States
     RightInclination = 2,
     Lateral = 3
 }
+
+public enum SubStates
+{
+    None = -1,
+    Sacro = 0
+}

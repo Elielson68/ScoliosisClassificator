@@ -11,6 +11,7 @@ public class SacroController : MonoBehaviour
 
     private DropdownField _dropdown;
     private StateController stateCotrol;
+    ClassificationWithSacro sacro;
     
     void Start()
     {
@@ -23,6 +24,9 @@ public class SacroController : MonoBehaviour
         
         _dropdown.style.display = DisplayStyle.Flex;
         _dropdown.RegisterValueChangedCallback(OnChooseOption);
+
+        sacro = FindObjectOfType<Classifications>()[0][0].classification as ClassificationWithSacro;
+        sacro.SubLines.Add(new Line(new Vector3(5, 1080, 0), new Vector3(5, -1080, 0)));
     }
 
     public void HideDropdown()
@@ -32,8 +36,9 @@ public class SacroController : MonoBehaviour
 
     private void OnChooseOption(ChangeEvent<string> option)
     {
-        if(_dropdown.choices.IndexOf(option.newValue) != 0)
+        if(_dropdown.choices.IndexOf(option.newValue) is int sac && sac != 0)
         {
+            sacro.Sacro = (Sacro) sac; 
             stateCotrol.ShowFowardButton();
         }
         else

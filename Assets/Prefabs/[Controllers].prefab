@@ -867,6 +867,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4448717835023767324}
     m_Modifications:
+    - target: {fileID: 918664990992361980, guid: ab753f30944e2844ab025648e979266c, type: 3}
+      propertyPath: SacroLinePrefab
+      value: 
+      objectReference: {fileID: 5493352834309018786, guid: 567602bf4358cd5488303c69ee8ce305, type: 3}
     - target: {fileID: 7202713095214832295, guid: ab753f30944e2844ab025648e979266c, type: 3}
       propertyPath: m_RootOrder
       value: 4

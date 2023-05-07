@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d318547e2e13733419519eaf86a975e0, type: 3}
+  m_Script: {fileID: 11500000, guid: b449825e6c3ac8e438934c698b971aad, type: 3}
   m_Name: Front
   m_EditorClassIdentifier: 
   State: 0
+  SubState: 0
   Lines: []
   Image: 
   Rules:
@@ -23,3 +24,5 @@ MonoBehaviour:
   - Name: ToracoLombar
     TotalLines: 4
   CurrentRule: 0
+  SubLines: []
+  Sacro: 1

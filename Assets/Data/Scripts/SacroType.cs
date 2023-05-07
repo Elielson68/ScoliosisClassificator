@@ -1,6 +1,6 @@
 public enum Sacro
 {
-    A = 0,
-    B = 1,
-    C = 2
+    A = 1,
+    B = 2,
+    C = 3
 }

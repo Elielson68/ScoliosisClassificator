@@ -47,7 +47,7 @@ public class ReportController : MonoBehaviour
     public void ShowReportButtons(bool exportJsonOnShowButtons = true)
     {
         ReportButtonsContent.style.display = DisplayStyle.Flex;
-        
+        ClassificationFolder.GenerateFolderName();
         foreach(var classification in _classifications)
         {
             radioButtons[classification.State].style.backgroundImage = new StyleBackground(imgStateController.GetStateImage(classification.State));

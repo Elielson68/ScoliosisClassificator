@@ -8,7 +8,7 @@ using UnityEngine;
 public class Classification : ScriptableObject
 {
     public States State;
-    
+    public SubStates SubState = SubStates.None;
 
     [Serializable]
     public struct Rule
@@ -27,26 +27,22 @@ public class Classification : ScriptableObject
     {
         Image = image;
     }
-
-    private string PathFolderFile => $"{Application.streamingAssetsPath}/Reports/{"{0}"}";
-    private string FileName => $"{PathFolderFile}/{State.ToString()}.json";
-    private string FolderName => DateTime.Now.ToString("dd-MM-yyyy_HH.mm");
-    private string DefinedFolderFilePath => string.Format(PathFolderFile, FolderName);
-    private string DefinedFilePath => string.Format(FileName, FolderName);
     
-    public void ExportJson() 
+    public virtual void ExportJson() 
     {
+        ClassificationFolder.StateName = State.ToString();
         string serialized = JsonUtility.ToJson(this, prettyPrint: true);
-        if(Directory.Exists(DefinedFolderFilePath) is false)
+        if(Directory.Exists(ClassificationFolder.DefinedFolderFilePath) is false)
         {
-            Directory.CreateDirectory(DefinedFolderFilePath);
+            Directory.CreateDirectory(ClassificationFolder.DefinedFolderFilePath);
         }
-        File.WriteAllText(DefinedFilePath, serialized, System.Text.Encoding.UTF8);
+        File.WriteAllText(ClassificationFolder.DefinedFilePath, serialized, System.Text.Encoding.UTF8);
     }
 
-    public void ImportJson(string folderName)
+    public virtual void ImportJson(string folderName)
     {
-        string file = File.ReadAllText(string.Format(FileName, folderName));
+        ClassificationFolder.StateName = State.ToString();
+        string file = File.ReadAllText(string.Format(ClassificationFolder.FileName, folderName));
         Classification obj = JsonConvert.DeserializeObject<Classification>(file);
         State = obj.State;
         Lines = obj.Lines;
@@ -54,7 +50,7 @@ public class Classification : ScriptableObject
     }
 
     [ContextMenu("Reset Values")]
-    public void Reset()
+    public virtual void Reset()
     {
         Lines = new List<Line>();
         Image = new byte[0];
