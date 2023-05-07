@@ -15,7 +15,7 @@ public class OptionController : MonoBehaviour
 
     void Start()
     {
-        _root = FindObjectOfType<UIDocument>().rootVisualElement.Q("root");
+        _root = FindObjectOfType<UIDocument>().rootVisualElement;
         ChangeScreen(Screens.Initial);
     }
 

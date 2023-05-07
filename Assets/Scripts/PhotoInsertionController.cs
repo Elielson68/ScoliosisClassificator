@@ -13,6 +13,12 @@ public class PhotoInsertionController : MonoBehaviour
     
 
     private List<ClassificationData> _classifications;
+
+    private void Start()
+    {
+        
+    }
+    
     public void StartClass()
     {
         _classifications = FindObjectOfType<Classifications>()[0];

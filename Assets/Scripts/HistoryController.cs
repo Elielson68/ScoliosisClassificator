@@ -18,6 +18,11 @@ public class HistoryController : MonoBehaviour
     private Button _backToHistoryButton;
     private Button _backToInitialButton;
 
+    private void Start()
+    {
+        
+    }
+
     public void StartHistory()
     {
         _classifications = FindObjectOfType<Classifications>()[0];

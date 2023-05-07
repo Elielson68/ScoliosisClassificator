@@ -4,6 +4,8 @@ using UnityEngine.UIElements;
 
 public class ReportController : MonoBehaviour
 {
+    private const string BackButton = "back-history";
+    private const string BackToInitialButton = "back-initial";
     public UIDocument document;
     private List<ClassificationData> _classifications;
     public VisualElement ReportButtonsContent;
@@ -12,22 +14,40 @@ public class ReportController : MonoBehaviour
     public GameObject LinePrefab;
     public UnityEngine.UI.RawImage ReportImage;
     private RawImageController _rawImageController;
+    private Button _backButton;
+    private Button _backToInitialButton;
+    private void Start() {
+        
+    }
 
     public void StartReport()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         _rawImageController = new RawImageController();
         ReportButtonsContent = document.rootVisualElement.Q("Report");
-        radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
-        radioButtons.Add(States.LeftInclination, ReportButtonsContent.Q<RadioButton>("LeftInclination"));
-        radioButtons.Add(States.RightInclination, ReportButtonsContent.Q<RadioButton>("RightInclination"));
-        radioButtons.Add(States.Lateral, ReportButtonsContent.Q<RadioButton>("Lateral"));
+        _backButton = ReportButtonsContent.Q<Button>(BackButton);
+        _backToInitialButton = document.rootVisualElement.Q<Button>(BackToInitialButton);
+
+        if(radioButtons.Count == 0)
+        {
+            radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
+            radioButtons.Add(States.LeftInclination, ReportButtonsContent.Q<RadioButton>("LeftInclination"));
+            radioButtons.Add(States.RightInclination, ReportButtonsContent.Q<RadioButton>("RightInclination"));
+            radioButtons.Add(States.Lateral, ReportButtonsContent.Q<RadioButton>("Lateral"));
+        }
+        
         _rawImageController.Image = ReportImage;
+
+        _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
+        {
+            FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
+        });
     }
 
     public void ShowReportButtons(bool exportJsonOnShowButtons = true)
     {
         ReportButtonsContent.style.display = DisplayStyle.Flex;
+        
         foreach(var classification in _classifications)
         {
             radioButtons[classification.State].style.backgroundImage = new StyleBackground(_rawImageController.GetTexture2D(classification));
@@ -45,6 +65,12 @@ public class ReportController : MonoBehaviour
                 _rawImageController.UpdateTexturePanel(_rawImageController.GetTexture2D(classification));
             } 
         }
+    }
+
+    public void DisplayBackButton(bool show)
+    {
+        _backButton.style.display = show ? DisplayStyle.Flex:DisplayStyle.None;
+        _backToInitialButton.style.display = show is false ? DisplayStyle.Flex:DisplayStyle.None;
     }
 
     public void ShowImageReport()
