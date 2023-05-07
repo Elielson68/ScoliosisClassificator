@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,10 +31,12 @@ public class ReportController : MonoBehaviour
 
         if(radioButtons.Count == 0)
         {
-            radioButtons.Add(States.Front, ReportButtonsContent.Q<RadioButton>("Frontal"));
-            radioButtons.Add(States.LeftInclination, ReportButtonsContent.Q<RadioButton>("LeftInclination"));
-            radioButtons.Add(States.RightInclination, ReportButtonsContent.Q<RadioButton>("RightInclination"));
-            radioButtons.Add(States.Lateral, ReportButtonsContent.Q<RadioButton>("Lateral"));
+            string[] states = Enum.GetNames(typeof(States));
+            for(int i=0; i<states.Length; i++)
+            {
+                Debug.Log($"State: {((States) i)} - states[i]: {states[i]} - RadioButton is null: {ReportButtonsContent.Q<RadioButton>(states[i]) is null}");
+                radioButtons.Add(((States) i), ReportButtonsContent.Q<RadioButton>(states[i]));
+            }
         }
         
         imgStateController.SetStateImage(ReportImage);
@@ -54,10 +57,19 @@ public class ReportController : MonoBehaviour
             radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
             radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
             
-            
             if(exportJsonOnShowButtons)
             {
                 classification.classification.ExportJson();
+            }
+
+            if(classification.classification.SubState == SubStates.Sacro)
+            {
+                RadioButton sacroButton = ReportButtonsContent.Q<RadioButton>("Sacro");
+                sacroButton.style.backgroundImage = radioButtons[classification.State].style.backgroundImage;
+                ClassificationWithSacro clsSub = classification.classification as ClassificationWithSacro;
+
+                sacroButton.RegisterCallback<ClickEvent>(UpdateTexturePanel);
+                sacroButton.RegisterCallback<ClickEvent, List<Line>>(DrawLine, clsSub.SubLines);
             }
         }
         imgStateController.UpdateImageToState(States.Front);

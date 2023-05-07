@@ -473,6 +473,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 28304433}
     - target: {fileID: 1017271558241388243, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: ExecuteOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: c0143a0f92d4e0445a03c76e2c599da7, type: 2}
+    - target: {fileID: 1017271558241388243, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: ExecuteOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017271558241388243, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: ExecuteOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ClassificationWithSacro, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017271558241388243, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ExecuteOnChangeFile.Array.data[2].Execute.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1085874902}
