@@ -14,7 +14,7 @@ public class SacroController : MonoBehaviour
     public GameObject LineParent;
     public GameObject SacroLinePrefab;
 
-    void Start()
+    private void OnEnable()
     {
         ImageStateController imgStateController = FindObjectOfType<ImageStateController>();
         _stateCotrol = FindObjectOfType<StateController>();
@@ -28,12 +28,10 @@ public class SacroController : MonoBehaviour
 
         _sacro = FindObjectOfType<Classifications>()[0][0].classification as ClassificationWithSacro;
         _sacroLine = Instantiate(SacroLinePrefab, Vector3.zero, Quaternion.identity, LineParent.transform);
-        StateController.OnUpdateState += SaveSacroLinePosition;
     }
 
-    private void SaveSacroLinePosition(States s, string arg)
+    private void OnDisable()
     {
-        StateController.OnUpdateState -= SaveSacroLinePosition;
         float posX = _sacroLine.transform.GetChild(0).transform.position.x;
         _sacro.SubLines.Add(new Line(new Vector3(posX, 1080, 0), new Vector3(posX, -1080, 0)));
     }

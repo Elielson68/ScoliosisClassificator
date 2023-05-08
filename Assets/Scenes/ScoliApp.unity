@@ -585,25 +585,37 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 28304433}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
       objectReference: {fileID: 1327235495}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 28304433}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Target
+      value: 
+      objectReference: {fileID: 28304433}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Target
+      value: 
+      objectReference: {fileID: 1327235495}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: InitialScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
@@ -613,19 +625,27 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1327235495}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
@@ -637,27 +657,35 @@ PrefabInstance:
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_TargetAssemblyTypeName
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_BoolArgument
-      value: 1
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: InitialScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      propertyPath: InitialScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 28304435}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
-      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7069481855465312204, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}

@@ -34,7 +34,6 @@ public class ReportController : MonoBehaviour
             string[] states = Enum.GetNames(typeof(States));
             for(int i=0; i<states.Length; i++)
             {
-                Debug.Log($"State: {((States) i)} - states[i]: {states[i]} - RadioButton is null: {ReportButtonsContent.Q<RadioButton>(states[i]) is null}");
                 radioButtons.Add(((States) i), ReportButtonsContent.Q<RadioButton>(states[i]));
             }
         }
@@ -43,6 +42,8 @@ public class ReportController : MonoBehaviour
 
         _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
         {
+            ClearLines();
+            radioButtons.Clear();
             FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
         });
     }

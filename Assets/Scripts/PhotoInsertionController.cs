@@ -7,11 +7,7 @@ public class PhotoInsertionController : MonoBehaviour
     public UIDocument document;
     public StateController StateControll;
     private Button uploadButton;
-    
     public static event System.Action OnUploadButtonClick;
-    private Label content;
-    
-
     private List<ClassificationData> _classifications;
 
     private void Start()
@@ -22,7 +18,6 @@ public class PhotoInsertionController : MonoBehaviour
     public void StartClass()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
-        content = document.rootVisualElement.Q<Label>("content");
         uploadButton = document.rootVisualElement.Q<Button>("upload-button");
 
         uploadButton.RegisterCallback<ClickEvent>(UploadButton);
@@ -37,6 +32,11 @@ public class PhotoInsertionController : MonoBehaviour
     {
         uploadButton.AddToClassList("element-hidden");
         document.rootVisualElement.Q<Button>("picture-button").AddToClassList("element-hidden");
+
+        uploadButton.UnregisterCallback<ClickEvent>(UploadButton);
+        StateController.OnUpdateState -= UpdateTextOnChangeState;
+        UploadImage.OnCompletedUploadImage -=  StateControll.ShowFowardButton;
+        UploadImage.OnChangeImage -= WriteImage;
     }
 
     public void ShowButtons()
@@ -53,9 +53,8 @@ public class PhotoInsertionController : MonoBehaviour
         OnUploadButtonClick?.Invoke();
     }
 
-    private void UpdateTextOnChangeState(States state, string contentState)
+    private void UpdateTextOnChangeState(States state)
     {
-        content.text = contentState;
         foreach(ClassificationData cd in _classifications)
         {
             if(cd.State == state)

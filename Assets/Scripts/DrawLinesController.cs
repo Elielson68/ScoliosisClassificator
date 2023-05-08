@@ -21,22 +21,31 @@ public class DrawLinesController : MonoBehaviour
     private bool _firstPointCreated = false;
     private bool _isClickOnUIElement;
     private List<ClassificationData> _classifications;
-    private void Start()
+    private ImageStateController _imgStateController;
+
+    private void OnEnable()
     {
         _collider = GetComponent<BoxCollider2D>();
         _collider.size = new Vector2(Screen.width, Screen.height);
         _classifications = FindObjectOfType<Classifications>()[0];
-        ImageStateController imgStateController = FindObjectOfType<ImageStateController>();
+        _imgStateController = FindObjectOfType<ImageStateController>();
 
         _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
 
         StateController.OnFowardButtonClick += ClearLines;
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
-        StateController.OnFowardButtonClick += imgStateController.UpdateImageOnChangeState;
+        StateController.OnFowardButtonClick += _imgStateController.UpdateImageOnChangeState;
         
-        imgStateController.SetStateImage(Image);
-        imgStateController.UpdateImageOnChangeState();
-        Debug.Log($"width: {Screen.width} height: {Screen.height}");
+        _imgStateController.SetStateImage(Image);
+        _imgStateController.UpdateImageOnChangeState();
+    }
+
+    private void OnDisable()
+    {
+        StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
+        StateController.OnFowardButtonClick -= ClearLines;
+        StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
+        BlockCreationLineGlobal = false;
     }
 
     private void Update()
@@ -53,11 +62,6 @@ public class DrawLinesController : MonoBehaviour
             Destroy(child.gameObject);
         }
         _degrees.Clear();
-    }
-
-    private void OnDisable()
-    {
-        BlockCreationLineGlobal = false;
     }
 
     private void OnMouseDown()

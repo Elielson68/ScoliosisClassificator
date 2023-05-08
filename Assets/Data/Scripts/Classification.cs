@@ -52,6 +52,7 @@ public class Classification : ScriptableObject
     [ContextMenu("Reset Values")]
     public virtual void Reset()
     {
+        CurrentRule = 0;
         Lines = new List<Line>();
         Image = new byte[0];
         Degrees = new List<float>();

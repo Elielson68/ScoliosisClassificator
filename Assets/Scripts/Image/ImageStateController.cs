@@ -8,7 +8,7 @@ public class ImageStateController : MonoBehaviour
     private RawImageController _rawImageController;
     private List<ClassificationData> _classifications;
 
-    public void Start()
+    public void Awake()
     {
         _rawImageController = new RawImageController();
         _classifications = FindObjectOfType<Classifications>()[0];

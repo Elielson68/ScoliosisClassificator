@@ -13,23 +13,32 @@ public class StateController : MonoBehaviour
     public int CurrentStep;
     public int CurrentStateFile;
     public List<StateInfo> Data = new List<StateInfo>();
-    public static event System.Action<States, string> OnUpdateState;
+    public static event System.Action<States> OnUpdateState;
     public static event System.Action OnChangeState;
     public UnityEvent ExecuteOnStart;
     public List<EnterNewFileExecute> ExecuteOnChangeFile;
     private Button fowardButton;
     public static event System.Action OnFowardButtonClick;
+    private Label content;
 
-    private void Start()
+    private void OnEnable()
     {
+        CurrentStep = 0;
+        CurrentStateFile = 0;
         fowardButton = document.rootVisualElement.Q<Button>("foward-button");
-
+        content = document.rootVisualElement.Q<Label>("content");
         OnFowardButtonClick += UpdateState;
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
 
         ResetStateController();
 
         ExecuteOnStart?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        OnFowardButtonClick -= UpdateState;
+        fowardButton.UnregisterCallback<ClickEvent>(FowardButton);
     }
 
     public void UpdateState()
@@ -61,7 +70,8 @@ public class StateController : MonoBehaviour
             }
         }
 
-        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].contents[CurrentStep]);
+        OnUpdateState?.Invoke(CurrentState);
+        content.text = Data[(int)CurrentState].contents[CurrentStep];
         CurrentStep++;
     }
 
@@ -71,7 +81,8 @@ public class StateController : MonoBehaviour
         CurrentStep = 0;
         CurrentStateFile = 0;
         UpdateFile();
-        OnUpdateState?.Invoke(CurrentState, Data[(int)CurrentState].contents[CurrentStep]);
+        OnUpdateState?.Invoke(CurrentState);
+        content.text = Data[(int)CurrentState].contents[CurrentStep];
         CurrentStep++;
     }
     
