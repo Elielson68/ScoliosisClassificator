@@ -42,3 +42,18 @@ public struct ScreenAsset
     public VisualTreeAsset Screen;
     public UnityEvent OnOpenScreen;
 }
+
+public enum Toracica
+{
+    Proximal = 0,
+    Principal = 1,
+    Lombar = 2
+}
+
+public struct TipoCurva
+{
+    public int Tipo;
+    public int ToracicaProximal;
+    public int ToraricaPrincipal;
+    public int ToracoLombar;
+}

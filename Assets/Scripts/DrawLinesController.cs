@@ -161,13 +161,6 @@ public class DrawLinesController : MonoBehaviour
         {
             if(cd.State == StateController.CurrentState)
             {
-                if(cd.classification.CurrentRule > cd.classification.Rules.Count - 1 && cd.State == States.Lateral)
-                {
-                    OnAllRulesDone?.Invoke();
-                    BlockCreationLineGlobal = true;
-                    Debug.LogWarning($"Todas as regras foram feitas!");
-                    return;
-                }
                 Classification.Rule rule = cd.classification.Rules[cd.classification.CurrentRule];
                 cd.classification.Lines.Add(new Line(point1, point2));
                 if(rule.TotalLines == lineParent.transform.childCount)
@@ -177,6 +170,11 @@ public class DrawLinesController : MonoBehaviour
                     {
                         StateControll.ShowFowardButton();
                         BlockCreationLineGlobal = true;
+                        cd.classification.Degrees = new List<float>(_degrees);
+                        if(cd.State == States.Lateral)
+                        {
+                            ClassificatorController.Classificate(_classifications);
+                        }
                         return;
                     }
                     StateControll.UpdateState();

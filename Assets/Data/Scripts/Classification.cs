@@ -19,7 +19,7 @@ public class Classification : ScriptableObject
 
     public List<Line> Lines;
     public byte[] Image;
-
+    public List<float> Degrees;
 
     public List<Rule> Rules;
     public int CurrentRule;
@@ -54,5 +54,6 @@ public class Classification : ScriptableObject
     {
         Lines = new List<Line>();
         Image = new byte[0];
+        Degrees = new List<float>();
     }
 }

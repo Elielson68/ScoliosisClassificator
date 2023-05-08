@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: RightInclination
   m_EditorClassIdentifier: 
   State: 2
+  SubState: -1
   Lines: []
   Image: 
+  Degrees: []
   Rules:
-  - Name: Principal
+  - Name: Proximal
     TotalLines: 2
+  - Name: ToracoLombar
+    TotalLines: 4
   CurrentRule: 0

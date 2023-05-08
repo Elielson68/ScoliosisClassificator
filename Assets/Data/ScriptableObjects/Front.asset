@@ -16,6 +16,7 @@ MonoBehaviour:
   SubState: 0
   Lines: []
   Image: 
+  Degrees: []
   Rules:
   - Name: Proximal
     TotalLines: 2
@@ -24,5 +25,6 @@ MonoBehaviour:
   - Name: ToracoLombar
     TotalLines: 4
   CurrentRule: 0
+  ClassificationCode: 
   SubLines: []
   Sacro: 1

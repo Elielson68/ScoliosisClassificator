@@ -1,45 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
-public class ClassificatorController : MonoBehaviour
+public static class ClassificatorController
 {
-
-    public enum Estados
-    {
-        Frontal = 0,
-        InclinacaoEsquerda = 1,
-        InclinacaoDireita = 2,
-        Lateral = 3
-    }
-    private enum Toracica
-    {
-        Proximal = 0,
-        Principal = 1,
-        Lombar = 2
-    }
-    public List<DegreeData> degreeDatas;
-
-    public TextMeshProUGUI classificationText;
-
-    public struct TipoCurva
-    {
-        public int Tipo;
-        public int ToracicaProximal;
-        public int ToraricaPrincipal;
-        public int ToracoLombar;
-    }
-
     /// <summary>
     /// 0 = NÃO POSSUI ÂNGULO ACIMA DE 25
     /// 1 = POSSUI ÂNGULO ACIMA DE 25
     /// 2 = CURVA PRINCIPAL
     /// </summary>
     /// <returns>Tipo de curva no formato Tipo de curva (1-6)</returns>
-    public List<TipoCurva> tipoCurvas = new(){
+    public static List<TipoCurva> tipoCurvas = new(){
         new(){Tipo = 1, ToracicaProximal=0, ToraricaPrincipal=2, ToracoLombar=0},
         new(){Tipo = 2, ToracicaProximal=1, ToraricaPrincipal=2, ToracoLombar=0},
         new(){Tipo = 3, ToracicaProximal=0, ToraricaPrincipal=2, ToracoLombar=1},
@@ -48,28 +20,23 @@ public class ClassificatorController : MonoBehaviour
         new(){Tipo = 6, ToracicaProximal=0, ToraricaPrincipal=1, ToracoLombar=2}
     };
 
-    private void OnEnable()
-    {
-        Classificate();
-    }
-
-    private void Classificate()
+    public static void Classificate(List<ClassificationData> classifications)
     {
         int[] classification = { 0, 0, 0 };
         TipoCurva tipoCurva = new();
 
         // CALCULANDO FRONTAL
-        for (int i = 0; i < degreeDatas[0].Degrees.Count; i++)
+        for (int i = 0; i < classifications[0].classification.Degrees.Count; i++)
         {
-            if (degreeDatas[0].Degrees[i].degree >= 25f)
+            if (classifications[0].classification.Degrees[i] >= 25f)
                 classification[i] = 1;
         }
 
         // CALCULANDO INCLINAÇÕES
-        float grauPrincipalEsquerda = degreeDatas[(int)Estados.InclinacaoEsquerda].Degrees[0].degree;
+        float grauPrincipalEsquerda = classifications[(int)States.LeftInclination].classification.Degrees[0];
 
-        float grauProximalDireita = degreeDatas[(int)Estados.InclinacaoDireita].Degrees[0].degree;
-        float grauLombarDireita = degreeDatas[(int)Estados.InclinacaoDireita].Degrees[1].degree;
+        float grauProximalDireita = classifications[(int)States.RightInclination].classification.Degrees[0];
+        float grauLombarDireita = classifications[(int)States.RightInclination].classification.Degrees[1];
 
         if (grauPrincipalEsquerda >= 25f)
             classification[(int)Toracica.Principal] = 1;
@@ -80,7 +47,7 @@ public class ClassificatorController : MonoBehaviour
         if (grauLombarDireita >= 25f)
             classification[(int)Toracica.Lombar] = 1;
 
-        if (degreeDatas[(int)Estados.Frontal].Degrees[(int)Toracica.Principal].degree > degreeDatas[(int)Estados.Frontal].Degrees[(int)Toracica.Lombar].degree)
+        if (classifications[(int)States.Front].classification.Degrees[(int)Toracica.Principal] > classifications[(int)States.Front].classification.Degrees[(int)Toracica.Lombar])
             classification[1] += 1;
         else
             classification[2] += 1;
@@ -93,15 +60,22 @@ public class ClassificatorController : MonoBehaviour
                     curva.ToracoLombar == classification[2]
                 )
             );
-        float modificadorToracicoSagital = degreeDatas[(int)Estados.Lateral].Degrees[0].degree;
+        float modificadorToracicoSagital = classifications[(int)States.Lateral].classification.Degrees[0];
 
         // VERIFICANDO MODIFICADOR TORACICO SAGITAL
         string modificadorSagitalToracico = modificadorToracicoSagital < 10f ? "-" : (modificadorToracicoSagital >= 10f && modificadorToracicoSagital <= 40f) ? "N" : "+";
-        string sacro = degreeDatas[(int)Estados.Frontal].sacro.ToString();
-        classificationText.text = $"A classificação é do tipo:\n\n{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
-        Debug.Log($"classifição: {classification[0]} {classification[1]} {classification[2]}");
-        foreach (DegreeData data in degreeDatas)
-            data.Reset();
+        ClassificationWithSacro clsSacro = classifications[(int)States.Front].classification as ClassificationWithSacro;
+        string sacro = clsSacro.Sacro.ToString();
+        clsSacro.ClassificationCode = $"{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
+        StateInfo stateInfo = new StateInfo()
+        {
+            title = "Classificação",
+            contents = new List<string>(){ clsSacro.ClassificationCode }
+        };
+        List<StateInfo> serializeInfo = new List<StateInfo>() { stateInfo };
+        string serialized = JsonConvert.SerializeObject(serializeInfo, Formatting.Indented);
+        File.WriteAllText($"{Application.streamingAssetsPath}/StatesFiles/Report.json", serialized);
+        Debug.Log($"classifição: {tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}");
     }
 
 }

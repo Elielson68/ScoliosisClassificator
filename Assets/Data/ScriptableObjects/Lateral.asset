@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Lateral
   m_EditorClassIdentifier: 
   State: 3
+  SubState: -1
   Lines: []
   Image: 
+  Degrees: []
   Rules:
   - Name: Principal
     TotalLines: 2

@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ClassificationWithSacro", menuName = "EscolioseClassificator/ClassificationWithSacro", order = 0)]
 public class ClassificationWithSacro : Classification
 {
+    public string ClassificationCode;
     public List<Line> SubLines;
     public Sacro Sacro;
 
