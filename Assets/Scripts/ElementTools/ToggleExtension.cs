@@ -9,8 +9,8 @@ public class ToggleExtension : Toggle
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        ImageManipulation.DisableImageManipulation = true;
-        LineCalculateController.BlockCreationLineGlobal = true;
+        //ImageManipulation.DisableImageManipulation = true;
+        DrawLinesController.BlockCreationLineGlobal = true;
         base.OnPointerDown(eventData);
     }
 

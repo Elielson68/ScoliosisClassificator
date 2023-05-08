@@ -8,12 +8,12 @@ public class PointController : MonoBehaviour
     public static bool DisableMove { get; set; }
     private RectTransform rectTransform;
     public bool IsSacralPoint;
-    private LineCalculateController retaController;
+    private DrawLinesController retaController;
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        retaController = FindObjectOfType<LineCalculateController>();
+        retaController = FindObjectOfType<DrawLinesController>();
     }
 
     void Update()
@@ -28,24 +28,22 @@ public class PointController : MonoBehaviour
 
     private void OnEnable()
     {
-        DisableMove = LineCalculateController.SacroStep = IsSacralPoint;
+        DisableMove = IsSacralPoint;
     }
 
     private void OnMouseDown()
     {
-        if (LineCalculateController.IsLineCompleted || IsSacralPoint)
+        if (DrawLinesController.IsLineCompleted || IsSacralPoint)
             IsMouseOnPoint = true;
     }
     private void OnMouseUp()
     {
-        if (LineCalculateController.IsLineCompleted || IsSacralPoint)
+        if (DrawLinesController.IsLineCompleted || IsSacralPoint)
             IsMouseOnPoint = false;
-        if (IsSacralPoint is false)
-            retaController.UpdateDegrees();
     }
     private void OnMouseDrag()
     {
-        if (LineCalculateController.IsLineCompleted || IsSacralPoint)
+        if (DrawLinesController.IsLineCompleted || IsSacralPoint)
         {
             IsMouseOnPoint = true;
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="content" style="width: 100%; height: 1920px; min-height: 100%; position: absolute;">
+        <ui:VisualElement name="Background" style="display: flex; visibility: visible; overflow: visible; width: 100%; height: 100%; align-items: center; justify-content: center; background-color: rgb(40, 100, 90);">
+            <ui:VisualElement name="Logo" style="flex-direction: column; height: 70%; width: 40%; align-items: auto; background-image: url(&apos;project://database/Assets/Design/Icons/Logo%20ScoliApp.png?fileID=21300000&amp;guid=be6bdc29be270de4b9343c1ebb063610&amp;type=3#Logo ScoliApp&apos;); max-width: none; max-height: none; -unity-background-scale-mode: scale-to-fit;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Menu" style="width: 100%; height: 50%; align-items: center; justify-content: space-around; background-color: rgb(40, 100, 90); -unity-text-align: upper-center;">
+            <ui:Button text="Classificar" display-tooltip-when-elided="true" name="classification" style="width: 40%; height: 25%; white-space: nowrap; align-items: center; font-size: 40%; background-color: rgb(255, 255, 255); -unity-background-image-tint-color: rgb(236, 236, 236); color: rgb(0, 0, 0);" />
+            <ui:Button text="Histórico" display-tooltip-when-elided="true" name="history" style="width: 40%; justify-content: center; align-items: center; -unity-text-align: middle-center; white-space: nowrap; height: 25%; flex-direction: column; font-size: 40%; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" />
+            <ui:Button text="Sobre" display-tooltip-when-elided="true" name="about" style="width: 40%; justify-content: center; align-items: center; -unity-text-align: middle-center; white-space: nowrap; height: 25%; flex-direction: column; font-size: 40%; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

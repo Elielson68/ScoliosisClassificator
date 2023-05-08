@@ -53,3 +53,5 @@ crashlytics-build.properties
 /Assets/TWD
 /.vscode
 /UserSettings
+
+/Assets/StreamingAssets/Reports/*
