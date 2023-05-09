@@ -57,3 +57,22 @@ public struct TipoCurva
     public int ToraricaPrincipal;
     public int ToracoLombar;
 }
+
+public struct LinePair
+{
+    public LineRenderer UpLine;
+    public LineRenderer ActualLine;
+    public LineRenderer DownLine;
+
+    public float DegreeBetweenActualAndUp;
+    public float DegreeBetweenActualAndDown;
+
+    public LinePair(int degreeUp = -1, int degreeDown = -1)
+    {
+        DegreeBetweenActualAndUp = degreeUp;
+        DegreeBetweenActualAndDown = degreeDown;
+        UpLine = null;
+        ActualLine = null;
+        DownLine = null;
+    }
+} 
