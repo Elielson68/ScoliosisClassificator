@@ -45,7 +45,7 @@ public class DrawLinesController : MonoBehaviour
     private void OnDisable()
     {
         PointController.OnDragPoint -= UpdateDegreeExtreme;
-        PointController.OnDragPoint -= UpdateDegreeExtreme;
+        StateController.OnBeforeUpdateState -= AddLinesToStateOnFinishState;
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
