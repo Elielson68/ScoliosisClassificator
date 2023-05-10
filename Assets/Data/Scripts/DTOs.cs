@@ -63,7 +63,9 @@ public struct LinePair
     public LineRenderer UpLine;
     public LineRenderer ActualLine;
     public LineRenderer DownLine;
-
+    public Label ScreenDegreeUp;
+    public Label ScreenDegreeDown;
+    
     public float DegreeBetweenActualAndUp;
     public float DegreeBetweenActualAndDown;
 
@@ -74,5 +76,7 @@ public struct LinePair
         UpLine = null;
         ActualLine = null;
         DownLine = null;
+        ScreenDegreeDown = null;
+        ScreenDegreeUp = null;
     }
 } 

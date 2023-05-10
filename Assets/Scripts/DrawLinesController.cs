@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class DrawLinesController : MonoBehaviour
@@ -13,6 +14,7 @@ public class DrawLinesController : MonoBehaviour
     public static bool BlockCreationLineGlobal { get; set; }
     public RawImage Image;
     
+    private const string DegreeLabelStyle = "degree-label";
     private LineController _auxLine;
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
@@ -21,6 +23,7 @@ public class DrawLinesController : MonoBehaviour
     private ImageStateController _imgStateController;
     private LineRenderer _lastPointCreated;
     private Dictionary<LineRenderer, LinePair> _lineDegrees = new Dictionary<LineRenderer, LinePair>();
+    private ScrollView _contentDegree;
 
     private void OnEnable()
     {
@@ -40,6 +43,8 @@ public class DrawLinesController : MonoBehaviour
         _imgStateController.UpdateImageOnChangeState();
 
         PointController.OnDragPoint += UpdateDegreeExtreme;
+
+        _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>("degree-content");
     }
 
     private void OnDisable()
@@ -133,14 +138,21 @@ public class DrawLinesController : MonoBehaviour
         {
             var line = new LineRenderer();
             _lastPointCreated = actualLine;
+            Label screenDegree = new Label("-1");
+            screenDegree.AddToClassList(DegreeLabelStyle);
+
             LinePair newLine = new LinePair()
             {
-                ActualLine = actualLine
+                ActualLine = actualLine,
+                ScreenDegreeDown = screenDegree
             };
             _lineDegrees.Add(actualLine, newLine);
         }
         else if (_lineDegrees[_lastPointCreated].DownLine is null)
         {
+            Label screenDegree = new Label("-1");
+            screenDegree.AddToClassList(DegreeLabelStyle);
+
             LinePair aux = _lineDegrees[_lastPointCreated];
             aux.DownLine = actualLine;
             _lineDegrees[_lastPointCreated] = aux;
@@ -148,12 +160,14 @@ public class DrawLinesController : MonoBehaviour
             LinePair newLine = new LinePair()
             {
                 ActualLine = actualLine,
-                UpLine = _lastPointCreated
+                UpLine = _lastPointCreated,
+                ScreenDegreeDown = screenDegree,
+                ScreenDegreeUp = aux.ScreenDegreeDown
             };
-            
             _lineDegrees.Add(actualLine, newLine);
+            UpdateDegreeExtreme(actualLine);
             _lastPointCreated = actualLine;
-            
+
         }
     }
 
@@ -168,11 +182,15 @@ public class DrawLinesController : MonoBehaviour
         {
             float degree = GetDegreeBetweenLines(ActualMoved, Up);
             moveLineStruct.DegreeBetweenActualAndUp = degree;
+            if(moveLineStruct.ScreenDegreeUp is not null)
+                moveLineStruct.ScreenDegreeUp.text = degree.ToString();
         }
         if(Down is not null)
         {
             float degree = GetDegreeBetweenLines(ActualMoved, Down);
             moveLineStruct.DegreeBetweenActualAndDown = degree;
+            if(moveLineStruct.ScreenDegreeDown is not null)
+                moveLineStruct.ScreenDegreeDown.text = degree.ToString();
         }
         _lineDegrees[movedLine] = moveLineStruct;
     }
@@ -204,7 +222,8 @@ public class DrawLinesController : MonoBehaviour
         if(rule.TotalLines == _lineDegrees.Keys.Count)
         {
             cd.CurrentRule++;
-            
+            _contentDegree.Add(_lineDegrees[_lastPointCreated].ScreenDegreeUp);
+            UpdateDegreeExtreme(_lastPointCreated);
             if(cd.CurrentRule > cd.Rules.Count - 1)
             {
                 StateControll.ShowFowardButton();
@@ -226,7 +245,6 @@ public class DrawLinesController : MonoBehaviour
             {
                 if(i == rule.TotalLines - 1)
                 {
-                    
                     UpdateDegreeExtreme(lineKeys[i]);
                     cd.Degrees.Add(_lineDegrees[lineKeys[i]].DegreeBetweenActualAndUp);
                 }
