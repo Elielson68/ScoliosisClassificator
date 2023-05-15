@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -12,9 +11,11 @@ public class DrawLinesController : MonoBehaviour
     public GameObject Line;
     public static bool IsLineCompleted;
     public static bool BlockCreationLineGlobal { get; set; }
-    public RawImage Image;
+    public UnityEngine.UI.RawImage Image;
     
     private const string DegreeLabelStyle = "degree-label";
+    private const string ShowDegreeButton = "show-degree";
+    private const string ShowDegreeContent = "degree-content";
     private LineController _auxLine;
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
@@ -24,7 +25,9 @@ public class DrawLinesController : MonoBehaviour
     private LineRenderer _lastPointCreated;
     private Dictionary<LineRenderer, LinePair> _lineDegrees = new Dictionary<LineRenderer, LinePair>();
     private ScrollView _contentDegree;
-
+    private Button _showDegreeButton;
+    private bool _isShowingContentDegree;
+    
     private void OnEnable()
     {
         _collider = GetComponent<BoxCollider2D>();
@@ -36,6 +39,7 @@ public class DrawLinesController : MonoBehaviour
 
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
         StateController.OnFowardButtonClick += _imgStateController.UpdateImageOnChangeState;
+        StateController.OnFowardButtonClick += () => _contentDegree.Clear();
         
         StateController.OnBeforeUpdateState += AddLinesToStateOnFinishState;
 
@@ -44,8 +48,12 @@ public class DrawLinesController : MonoBehaviour
 
         PointController.OnDragPoint += UpdateDegreeExtreme;
 
-        _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>("degree-content");
+        _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>(ShowDegreeContent);
+        _showDegreeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<Button>(ShowDegreeButton);
+        
+        _showDegreeButton.RegisterCallback<ClickEvent>(ToggleContentDegree);
     }
+
 
     private void OnDisable()
     {
@@ -54,7 +62,27 @@ public class DrawLinesController : MonoBehaviour
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick -= () => _contentDegree.Clear();
+        _showDegreeButton.UnregisterCallback<ClickEvent>(ToggleContentDegree);
         BlockCreationLineGlobal = false;
+    }
+
+    private void ToggleContentDegree(ClickEvent evt)
+    {
+        _isShowingContentDegree = !_isShowingContentDegree;
+        _contentDegree.style.display = _isShowingContentDegree ?  DisplayStyle.Flex : DisplayStyle.None;
+    }
+    
+    public void ShowContentAndButtonDegree()
+    {
+        _contentDegree.style.display = DisplayStyle.Flex;
+        _showDegreeButton.style.display = DisplayStyle.Flex;
+    }
+
+    public void HideContentAndButtonDegree()
+    {
+        _contentDegree.style.display = DisplayStyle.None;
+        _showDegreeButton.style.display = DisplayStyle.None;
     }
 
     private void Update()

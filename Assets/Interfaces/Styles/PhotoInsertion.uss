@@ -152,34 +152,26 @@
 }
 
 .degree-label {
-    -unity-font: url('project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&guid=8a2b9e2a607dd2143b58c44bc32410b4&type=3#Electronic Highway Sign');
-    font-size: 226px;
+    -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#Arial');
+    font-size: 25px;
     -unity-font-style: bold;
     white-space: scale;
-    border-left-width: 492px;
+    border-left-width: 3px;
     border-right-width: 3px;
     border-top-width: 3px;
     border-bottom-width: 3px;
-    border-left-color: rgba(19, 19, 19, 255);
-    border-right-color: rgba(19, 19, 19, 255);
-    border-top-color: rgba(19, 19, 19, 255);
-    border-bottom-color: rgba(19, 19, 19, 255);
-    -unity-font-definition: none;
-    color: rgba(255, 255, 255, 255);
+    border-left-color: rgb(19, 19, 19);
+    border-right-color: rgb(19, 19, 19);
+    border-top-color: rgb(19, 19, 19);
+    border-bottom-color: rgb(19, 19, 19);
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 #degree-content {
-    width: 100px;
-    height: 100px;
-    transition-property: width, height;
-    transition-duration: 1s, 1s;
-    transition-delay: 0s, 1s;
-}
-
-#degree-content:hover {
-    width: 400px;
-    height: 500px;
-    transition-property: width, height;
-    transition-duration: 1s, 1s;
-    transition-delay: 0s, 1s;
+    width: 252px;
+    height: 248px;
 }
