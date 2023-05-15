@@ -19,6 +19,7 @@ public class StateController : MonoBehaviour
     public List<EnterNewFileExecute> ExecuteOnChangeFile;
     private Button fowardButton;
     public static event System.Action OnFowardButtonClick;
+    public static System.Action OnBeforeUpdateState;
     private Label content;
 
     private void OnEnable()
@@ -48,12 +49,13 @@ public class StateController : MonoBehaviour
             Debug.Log("Não há mais arquivos");
             return;
         }
-
+        
         if(IsAllStepsDone)
         {
             CurrentStep = 0;
             if(IsAllStatesDone)
             {
+                OnBeforeUpdateState?.Invoke();
                 UpdateStateFile();
                 ExecuteOnChangeFile.ForEach(actionEx => {
                     if(actionEx.FileName == StateFileList[CurrentStateFile])
@@ -65,6 +67,7 @@ public class StateController : MonoBehaviour
             }
             else
             {
+                OnBeforeUpdateState?.Invoke();
                 CurrentState++;
                 OnChangeState?.Invoke();
             }

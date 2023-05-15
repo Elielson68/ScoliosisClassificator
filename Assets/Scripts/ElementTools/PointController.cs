@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PointController : MonoBehaviour
@@ -9,6 +8,8 @@ public class PointController : MonoBehaviour
     private RectTransform rectTransform;
     public bool IsSacralPoint;
     private DrawLinesController retaController;
+
+    public static Action<LineRenderer> OnDragPoint;
 
     private void Start()
     {
@@ -56,6 +57,8 @@ public class PointController : MonoBehaviour
             }
             else
                 transform.position = pos;
+
+            OnDragPoint?.Invoke(GetComponentInParent<LineRenderer>());
         }
     }
 }
