@@ -38,7 +38,7 @@ public class HistoryController : MonoBehaviour
             FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
         });
 
-        foreach(string dir in Directory.GetDirectories(Application.streamingAssetsPath+"/Reports/"))
+        foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
         {
             Button reportFolder = new Button();
             reportFolder.text = (new DirectoryInfo(dir)).Name;

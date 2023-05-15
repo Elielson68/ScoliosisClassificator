@@ -11,7 +11,7 @@ public class ImageManipulation : MonoBehaviour
     public Vector3 OneTouchPosition;
     public bool MovingImage;
     public bool Zooming;
-    public static bool DisableImageManipulation {get; set;} = true;
+    public static bool DisableImageManipulation {get; set;} = false;
 
     private void Start()
     {
