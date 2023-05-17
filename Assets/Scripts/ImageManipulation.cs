@@ -1,21 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ImageManipulation : MonoBehaviour
 {
+    public static System.Action OnEditImageActive;
     public float DistanciaMatriz;
     public float Zoom;
-    public RawImage imagem;
+    public UnityEngine.UI.RawImage imagem;
     public Vector3 OneTouchPosition;
     public bool MovingImage;
     public bool Zooming;
-    public static bool DisableImageManipulation {get; set;} = false;
+    public static bool DisableImageManipulation {get; set;} = true;
+    private RadioButton _editModeButton;
 
-    private void Start()
+    private void OnEnable()
     {
-        //ImageStateController.OnStateImageChange += img => imagem = img;
+        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("edit-mode");
+        _editModeButton.RegisterCallback<ClickEvent>(EditImageAction);
+        DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
+    }
+
+    private void OnDisable()
+    {
+        _editModeButton.UnregisterCallback<ClickEvent>(EditImageAction);
+        DrawLinesController.OnDrawModeActive -= () => DisableImageManipulation = true;
+        DisableImageManipulation = true;
+    }
+
+    public void ShowEditModeButton()
+    {
+        _editModeButton.style.display = DisplayStyle.Flex;
+    }
+
+    public void HideEditModeButton()
+    {
+        _editModeButton.style.display = DisplayStyle.None;
+    }
+
+    private void EditImageAction(ClickEvent evt)
+    {
+        OnEditImageActive?.Invoke();
+        DisableImageManipulation = false;
     }
 
     private void Update()

@@ -117,8 +117,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 85c94ed00d335b94bab521a248fc64c0, type: 2}
-        m_TargetAssemblyTypeName: Classification, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: c0143a0f92d4e0445a03c76e2c599da7, type: 2}
+        m_TargetAssemblyTypeName: ClassificationWithSacro, Assembly-CSharp
         m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
@@ -275,12 +275,36 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: 
+          m_TargetAssemblyTypeName: DrawLinesController, Assembly-CSharp
+          m_MethodName: ShowContentAndButtonDegree
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: DrawLinesController, Assembly-CSharp
+          m_MethodName: ShowDrawModeButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 7058801823954514912}
+          m_TargetAssemblyTypeName: ImageManipulation, Assembly-CSharp
+          m_MethodName: ShowEditModeButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -290,6 +314,30 @@ MonoBehaviour:
     Execute:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: DrawLinesController, Assembly-CSharp
+          m_MethodName: HideContentAndButtonDegree
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: DrawLinesController, Assembly-CSharp
+          m_MethodName: HideDrawModeButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 4223132075451476632}
           m_TargetAssemblyTypeName: ReportController, Assembly-CSharp
           m_MethodName: StartReport
@@ -366,6 +414,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 7058801823954514912}
+          m_TargetAssemblyTypeName: ImageManipulation, Assembly-CSharp
+          m_MethodName: HideEditModeButton
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
