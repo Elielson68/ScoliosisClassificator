@@ -11,6 +11,7 @@ public class DrawLinesController : MonoBehaviour
     public GameObject Line;
     public static bool IsLineCompleted;
     public static bool BlockCreationLineGlobal { get; set; }
+    public static bool BlockCreationLineFinishState { get; set; }
     public UnityEngine.UI.RawImage Image;
     public static System.Action OnDrawModeActive;
 
@@ -21,7 +22,6 @@ public class DrawLinesController : MonoBehaviour
     private LineController _auxLine;
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
-    private bool _isClickOnUIElement;
     private List<ClassificationData> _classifications;
     private ImageStateController _imgStateController;
     private LineRenderer _lastPointCreated;
@@ -41,6 +41,7 @@ public class DrawLinesController : MonoBehaviour
         _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
 
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick += () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick += _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick += () => _contentDegree.Clear();
         
@@ -69,6 +70,7 @@ public class DrawLinesController : MonoBehaviour
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick -= () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick -= () => _contentDegree.Clear();
         ImageManipulation.OnEditImageActive -= () => BlockCreationLineGlobal = true;
         _showDegreeButton.UnregisterCallback<ClickEvent>(ToggleContentDegree);
@@ -112,7 +114,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void Update()
     {
-        if (BlockCreationLineGlobal)
+        if (BlockCreationLineGlobal || BlockCreationLineFinishState)
             if (_auxLine is not null && IsLineCompleted is false)
                 _auxLine = null;
     }
@@ -127,7 +129,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
         if (_firstPointCreated)
         {
             CreatePoint();
@@ -136,7 +138,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
         if (_firstPointCreated && _auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -147,7 +149,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
 
         if (_firstPointCreated is false)
         {
@@ -280,7 +282,7 @@ public class DrawLinesController : MonoBehaviour
             if(cd.CurrentRule > cd.Rules.Count - 1)
             {
                 StateControll.ShowFowardButton();
-                BlockCreationLineGlobal = true;
+                BlockCreationLineFinishState = true;
                 return;
             }
             StateControll.UpdateState();

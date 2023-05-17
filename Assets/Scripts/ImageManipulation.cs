@@ -15,14 +15,26 @@ public class ImageManipulation : MonoBehaviour
 
     private void OnEnable()
     {
-        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("edit-mode");
+        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("move-mode");
         _editModeButton.RegisterCallback<ClickEvent>(EditImageAction);
+        _editModeButton.RegisterCallback<FocusInEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = true;
+        });
+        _editModeButton.RegisterCallback<FocusOutEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = false;
+        });
         DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
     }
 
     private void OnDisable()
     {
         _editModeButton.UnregisterCallback<ClickEvent>(EditImageAction);
+        _editModeButton.UnregisterCallback<FocusInEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = true;
+        });
+        _editModeButton.UnregisterCallback<FocusOutEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = false;
+        });
         DrawLinesController.OnDrawModeActive -= () => DisableImageManipulation = true;
         DisableImageManipulation = true;
     }
