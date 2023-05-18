@@ -50,6 +50,7 @@ public class ReportController : MonoBehaviour
 
     public void ShowReportButtons(bool exportJsonOnShowButtons = true)
     {
+        imgStateController.SetToDefaultPositionAndScale();
         ReportButtonsContent.style.display = DisplayStyle.Flex;
         ClassificationFolder.GenerateFolderName();
         foreach(var classification in _classifications)
@@ -57,6 +58,7 @@ public class ReportController : MonoBehaviour
             radioButtons[classification.State].style.backgroundImage = new StyleBackground(imgStateController.GetStateImage(classification.State));
             radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
             radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
+            radioButtons[classification.State].RegisterCallback<ClickEvent, Tuple<Vector3, Vector3>>(UpdatePositionAndScale, new Tuple<Vector3, Vector3>(classification.classification.PositionImage, classification.classification.ScaleImage));
             
             if(exportJsonOnShowButtons)
             {
@@ -71,6 +73,7 @@ public class ReportController : MonoBehaviour
 
                 sacroButton.RegisterCallback<ClickEvent>(UpdateTexturePanel);
                 sacroButton.RegisterCallback<ClickEvent, List<Line>>(DrawLine, clsSub.SubLines);
+                sacroButton.RegisterCallback<ClickEvent>(SetToDefaultPositionAndScale);
             }
         }
         imgStateController.UpdateImageToState(States.Front);
@@ -84,6 +87,7 @@ public class ReportController : MonoBehaviour
 
     public void ShowImageReport()
     {
+        imgStateController.SetToDefaultPositionAndScale();
         ReportImage.gameObject.SetActive(true);
     }
 
@@ -91,6 +95,7 @@ public class ReportController : MonoBehaviour
     {
         ReportButtonsContent.style.display = DisplayStyle.None;
         ReportImage.gameObject.SetActive(false);
+        imgStateController.SetToDefaultPositionAndScale();
         ClearLines();
     }
 
@@ -98,6 +103,17 @@ public class ReportController : MonoBehaviour
     {
         RadioButton button = evt.currentTarget as RadioButton;
         imgStateController.UpdateImageToState(button.style.backgroundImage.value.texture);
+    }
+
+    public void UpdatePositionAndScale(ClickEvent evt, Tuple<Vector3, Vector3> param)
+    {
+        RadioButton button = evt.currentTarget as RadioButton;
+        imgStateController.UpdatePositionAndScale(param.Item1, param.Item2);
+    }
+
+    public void SetToDefaultPositionAndScale(ClickEvent evt)
+    {
+        imgStateController.SetToDefaultPositionAndScale();
     }
 
     public void DrawLine(ClickEvent evt, List<Line> lines)

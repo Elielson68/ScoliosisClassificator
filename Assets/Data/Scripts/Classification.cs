@@ -23,6 +23,9 @@ public class Classification : ScriptableObject
 
     public List<Rule> Rules;
     public int CurrentRule;
+    public Vector3 PositionImage;
+    public Vector3 ScaleImage;
+
     public void SetImage(byte[] image)
     {
         Image = image;
@@ -47,6 +50,8 @@ public class Classification : ScriptableObject
         State = obj.State;
         Lines = obj.Lines;
         Image = obj.Image;
+        PositionImage = obj.PositionImage;
+        ScaleImage = obj.ScaleImage;
     }
 
     [ContextMenu("Reset Values")]
@@ -56,5 +61,7 @@ public class Classification : ScriptableObject
         Lines = new List<Line>();
         Image = new byte[0];
         Degrees = new List<float>();
+        PositionImage = Vector3.zero;
+        ScaleImage = Vector3.zero;
     }
 }
