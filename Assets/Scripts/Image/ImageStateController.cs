@@ -30,6 +30,16 @@ public class ImageStateController : MonoBehaviour
     {
         _rawImageController.UpdateTexturePanel(img);
     }
+    
+    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal)
+    {
+        _rawImageController.UpdatePositionAndScale(pos, scal);
+    }
+    
+    public void SetToDefaultPositionAndScale()
+    {
+        _rawImageController.SetToDefaultPositionAndScale();
+    }
 
     public Texture2D GetStateImage(States state)
     {

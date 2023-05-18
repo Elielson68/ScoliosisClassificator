@@ -1,21 +1,68 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ImageManipulation : MonoBehaviour
 {
+    public readonly static Vector3 DefaultPositionImage = new Vector3(-3.1f, 78.5f, 10f);
+    public readonly static Vector3 DefaultScaleImage = Vector3.one;
+    public static System.Action OnEditImageActive;
     public float DistanciaMatriz;
     public float Zoom;
-    public RawImage imagem;
+    public UnityEngine.UI.RawImage imagem;
     public Vector3 OneTouchPosition;
     public bool MovingImage;
     public bool Zooming;
     public static bool DisableImageManipulation {get; set;} = true;
+    private RadioButton _editModeButton;
+    private List<ClassificationData> _classifications;
+    private StateController _stateController;
 
-    private void Start()
+    private void OnEnable()
     {
-        //ImageStateController.OnStateImageChange += img => imagem = img;
+        _classifications = FindObjectOfType<Classifications>()[0];
+        _stateController = FindObjectOfType<StateController>();
+        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("move-mode");
+        _editModeButton.RegisterCallback<ClickEvent>(EditImageAction);
+        _editModeButton.RegisterCallback<FocusInEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = true;
+        });
+        _editModeButton.RegisterCallback<FocusOutEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = false;
+        });
+        DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
+
+        StateController.OnBeforeUpdateState += UpdatePositionAndScaleImageState;
+    }
+
+    private void OnDisable()
+    {
+        _editModeButton.UnregisterCallback<ClickEvent>(EditImageAction);
+        _editModeButton.UnregisterCallback<FocusInEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = true;
+        });
+        _editModeButton.UnregisterCallback<FocusOutEvent>(evt => {
+            VisualElementInteraction.IsVisualElementFocus = false;
+        });
+        StateController.OnBeforeUpdateState -= UpdatePositionAndScaleImageState;
+        DrawLinesController.OnDrawModeActive -= () => DisableImageManipulation = true;
+        DisableImageManipulation = true;
+    }
+
+    public void ShowEditModeButton()
+    {
+        _editModeButton.style.display = DisplayStyle.Flex;
+    }
+
+    public void HideEditModeButton()
+    {
+        _editModeButton.style.display = DisplayStyle.None;
+    }
+
+    private void EditImageAction(ClickEvent evt)
+    {
+        OnEditImageActive?.Invoke();
+        DisableImageManipulation = false;
     }
 
     private void Update()
@@ -50,10 +97,14 @@ public class ImageManipulation : MonoBehaviour
             Zoom = Vector3.Distance(pos_touch_1, pos_touch_2) - DistanciaMatriz;
             DistanciaMatriz = Vector3.Distance(pos_touch_1, pos_touch_2);
             imagem.transform.localScale += ((Vector3.one * Zoom)/10);
+            _classifications[(int)StateController.CurrentState].classification.ScaleImage = imagem.transform.localScale;
         }
 
         if(imagem.transform.localScale.x < 0)
-            imagem.transform.localScale = Vector3.one/10;
+        {
+            imagem.transform.localScale = _classifications[(int)StateController.CurrentState].classification.ScaleImage = Vector3.one/10;
+        }
+
 
         MovingImage = false;
     }
@@ -73,6 +124,14 @@ public class ImageManipulation : MonoBehaviour
             MovingImage = true;
 
         if(MovingImage)
-            imagem.transform.position = pos_touch_1;
+            imagem.transform.position = _classifications[(int)StateController.CurrentState].classification.PositionImage = pos_touch_1;
+    }
+
+    private void UpdatePositionAndScaleImageState()
+    {
+        _classifications[(int)StateController.CurrentState].classification.PositionImage = imagem.transform.position;
+        _classifications[(int)StateController.CurrentState].classification.ScaleImage = imagem.transform.localScale;
+        imagem.transform.localPosition = DefaultPositionImage;
+        imagem.transform.localScale = DefaultScaleImage;
     }
 }

@@ -13,12 +13,12 @@ public class StateController : MonoBehaviour
     public int CurrentStep;
     public int CurrentStateFile;
     public List<StateInfo> Data = new List<StateInfo>();
-    public static event System.Action<States> OnUpdateState;
-    public static event System.Action OnChangeState;
+    public static System.Action<States> OnUpdateState;
+    public static System.Action OnChangeState;
     public UnityEvent ExecuteOnStart;
     public List<EnterNewFileExecute> ExecuteOnChangeFile;
     private Button fowardButton;
-    public static event System.Action OnFowardButtonClick;
+    public static System.Action OnFowardButtonClick;
     public static System.Action OnBeforeUpdateState;
     private Label content;
 
@@ -98,7 +98,7 @@ public class StateController : MonoBehaviour
 
     private void UpdateFile()
     {
-        string text = File.ReadAllText($"{Application.streamingAssetsPath}/StatesFiles/{StateFileList[CurrentStateFile]}.json");
+        string text = File.ReadAllText($"{ClassificationFolder.SaveDataFolder}/StatesFiles/{StateFileList[CurrentStateFile]}.json");
         Data = JsonConvert.DeserializeObject<List<StateInfo>>(text);
     }
 

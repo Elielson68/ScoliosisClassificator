@@ -11,21 +11,24 @@ public class DrawLinesController : MonoBehaviour
     public GameObject Line;
     public static bool IsLineCompleted;
     public static bool BlockCreationLineGlobal { get; set; }
+    public static bool BlockCreationLineFinishState { get; set; }
     public UnityEngine.UI.RawImage Image;
-    
+    public static System.Action OnDrawModeActive;
+
     private const string DegreeLabelStyle = "degree-label";
     private const string ShowDegreeButton = "show-degree";
+    private const string DrawModeButton = "draw-mode";
     private const string ShowDegreeContent = "degree-content";
     private LineController _auxLine;
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
-    private bool _isClickOnUIElement;
     private List<ClassificationData> _classifications;
     private ImageStateController _imgStateController;
     private LineRenderer _lastPointCreated;
     private Dictionary<LineRenderer, LinePair> _lineDegrees = new Dictionary<LineRenderer, LinePair>();
     private ScrollView _contentDegree;
     private Button _showDegreeButton;
+    private RadioButton _drawModeButton;
     private bool _isShowingContentDegree;
     
     private void OnEnable()
@@ -38,6 +41,7 @@ public class DrawLinesController : MonoBehaviour
         _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
 
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick += () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick += _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick += () => _contentDegree.Clear();
         
@@ -50,8 +54,12 @@ public class DrawLinesController : MonoBehaviour
 
         _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>(ShowDegreeContent);
         _showDegreeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<Button>(ShowDegreeButton);
-        
+        _drawModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>(DrawModeButton);
+
         _showDegreeButton.RegisterCallback<ClickEvent>(ToggleContentDegree);
+        _drawModeButton.RegisterCallback<ClickEvent>(DrawModeAction);
+
+        ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
     }
 
 
@@ -62,9 +70,28 @@ public class DrawLinesController : MonoBehaviour
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
         StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
+        StateController.OnFowardButtonClick -= () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick -= () => _contentDegree.Clear();
+        ImageManipulation.OnEditImageActive -= () => BlockCreationLineGlobal = true;
         _showDegreeButton.UnregisterCallback<ClickEvent>(ToggleContentDegree);
+        _drawModeButton.UnregisterCallback<ClickEvent>(DrawModeAction);
         BlockCreationLineGlobal = false;
+    }
+
+    private void DrawModeAction(ClickEvent evt)
+    {
+        OnDrawModeActive?.Invoke();
+        BlockCreationLineGlobal = false;
+    }
+
+    public void ShowDrawModeButton()
+    {
+        _drawModeButton.style.display = DisplayStyle.Flex;
+    }
+
+    public void HideDrawModeButton()
+    {
+        _drawModeButton.style.display = DisplayStyle.None;
     }
 
     private void ToggleContentDegree(ClickEvent evt)
@@ -87,7 +114,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void Update()
     {
-        if (BlockCreationLineGlobal)
+        if (BlockCreationLineGlobal || BlockCreationLineFinishState)
             if (_auxLine is not null && IsLineCompleted is false)
                 _auxLine = null;
     }
@@ -102,7 +129,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
         if (_firstPointCreated)
         {
             CreatePoint();
@@ -111,7 +138,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
         if (_firstPointCreated && _auxLine is not null)
         {
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -122,7 +149,7 @@ public class DrawLinesController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (BlockCreationLineGlobal || _isClickOnUIElement) return;
+        if (BlockCreationLineGlobal || VisualElementInteraction.IsVisualElementFocus || BlockCreationLineFinishState) return;
 
         if (_firstPointCreated is false)
         {
@@ -255,7 +282,7 @@ public class DrawLinesController : MonoBehaviour
             if(cd.CurrentRule > cd.Rules.Count - 1)
             {
                 StateControll.ShowFowardButton();
-                BlockCreationLineGlobal = true;
+                BlockCreationLineFinishState = true;
                 return;
             }
             StateControll.UpdateState();

@@ -5,6 +5,7 @@ public class PointController : MonoBehaviour
 {
     public static bool IsMouseOnPoint;
     public static bool DisableMove { get; set; }
+    private static bool IsRegistered;
     private RectTransform rectTransform;
     public bool IsSacralPoint;
     private DrawLinesController retaController;
@@ -29,7 +30,21 @@ public class PointController : MonoBehaviour
 
     private void OnEnable()
     {
+        if(IsRegistered is false)
+        {
+            ImageManipulation.OnEditImageActive += () => DisableMove = true;
+            DrawLinesController.OnDrawModeActive += () => DisableMove = false;
+            IsRegistered = true;
+        }
+        
         DisableMove = IsSacralPoint;
+    }
+
+    private void OnDisable()
+    {
+        ImageManipulation.OnEditImageActive -= () => DisableMove = true;
+        DrawLinesController.OnDrawModeActive -= () => DisableMove = false;
+        IsRegistered = false;
     }
 
     private void OnMouseDown()

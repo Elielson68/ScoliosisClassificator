@@ -26,6 +26,8 @@ public class ClassificationWithSacro : Classification
         Image = obj.Image;
         SubLines = obj.SubLines;
         Sacro = obj.Sacro;
+        PositionImage = obj.PositionImage;
+        ScaleImage = obj.ScaleImage;
     }
 
     [ContextMenu("Reset Values")]

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class OptionController : MonoBehaviour
@@ -17,6 +14,7 @@ public class OptionController : MonoBehaviour
     {
         _root = FindObjectOfType<UIDocument>().rootVisualElement;
         ChangeScreen(Screens.Initial);
+        ClassificationFolder.ConfigureFoldersOnAndroid();
     }
 
     public void ChangeScreen(Screens screens)

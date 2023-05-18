@@ -20,4 +20,16 @@ public class RawImageController
         text.Apply();
         return text;
     }
+
+    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal)
+    {
+        Image.transform.position = pos;
+        Image.transform.localScale = scal;
+    }
+
+    public void SetToDefaultPositionAndScale()
+    {
+        Image.transform.localPosition = ImageManipulation.DefaultPositionImage;
+        Image.transform.localScale = ImageManipulation.DefaultScaleImage;
+    }
 }
