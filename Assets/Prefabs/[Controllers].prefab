@@ -875,6 +875,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Report|History] Controller'
       objectReference: {fileID: 0}
+    - target: {fileID: 9052958143152467231, guid: a3144934e7ef8d24ebe36d18ca3506f8, type: 3}
+      propertyPath: ItemStory
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: a3430c763a51410418c67134d7d72f91, type: 3}
+    - target: {fileID: 9052958143152467231, guid: a3144934e7ef8d24ebe36d18ca3506f8, type: 3}
+      propertyPath: EditNamePopup
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 84810b6dca82755478363a865c942bac, type: 3}
+    - target: {fileID: 9052958143152467231, guid: a3144934e7ef8d24ebe36d18ca3506f8, type: 3}
+      propertyPath: DeleteItemPopup
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 130bb623d19916f4f9ddec26da22b84e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3144934e7ef8d24ebe36d18ca3506f8, type: 3}
 --- !u!4 &1688719124217208382 stripped
