@@ -1,13 +1,13 @@
 .button {
-    width: 20%;
-    height: 50%;
+    width: 30%;
+    height: 80%;
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .steps {
     width: 20%;
     height: 40%;
-    background-color: rgba(255, 255, 255, 255);
+    background-color: rgb(255, 255, 255);
     margin-right: 10px;
     margin-left: 10px;
     border-top-left-radius: 10px;

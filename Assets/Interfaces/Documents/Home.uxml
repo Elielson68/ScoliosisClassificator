@@ -11,6 +11,6 @@
     <ui:VisualElement name="Menu" style="width: 100%; height: 40%; align-items: center; justify-content: flex-start; -unity-text-align: upper-center;">
         <ui:Button text="Classificar" display-tooltip-when-elided="true" name="classification" class="menu-buttons" />
         <ui:Button text="Histórico" display-tooltip-when-elided="true" name="history" class="menu-buttons" />
-        <ui:Button text="Sobre" display-tooltip-when-elided="true" name="about" class="menu-buttons" />
+        <ui:Button text="Tutorial" display-tooltip-when-elided="true" name="about" class="menu-buttons" />
     </ui:VisualElement>
 </ui:UXML>

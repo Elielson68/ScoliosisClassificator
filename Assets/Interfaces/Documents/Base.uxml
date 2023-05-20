@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="StatesFlow" src="project://database/Assets/Interfaces/Documents/StatesFlow.uxml?fileID=9197481963319205126&amp;guid=421be474193a83c49b02fc01790932a9&amp;type=3#StatesFlow" />
+    <ui:Instance template="StatesFlow" name="StatesFlow" style="width: 100%; height: 100%;" />
+</ui:UXML>
