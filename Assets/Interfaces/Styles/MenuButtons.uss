@@ -17,10 +17,10 @@
     font-size: 250%;
     -unity-text-align: middle-center;
     margin-top: 30px;
-    border-left-color: rgba(1, 121, 220, 255);
-    border-right-color: rgba(1, 121, 220, 255);
-    border-top-color: rgba(1, 121, 220, 255);
-    border-bottom-color: rgba(1, 121, 220, 255);
+    border-left-color: rgb(1, 121, 220);
+    border-right-color: rgb(1, 121, 220);
+    border-top-color: rgb(1, 121, 220);
+    border-bottom-color: rgb(1, 121, 220);
 }
 
 .menu-buttons:hover {
