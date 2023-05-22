@@ -1,0 +1,17 @@
+.dropside {
+    width: 5%;
+    height: 40%;
+    background-color: rgba(120, 120, 120, 255);
+    margin-top: 20px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
+
+.dropside:focus {
+    width: 20%;
+    height: 40%;
+    background-color: rgb(120, 120, 120);
+    margin-top: 20px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
