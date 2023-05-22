@@ -12,7 +12,7 @@
                 <ui:VisualElement name="step" class="steps" />
                 <ui:VisualElement name="step" class="steps" />
             </ui:VisualElement>
-            <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" name="title-step" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255); -unity-text-align: middle-center;" />
+            <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" name="title-step" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255); -unity-text-align: middle-center; white-space: normal;" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="width: 80%; height: 60%; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0); display: flex;">
             <ui:VisualElement name="dropside-area" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-end; align-items: flex-start;">
