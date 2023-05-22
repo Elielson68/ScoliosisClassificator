@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MyUILibrary;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,7 +15,7 @@ public class ImageManipulation : MonoBehaviour
     public bool MovingImage;
     public bool Zooming;
     public static bool DisableImageManipulation {get; set;} = true;
-    private RadioButton _editModeButton;
+    private SlideToggle _editModeToggle;
     private List<ClassificationData> _classifications;
     private StateController _stateController;
 
@@ -22,12 +23,12 @@ public class ImageManipulation : MonoBehaviour
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         _stateController = FindObjectOfType<StateController>();
-        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("move-mode");
-        _editModeButton.RegisterCallback<ClickEvent>(EditImageAction);
-        _editModeButton.RegisterCallback<FocusInEvent>(evt => {
+        _editModeToggle = FindObjectOfType<UIDocument>().rootVisualElement.Q<SlideToggle>();
+        _editModeToggle.RegisterCallback<ChangeEvent<bool>>(EditImageAction);
+        _editModeToggle.RegisterCallback<FocusInEvent>(evt => {
             VisualElementInteraction.IsVisualElementFocus = true;
         });
-        _editModeButton.RegisterCallback<FocusOutEvent>(evt => {
+        _editModeToggle.RegisterCallback<FocusOutEvent>(evt => {
             VisualElementInteraction.IsVisualElementFocus = false;
         });
         DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
@@ -37,11 +38,11 @@ public class ImageManipulation : MonoBehaviour
 
     private void OnDisable()
     {
-        _editModeButton.UnregisterCallback<ClickEvent>(EditImageAction);
-        _editModeButton.UnregisterCallback<FocusInEvent>(evt => {
+        _editModeToggle.UnregisterCallback<ChangeEvent<bool>>(EditImageAction);
+        _editModeToggle.UnregisterCallback<FocusInEvent>(evt => {
             VisualElementInteraction.IsVisualElementFocus = true;
         });
-        _editModeButton.UnregisterCallback<FocusOutEvent>(evt => {
+        _editModeToggle.UnregisterCallback<FocusOutEvent>(evt => {
             VisualElementInteraction.IsVisualElementFocus = false;
         });
         StateController.OnBeforeUpdateState -= UpdatePositionAndScaleImageState;
@@ -51,18 +52,21 @@ public class ImageManipulation : MonoBehaviour
 
     public void ShowEditModeButton()
     {
-        _editModeButton.style.display = DisplayStyle.Flex;
+        //_editModeButton.style.display = DisplayStyle.Flex;
     }
 
     public void HideEditModeButton()
     {
-        _editModeButton.style.display = DisplayStyle.None;
+        //_editModeButton.style.display = DisplayStyle.None;
     }
 
-    private void EditImageAction(ClickEvent evt)
+    private void EditImageAction(ChangeEvent<bool> evt)
     {
-        OnEditImageActive?.Invoke();
-        DisableImageManipulation = false;
+        if(evt.newValue)
+        {
+            OnEditImageActive?.Invoke();
+            DisableImageManipulation = false;
+        }
     }
 
     private void Update()

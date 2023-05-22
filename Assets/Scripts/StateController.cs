@@ -21,19 +21,22 @@ public class StateController : MonoBehaviour
     public static System.Action OnFowardButtonClick;
     public static System.Action OnBeforeUpdateState;
     private Label content;
-
+    private VisualElement _footerButtonsContainer;
+    
     private void OnEnable()
     {
         CurrentStep = 0;
         CurrentStateFile = 0;
+        _footerButtonsContainer = document.rootVisualElement.Q("insert-image-flow");
         fowardButton = document.rootVisualElement.Q<Button>("foward-button");
-        content = document.rootVisualElement.Q<Label>("content");
+        content = document.rootVisualElement.Q<Label>("title-step");
         OnFowardButtonClick += UpdateState;
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
 
         ResetStateController();
 
         ExecuteOnStart?.Invoke();
+        HideFowardButton();
     }
 
     private void OnDisable()
@@ -110,12 +113,12 @@ public class StateController : MonoBehaviour
 
     public void ShowFowardButton()
     {
-        fowardButton.RemoveFromClassList("element-hidden");
+        fowardButton.style.display = DisplayStyle.Flex;
     }
 
     public void HideFowardButton()
     {
-        fowardButton.AddToClassList("element-hidden");
+        fowardButton.style.display = DisplayStyle.None;
     }
 
     private bool IsAllStatesDone => (int)CurrentState == Data.Count-1;
