@@ -113,7 +113,7 @@
 }
 
 #sacro-dropdown > VisualElement {
-    background-color: rgba(255, 255, 255, 255);
+    background-color: rgb(255, 255, 255);
     border-left-color: rgba(255, 255, 255, 0);
     border-right-color: rgba(255, 255, 255, 0);
     border-top-color: rgba(255, 255, 255, 0);
@@ -121,7 +121,7 @@
 }
 
 #sacro-dropdown > VisualElement > PopupTextElement {
-    color: rgba(0, 50, 90, 255);
+    color: rgb(0, 50, 90);
 }
 
 #sacro-dropdown > VisualElement > VisualElement {
