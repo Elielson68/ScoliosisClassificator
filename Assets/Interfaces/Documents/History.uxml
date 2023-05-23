@@ -1,9 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Report" src="project://database/Assets/Interfaces/Documents/Report.uxml?fileID=9197481963319205126&amp;guid=6a7ecd9068d04144fbca01922f007065&amp;type=3#Report" />
-    <Style src="project://database/Assets/Interfaces/Styles/PhotoInsertion.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#PhotoInsertion" />
+    <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
     <ui:VisualElement style="align-items: center; justify-content: center; margin-top: 25px; margin-bottom: 25px;">
         <ui:Button text="BACK" display-tooltip-when-elided="true" name="back-initial" style="width: 400px; height: 100px; align-items: center; justify-content: center; font-size: 50px; -unity-font-style: bold; background-color: rgba(209, 25, 25, 0.25); border-left-color: rgb(96, 87, 87); border-right-color: rgb(96, 87, 87); border-top-color: rgb(96, 87, 87); border-bottom-color: rgb(96, 87, 87); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="title" style="font-size: 85px; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-definition: none; color: rgb(255, 255, 255); -unity-font-style: bold;" />
     </ui:VisualElement>
     <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="history-content" style="width: 100%; height: 1280px; flex-wrap: wrap; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left-color: rgb(128, 124, 124); border-right-color: rgb(128, 124, 124); border-top-color: rgb(128, 124, 124); border-bottom-color: rgb(128, 124, 124); align-items: center; justify-content: center;" />
-    <ui:Instance template="Report" name="Report" style="display: none;" />
+    <ui:VisualElement name="report-flow" style="width: 100%; display: none;">
+        <ui:Instance template="Report" name="Report" style="display: flex;" />
+    </ui:VisualElement>
 </ui:UXML>

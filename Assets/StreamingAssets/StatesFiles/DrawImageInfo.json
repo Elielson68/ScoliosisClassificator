@@ -3,16 +3,16 @@
         "title": "Frontal",
         "contents": 
         [
-            "Frontal - Desenhe as linhas referente a Torácica Proximal",
-            "Frontal - Desenhe as linhas referente a Torácica Principal",
-            "Frontal - Desenhe as linhas referente a Toraco-Lombar"
+            "Desenhe as linhas referente a Torácica Proximal",
+            "Desenhe as linhas referente a Torácica Principal",
+            "Desenhe as linhas referente a Toraco-Lombar"
         ]
     },
     {
         "title": "Inclinação para a esquerda",
         "contents": 
         [
-            "Inclinação-Esquerda - Desenhe as linhas referente a Torácica Principal"
+            "Desenhe as linhas referente a Torácica Principal"
         ]
         
     },
@@ -20,8 +20,8 @@
         "title": "Inclinação para a direita",
         "contents": 
         [
-            "Inclinação-Direita - Desenhe as linhas referente a Torácica Proximal",
-            "Inclinação-Direita - Desenhe as linhas referente a Toraco-Lombar"
+            "Desenhe as linhas referente a Torácica Proximal",
+            "Desenhe as linhas referente a Toraco-Lombar"
         ]
         
         
@@ -30,7 +30,7 @@
         "title": "Inclinação lateral",
         "contents": 
         [
-            "Lateral - Desenhe as linhas referente a Torácica Principal"
+            "Desenhe as linhas referente ao Modificador toracico sagital (T5 a T12)"
         ]
     }
 ]

@@ -2,25 +2,25 @@
     {
         "title": "Frontal",
         "contents": [
-            "Inserir radiografia frontal"
+            "Insira o raio-x Frontal"
         ]
     },
     {
         "title": "Inclinação para a esquerda",
         "contents": [
-            "Inserir radiografia inclinada à esquerda"
+            "Insira o raio-x com a Inclinação em que diminui o ângulo da torácica principal"
         ]
     },
     {
         "title": "Inclinação para a direita",
         "contents": [
-            "Inserir radiografia inclinada à direita"
+            "Insira o raio-x  em que diminua o ângulo da torácica proximal e da toraco-lombar lombar"
         ]
     },
     {
         "title": "Inclinação lateral",
         "contents": [
-            "Inserir radiografia lateral"
+            "Insira o raio-x Lateral"
         ]
     }
 ]

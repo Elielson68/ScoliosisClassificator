@@ -3,16 +3,12 @@
     <Style src="project://database/Assets/Interfaces/Styles/PhotoFlow.uss?fileID=7433441132597879392&amp;guid=65a1ea2b9c905664585056929bc75e35&amp;type=3#PhotoFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/slide-toggle/slide-toggle.uss?fileID=7433441132597879392&amp;guid=1f42dd34834f0c251b7f69fab8c28bd1&amp;type=3#slide-toggle" />
-    <Style src="project://database/Assets/Interfaces/Styles/DropSide.uss?fileID=7433441132597879392&amp;guid=eb699de5af8911044891360790314ea2&amp;type=3#DropSide" />
-    <ui:VisualElement name="root" style="width: 100%; height: 100%; align-items: center; justify-content: center;">
+    <Style src="project://database/Assets/Interfaces/Styles/DropSide.uss?fileID=7433441132597879392&amp;guid=8a29922bd12c071b38e6b77876e3277e&amp;type=3#DropSide" />
+    <Style src="project://database/Assets/Interfaces/Styles/Step.uss?fileID=7433441132597879392&amp;guid=41be05664c755c64e97832e8b33fb241&amp;type=3#Step" />
+    <ui:VisualElement name="root" style="width: 100%; height: 1920px; align-items: center; justify-content: center; background-color: rgba(0, 50, 90, 0);">
         <ui:VisualElement name="header" style="width: 100%; height: 20%; justify-content: space-between;">
-            <ui:VisualElement name="steps-area" style="flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 50%;">
-                <ui:VisualElement name="step" class="steps" />
-                <ui:VisualElement name="step" class="steps" />
-                <ui:VisualElement name="step" class="steps" />
-                <ui:VisualElement name="step" class="steps" />
-            </ui:VisualElement>
-            <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255);" />
+            <ui:VisualElement name="steps-area" style="flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 50%;" />
+            <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" name="title" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255); -unity-text-align: middle-center; white-space: normal;" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="width: 80%; height: 60%; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0); display: flex;">
             <ui:VisualElement name="dropside-container" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-end; align-items: flex-start;">
@@ -22,30 +18,23 @@
             <ui:Label text="Adicionar arquivo" display-tooltip-when-elided="true" style="color: rgb(200, 200, 200); -unity-text-align: middle-center; font-size: 30%; -unity-font-style: bold; display: none;" />
             <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="degree-content" focusable="true" class="degree-default-content" style="left: 384px; bottom: -466px; background-color: rgba(135, 96, 96, 0.75); border-left-color: rgb(36, 32, 32); border-right-color: rgb(36, 32, 32); border-top-color: rgb(36, 32, 32); border-bottom-color: rgb(36, 32, 32); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; flex-wrap: wrap; position: absolute; display: none;" />
         </ui:VisualElement>
-        <ui:VisualElement name="footer" style="align-items: center; justify-content: space-between; width: 100%; height: 20%; flex-direction: row; display: flex; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;">
-            <ui:VisualElement name="insert-image-flow" style="display: none; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
-                <ui:VisualElement name="button-forward" class="button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-foward.png?fileID=2800000&amp;guid=380e48324631b3f2aa37bcea8865d8c2&amp;type=3#button-foward&apos;);">
-                    <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo element-hidden" style="background-image: url(&apos;center&apos;); margin-right: 36px; width: 1%; height: 35%; margin-top: 30px;" />
-                </ui:VisualElement>
-                <ui:VisualElement name="button-back" class="button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-back.png?fileID=2800000&amp;guid=525d823e3dcd552adbcf4962f8c80a68&amp;type=3#button-back&apos;);">
-                    <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo element-hidden" style="background-image: url(&apos;project://database/Assets/Design/Icons/icone%20seta.png?fileID=21300000&amp;guid=0a077cdc7242cab47bca953921cd0a43&amp;type=3#icone seta&apos;); margin-right: 36px; width: 1%; height: 35%; margin-top: 30px;" />
-                </ui:VisualElement>
+        <ui:VisualElement name="footer" style="align-items: center; justify-content: flex-end; width: 100%; height: 20%; flex-direction: row; display: flex; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;">
+            <ui:VisualElement name="insert-image-flow" style="display: none; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center; visibility: visible;">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="button-back" class="button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-back.png?fileID=2800000&amp;guid=525d823e3dcd552adbcf4962f8c80a68&amp;type=3#button-back&apos;); background-color: rgba(88, 88, 88, 0);" />
             </ui:VisualElement>
-            <ui:VisualElement name="sacro-type-flow" style="display: none; align-items: center; justify-content: center; width: 100%; height: 100%;">
-                <ui:DropdownField index="0" choices="A linha está..,Esquerda,Direita,Paralelo" name="sacro-dropdown" style="width: 80%; height: 50%; align-items: stretch; -unity-font-style: bold; font-size: 80%; -unity-text-align: middle-center; display: flex; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 30px; background-color: rgb(255, 255, 255); color: rgba(0, 0, 0, 0); padding-right: 30px;" />
+            <ui:VisualElement name="sacro-type-flow" style="display: none; align-items: center; justify-content: center; width: 100%; height: 100%; visibility: visible;">
+                <ui:DropdownField index="0" choices="A linha sacral está...,Entre os pedículos,Tocando um dos pedículos,Ultrapassando os pedículos" name="sacro-dropdown" style="width: 100%; height: 50%; align-items: stretch; -unity-font-style: bold; font-size: 80%; -unity-text-align: middle-center; display: flex; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 30px; background-color: rgb(255, 255, 255); color: rgba(0, 0, 0, 0); padding-right: 30px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="draw-lines-flow" style="display: flex; visibility: visible; overflow: visible; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
+            <ui:VisualElement name="draw-lines-flow" style="display: none; visibility: visible; overflow: visible; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
                 <MyUILibrary.SlideToggle style="width: auto; height: auto; align-items: center; justify-content: center; margin-left: 40px;" />
                 <ui:VisualElement name="shadow-image-pencil" class="left-image" style="align-items: flex-start;" />
                 <ui:VisualElement name="shadow-image-edit" class="right-image" />
-                <ui:VisualElement name="button-forward" class="button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-foward.png?fileID=2800000&amp;guid=380e48324631b3f2aa37bcea8865d8c2&amp;type=3#button-foward&apos;); display: flex;">
-                    <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo element-hidden" style="background-image: url(&apos;center&apos;); margin-right: 36px; width: 1%; height: 35%; margin-top: 30px;" />
-                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="report-flow" style="display: none;">
-                <ui:Instance template="Report" name="Report" style="display: none; position: absolute;" />
+            <ui:VisualElement name="report-flow" style="display: none; visibility: visible;">
+                <ui:Instance template="Report" name="Report" style="display: flex; position: relative;" />
                 <ui:Button display-tooltip-when-elided="true" name="back-initial" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/Design/Icons/icone%20seta.png?fileID=21300000&amp;guid=0a077cdc7242cab47bca953921cd0a43&amp;type=3#icone seta&apos;); display: none;" />
             </ui:VisualElement>
+            <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-foward.png?fileID=2800000&amp;guid=380e48324631b3f2aa37bcea8865d8c2&amp;type=3#button-foward&apos;); background-color: rgba(88, 88, 88, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

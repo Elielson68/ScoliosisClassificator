@@ -10,6 +10,7 @@ public class ReportController : MonoBehaviour
     public UIDocument document;
     private List<ClassificationData> _classifications;
     public VisualElement ReportButtonsContent;
+    public VisualElement ReportButtonsContainer;
     public Dictionary<States, RadioButton> radioButtons = new Dictionary<States, RadioButton>();
     public GameObject LineParent;
     public GameObject LinePrefab;
@@ -17,6 +18,7 @@ public class ReportController : MonoBehaviour
     private ImageStateController imgStateController;
     private Button _backButton;
     private Button _backToInitialButton;
+    private Label _title;
     private void Start() {
         
     }
@@ -26,6 +28,8 @@ public class ReportController : MonoBehaviour
         _classifications = FindObjectOfType<Classifications>()[0];
         imgStateController = FindObjectOfType<ImageStateController>();
         ReportButtonsContent = document.rootVisualElement.Q("Report");
+        ReportButtonsContainer = document.rootVisualElement.Q("report-flow");
+        _title = document.rootVisualElement.Q<Label>("title");
         _backButton = ReportButtonsContent.Q<Button>(BackButton);
         _backToInitialButton = document.rootVisualElement.Q<Button>(BackToInitialButton);
 
@@ -46,12 +50,15 @@ public class ReportController : MonoBehaviour
             radioButtons.Clear();
             FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
         });
+
+        _title.style.display = DisplayStyle.None;
     }
 
     public void ShowReportButtons(bool exportJsonOnShowButtons = true)
     {
+        
         imgStateController.SetToDefaultPositionAndScale();
-        ReportButtonsContent.style.display = DisplayStyle.Flex;
+        ReportButtonsContainer.style.display = DisplayStyle.Flex;
         ClassificationFolder.GenerateFolderName();
         foreach(var classification in _classifications)
         {
@@ -70,7 +77,7 @@ public class ReportController : MonoBehaviour
                 RadioButton sacroButton = ReportButtonsContent.Q<RadioButton>("Sacro");
                 sacroButton.style.backgroundImage = radioButtons[classification.State].style.backgroundImage;
                 ClassificationWithSacro clsSub = classification.classification as ClassificationWithSacro;
-
+                _title.text = clsSub.ClassificationCode;
                 sacroButton.RegisterCallback<ClickEvent>(UpdateTexturePanel);
                 sacroButton.RegisterCallback<ClickEvent, List<Line>>(DrawLine, clsSub.SubLines);
                 sacroButton.RegisterCallback<ClickEvent>(SetToDefaultPositionAndScale);
@@ -89,14 +96,21 @@ public class ReportController : MonoBehaviour
     {
         imgStateController.SetToDefaultPositionAndScale();
         ReportImage.gameObject.SetActive(true);
+        _title.style.display = DisplayStyle.Flex;
     }
 
     public void HideReportScreen()
     {
-        ReportButtonsContent.style.display = DisplayStyle.None;
+        ReportButtonsContainer.style.display = DisplayStyle.None;
         ReportImage.gameObject.SetActive(false);
         imgStateController.SetToDefaultPositionAndScale();
         ClearLines();
+        _title.style.display = DisplayStyle.None;
+    }
+
+    public void ShowTitle()
+    {
+        _title.style.display = DisplayStyle.Flex;
     }
 
     public void UpdateTexturePanel(ClickEvent evt)
