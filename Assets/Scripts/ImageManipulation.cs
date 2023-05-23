@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class ImageManipulation : MonoBehaviour
 {
-    public readonly static Vector3 DefaultPositionImage = new Vector3(-3.1f, 78.5f, 10f);
+    public readonly static Vector3 DefaultPositionImage = new Vector3(0, -69.9f, 10f);
     public readonly static Vector3 DefaultScaleImage = Vector3.one;
     public static System.Action OnEditImageActive;
     public float DistanciaMatriz;
