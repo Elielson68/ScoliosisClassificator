@@ -28,6 +28,8 @@ public class DrawLinesController : MonoBehaviour
     private Dictionary<LineRenderer, LinePair> _lineDegrees = new Dictionary<LineRenderer, LinePair>();
     private ScrollView _contentDegree;
     private Button _showDegreeButton;
+    private Toggle _dropside;
+    private VisualElement _dropsideArea;
     private RadioButton _drawModeButton;
     private bool _isShowingContentDegree;
     
@@ -55,9 +57,12 @@ public class DrawLinesController : MonoBehaviour
         _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>(ShowDegreeContent);
         _showDegreeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<Button>(ShowDegreeButton);
         _drawModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>(DrawModeButton);
+        _dropside = FindObjectOfType<UIDocument>().rootVisualElement.Q<Toggle>("dropside");
+        _dropsideArea = FindObjectOfType<UIDocument>().rootVisualElement.Q("dropside-area");
 
         _showDegreeButton.RegisterCallback<ClickEvent>(ToggleContentDegree);
         _drawModeButton.RegisterCallback<ClickEvent>(DrawModeAction);
+        _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside); //ADD POR SÁVIO
 
         ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
     }
@@ -98,6 +103,18 @@ public class DrawLinesController : MonoBehaviour
     {
         _isShowingContentDegree = !_isShowingContentDegree;
         _contentDegree.style.display = _isShowingContentDegree ?  DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    public void Dropside(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            _dropsideArea.AddToClassList("dropside-expanded");
+        }
+        else
+        {
+            _dropsideArea.RemoveFromClassList("dropside-expanded");
+        }
     }
     
     public void ShowContentAndButtonDegree()

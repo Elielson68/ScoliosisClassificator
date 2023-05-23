@@ -1,17 +1,22 @@
 .dropside {
-    width: 5%;
-    height: 40%;
-    background-color: rgba(120, 120, 120, 255);
-    margin-top: 20px;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+    width: 30px;
+    height: 300px;
+    transition-property: width;
+    transition-duration: 1s;
 }
 
-.dropside:focus {
-    width: 20%;
-    height: 40%;
-    background-color: rgb(120, 120, 120);
-    margin-top: 20px;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+.dropside-expanded {
+    width: 200px;
+    transition-property: width;
+    transition-duration: 1s;
+}
+
+.toggle-dropside {
+    background-image: url('project://database/Assets/Design/Icons/button-back.png?fileID=2800000&guid=525d823e3dcd552adbcf4962f8c80a68&type=3#button-back');
+}
+
+.toggle-dropside:checked {
+    background-image: url('project://database/Assets/Design/Icons/button-back.png?fileID=2800000&guid=525d823e3dcd552adbcf4962f8c80a68&type=3#button-back');
+    translate: 0 0;
+    scale: -1 1;
 }

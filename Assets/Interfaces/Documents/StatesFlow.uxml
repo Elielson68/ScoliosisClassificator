@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/Interfaces/Styles/PhotoFlow.uss?fileID=7433441132597879392&amp;guid=65a1ea2b9c905664585056929bc75e35&amp;type=3#PhotoFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/slide-toggle/slide-toggle.uss?fileID=7433441132597879392&amp;guid=1f42dd34834f0c251b7f69fab8c28bd1&amp;type=3#slide-toggle" />
-    <Style src="project://database/Assets/Interfaces/Styles/DropSide.uss?fileID=7433441132597879392&amp;guid=8a29922bd12c071b38e6b77876e3277e&amp;type=3#DropSide" />
+    <Style src="project://database/Assets/Interfaces/Styles/DropSide.uss?fileID=7433441132597879392&amp;guid=eb699de5af8911044891360790314ea2&amp;type=3#DropSide" />
     <ui:VisualElement name="root" style="width: 100%; height: 100%; align-items: center; justify-content: center;">
         <ui:VisualElement name="header" style="width: 100%; height: 20%; justify-content: space-between;">
             <ui:VisualElement name="steps-area" style="flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 50%;">
@@ -15,8 +15,9 @@
             <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255);" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="width: 80%; height: 60%; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0); display: flex;">
-            <ui:VisualElement name="dropside-area" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-end; align-items: flex-start;">
-                <ui:VisualElement name="dropside" class="dropside" />
+            <ui:VisualElement name="dropside-container" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-end; align-items: flex-start;">
+                <ui:Toggle name="dropside" class="toggle-dropside" style="width: 200px; height: 200px;" />
+                <ui:VisualElement name="dropside-area" class="dropside" style="background-color: rgb(178, 0, 0);" />
             </ui:VisualElement>
             <ui:Label text="Adicionar arquivo" display-tooltip-when-elided="true" style="color: rgb(200, 200, 200); -unity-text-align: middle-center; font-size: 30%; -unity-font-style: bold; display: none;" />
             <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="degree-content" focusable="true" class="degree-default-content" style="left: 384px; bottom: -466px; background-color: rgba(135, 96, 96, 0.75); border-left-color: rgb(36, 32, 32); border-right-color: rgb(36, 32, 32); border-top-color: rgb(36, 32, 32); border-bottom-color: rgb(36, 32, 32); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; flex-wrap: wrap; position: absolute; display: none;" />
