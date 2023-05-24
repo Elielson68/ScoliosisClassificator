@@ -11,9 +11,9 @@
             <ui:Label text="Inserir radiografia frontal" display-tooltip-when-elided="true" name="title" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&amp;guid=8d500f3fa9b759e9db38fd9ec1eb1166&amp;type=3#Jura-VariableFont_wght&apos;); -unity-font-style: bold; font-size: 60%; margin-bottom: 15px; margin-left: 5%; flex-direction: row; flex-wrap: wrap; color: rgb(255, 255, 255); -unity-text-align: middle-center; white-space: normal;" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="width: 100%; height: 60%; align-items: center; justify-content: space-between; background-color: rgba(255, 255, 255, 0); display: flex;">
-            <ui:VisualElement name="dropside-container" style="width: 100%; height: 30%; flex-direction: row; justify-content: flex-end; align-items: flex-start; display: none;">
-                <ui:Toggle name="dropside" class="toggle-dropside" style="width: 150px; height: 150px; justify-content: flex-start; -unity-background-scale-mode: scale-to-fit; margin-left: -40px; margin-right: -41px; margin-top: 75px;" />
-                <ui:VisualElement name="dropside-area" class="dropside" />
+            <ui:VisualElement name="dropside-container" style="width: 100%; height: 18%; flex-direction: row; justify-content: flex-end; align-items: flex-start; display: flex;">
+                <ui:Toggle name="dropside" class="toggle-dropside" style="width: 150px; height: 150px; justify-content: flex-start; -unity-background-scale-mode: scale-to-fit; margin-left: -40px; margin-right: -41px; margin-top: 30px;" />
+                <ui:VisualElement name="dropside-area" class="dropside" style="padding-top: 10px;" />
             </ui:VisualElement>
             <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="degree-content" focusable="true" class="degree-default-content" style="left: 384px; bottom: -466px; background-color: rgba(135, 96, 96, 0.75); border-left-color: rgb(36, 32, 32); border-right-color: rgb(36, 32, 32); border-top-color: rgb(36, 32, 32); border-bottom-color: rgb(36, 32, 32); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; flex-wrap: wrap; position: absolute; display: none;" />
         </ui:VisualElement>
@@ -24,10 +24,12 @@
             <ui:VisualElement name="sacro-type-flow" style="display: none; align-items: center; justify-content: center; width: 100%; height: 100%; visibility: visible;">
                 <ui:DropdownField index="0" choices="A linha sacral está...,Entre os pedículos,Tocando um dos pedículos,Ultrapassando os pedículos" name="sacro-dropdown" style="width: 100%; height: 50%; align-items: stretch; -unity-font-style: bold; font-size: 80%; -unity-text-align: middle-center; display: flex; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 30px; background-color: rgb(255, 255, 255); color: rgba(0, 0, 0, 0); padding-right: 30px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="draw-lines-flow" style="display: none; visibility: visible; overflow: visible; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
-                <MyUILibrary.SlideToggle style="width: auto; height: auto; align-items: center; justify-content: center; margin-left: 40px;" />
-                <ui:VisualElement name="shadow-image-pencil" class="left-image" />
-                <ui:VisualElement name="shadow-image-edit" class="right-image" />
+            <ui:VisualElement name="draw-lines-flow" style="display: flex; visibility: visible; overflow: visible; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
+                <ui:VisualElement name="slide-toggle-container" style="min-width: auto; min-height: auto; scale: 0.9 0.9;">
+                    <MyUILibrary.SlideToggle style="width: auto; height: auto; align-items: center; justify-content: center; margin-left: 40px;" />
+                    <ui:VisualElement name="shadow-image-pencil" class="left-image" style="top: 0;" />
+                    <ui:VisualElement name="shadow-image-edit" class="right-image" style="top: 0;" />
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="report-flow" style="display: none; visibility: visible;">
                 <ui:Instance template="Report" name="Report" style="display: flex; position: relative;" />
