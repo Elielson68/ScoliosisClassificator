@@ -630,6 +630,10 @@ PrefabInstance:
       propertyPath: InitialScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 28304435}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: InitialScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2800000, guid: 9c6313a5316f8a34b852bf94ff96e3ab, type: 3}
     - target: {fileID: 7058801823954514912, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: imagem
       value: 

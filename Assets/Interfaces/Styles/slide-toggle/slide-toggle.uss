@@ -16,14 +16,14 @@
     border-left-color: var(--unity-colors-slider_thumb-border);
     transition-property: background-color;
     transition-duration: 0.5s;
-    width: 400px;
-    height: 120px;
+    width: 600px;
+    height: 200px;
     justify-content: center;
 }
 
 .slide-toggle__input-knob {
-    height: 120px;
-    width: 120px;
+    height: 200px;
+    width: 200px;
     background-color: rgba(255, 255, 255, 0);
     position: absolute;
     top: -1px;
@@ -42,11 +42,11 @@
 }
 
 .left-image {
-    height: 120px;
-    width: 120px;
+    height: 200px;
+    width: 200px;
     background-color: rgba(255, 255, 255, 0);
     position: absolute;
-    top: 79px;
+    top: 48px;
     transition-property: translate, background-color;
     transition-duration: 0.5s, 0.5s;
     translate: -1px 0;
@@ -64,11 +64,9 @@
 }
 
 .right-image {
-    height: 120px;
-    width: 120px;
+    height: 200px;
+    width: 200px;
     background-color: rgba(255, 255, 255, 0);
-    position: absolute;
-    top: 79px;
     transition-property: translate, background-color;
     transition-duration: 0.5s, 0.5s;
     translate: -1px 0;
@@ -82,7 +80,9 @@
     border-bottom-color: rgba(255, 255, 255, 0);
     background-image: url('project://database/Assets/Design/Icons/button-zoom.png?fileID=2800000&guid=6e210c453d413e4309f3792a39fc2731&type=3#button-zoom');
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.39);
-    left: 323px;
+    position: absolute;
+    left: 442px;
+    top: 48px;
 }
 
 .slide-toggle__input--checked {
@@ -90,7 +90,7 @@
 }
 
 .slide-toggle__input--checked > .slide-toggle__input-knob {
-    translate: 280px 0;
+    translate: 400px 0;
     margin-right: 0;
     background-image: url('project://database/Assets/Design/Icons/button-zoom.png?fileID=2800000&guid=6e210c453d413e4309f3792a39fc2731&type=3#button-zoom');
 }
