@@ -19,6 +19,7 @@ public class ReportController : MonoBehaviour
     private int _currentClassificationIndex;
     private Screens _backToScreen;
     private string _backToText;
+    private List<TinyClassification> _classificationsToShow = new List<TinyClassification>();
 
     private void Start() {
         
@@ -36,6 +37,8 @@ public class ReportController : MonoBehaviour
         _backButton = document.rootVisualElement.Q<Button>("back-button");
         
         _backButton.text = _backToText;
+
+        InitializeClassificationsToShow();
 
         imgStateController.SetStateImage(ReportImage);
 
@@ -65,11 +68,12 @@ public class ReportController : MonoBehaviour
         _nextClassification.UnregisterCallback<ClickEvent>(NextClassificationImage);
         _previousClassification.UnregisterCallback<ClickEvent>(PreviousClassificationImage);
         _backButton.UnregisterCallback<ClickEvent>(BackButtonAction);
+        _classificationsToShow.Clear();
     }
 
     private void NextClassificationImage(ClickEvent evt)
     {
-        _currentClassificationIndex = (_currentClassificationIndex+1) % 4;
+        _currentClassificationIndex = (_currentClassificationIndex+1) % _classificationsToShow.Count;
         UpdateClassificationReport();
     }
 
@@ -77,16 +81,43 @@ public class ReportController : MonoBehaviour
     {
         _currentClassificationIndex -= 1;
         if(_currentClassificationIndex < 0)
-            _currentClassificationIndex = 3;
+            _currentClassificationIndex = _classificationsToShow.Count - 1;
         UpdateClassificationReport();
+    }
+
+    private void InitializeClassificationsToShow()
+    {
+        foreach(var cls in _classifications)
+        {
+            if(cls.classification.SubState == SubStates.Sacro && cls.classification is ClassificationWithSacro clsSacro)
+            {
+                TinyClassification tinySacro = new TinyClassification()
+                {
+                    Image = imgStateController.GetStateImage(cls.State),
+                    Lines = clsSacro.SubLines,
+                    PositionImage = ImageManipulation.DefaultPositionImage,
+                    ScaleImage = ImageManipulation.DefaultScaleImage,
+                    UseLocalPosition = true
+                };
+                _classificationsToShow.Add(tinySacro);
+            }
+            TinyClassification tinyCls = new TinyClassification()
+            {
+                Image = imgStateController.GetStateImage(cls.State),
+                Lines = cls.classification.Lines,
+                PositionImage = cls.classification.PositionImage,
+                ScaleImage = cls.classification.ScaleImage
+            };
+            _classificationsToShow.Add(tinyCls);
+        }
     }
 
     private void UpdateClassificationReport()
     {
-        ClassificationData classification = _classifications[_currentClassificationIndex];
-        imgStateController.UpdateImageToState(imgStateController.GetStateImage(classification.State));
-        DrawLine(classification.classification.Lines);
-        imgStateController.UpdatePositionAndScale(classification.classification.PositionImage, classification.classification.ScaleImage);
+        TinyClassification classification = _classificationsToShow[_currentClassificationIndex];
+        imgStateController.UpdateImageToState(classification.Image);
+        DrawLine(classification.Lines);
+        imgStateController.UpdatePositionAndScale(classification.PositionImage, classification.ScaleImage, classification.UseLocalPosition);
     }
 
     private void UpdateTitle()

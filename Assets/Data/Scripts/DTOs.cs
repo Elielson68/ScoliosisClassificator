@@ -82,3 +82,12 @@ public struct LinePair
         ScreenDegreeUp = null;
     }
 } 
+
+public struct TinyClassification
+{
+    public Texture2D Image;
+    public List<Line> Lines;
+    public Vector3 PositionImage;
+    public Vector3 ScaleImage;
+    public bool UseLocalPosition;
+}

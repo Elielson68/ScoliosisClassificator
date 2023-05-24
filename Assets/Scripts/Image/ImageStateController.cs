@@ -31,9 +31,9 @@ public class ImageStateController : MonoBehaviour
         _rawImageController.UpdateTexturePanel(img);
     }
     
-    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal)
+    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal, bool useLocalPosition=false)
     {
-        _rawImageController.UpdatePositionAndScale(pos, scal);
+        _rawImageController.UpdatePositionAndScale(pos, scal, useLocalPosition);
     }
     
     public void SetToDefaultPositionAndScale()

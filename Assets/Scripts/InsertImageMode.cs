@@ -51,8 +51,6 @@ public class InsertImageMode : MonoBehaviour
 
     private void ResetImage(States state)
     {
-        if(state == States.Lateral) return;
-
         _image.color = InsertImageColor;
         _text.gameObject.SetActive(true);
         _image.texture = BlankTexture;

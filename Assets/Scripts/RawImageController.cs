@@ -21,9 +21,12 @@ public class RawImageController
         return text;
     }
 
-    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal)
+    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal, bool useLocalPosition=false)
     {
-        Image.transform.position = pos;
+        if(useLocalPosition)
+            Image.transform.localPosition = pos;
+        else
+            Image.transform.position = pos;
         Image.transform.localScale = scal;
     }
 
