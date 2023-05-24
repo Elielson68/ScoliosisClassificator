@@ -17,7 +17,7 @@ public class HistoryController : MonoBehaviour
     private UIDocument _document;
     private VisualElement HistoryContentVE;
     private Button _backToInitialButton;
-
+    private TextField _searchReport;
     private void Start()
     {
         
@@ -30,30 +30,43 @@ public class HistoryController : MonoBehaviour
         _reportController = GetComponent<ReportController>();
         HistoryContentVE = _document.rootVisualElement.Q(HistoryContent);
         _backToInitialButton = _document.rootVisualElement.Q<Button>(BackInitialButton);
+        _searchReport = _document.rootVisualElement.Q<TextField>("search-report");
 
         _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
         {
             FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
         });
 
+        _searchReport.RegisterValueChangedCallback(FindReport);
+
         _reportController.SetBackToButton("BACK", Screens.History);
         CreateStoryItens();
     }
 
-    private void CreateStoryItens()
+    private void CreateStoryItens(string find = "")
     {
         foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
         {
+            string name = (new DirectoryInfo(dir)).Name;
+
+            if(string.IsNullOrEmpty(find) is false && name.ToLower().Contains(find.ToLower()) is false) continue;
+
             VisualElement baseVE = ItemStory.Instantiate();
             HistoryContentVE.Add(baseVE);
 
             Label reportFolder = baseVE.Q<Label>("item");
-            reportFolder.text = (new DirectoryInfo(dir)).Name;
+            reportFolder.text = name;
             reportFolder.RegisterCallback<ClickEvent>(SetReportData);
 
             ConfigureEditButton(baseVE, reportFolder.text);
             ConfigureDeleteButton(baseVE, reportFolder.text);
         }
+    }
+
+    private void FindReport(ChangeEvent<string> evt)
+    {
+        HistoryContentVE.Clear();
+        CreateStoryItens(evt.newValue);
     }
 
     private void ConfigureEditButton(VisualElement baseVE, string reportFolderName)
