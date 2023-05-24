@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Interfaces/Styles/PhotoInsertion.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#PhotoInsertion" />
+    <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
     <ui:VisualElement name="item-container" style="flex-direction: row; width: 1080px; margin-top: 40px; height: 130px;">
         <ui:Label text="2023-05-18_23.25" display-tooltip-when-elided="true" name="item" focusable="true" class="report-title-label" />
-        <ui:Button display-tooltip-when-elided="true" name="edit" class="story-button" style="background-image: url(&apos;project://database/Assets/Design/Icons/lapis.jpg?fileID=2800000&amp;guid=8d41167d7118c5d45b1d0ed02e992aee&amp;type=3#lapis&apos;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.47);" />
-        <ui:Button display-tooltip-when-elided="true" name="delete" class="story-button" style="background-image: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Textures/icons/64x64/x.png?fileID=2800000&amp;guid=f83e9462d8dbe654b9dc1ea2294dba0d&amp;type=3#x&apos;); -unity-background-image-tint-color: rgb(255, 0, 0); background-color: rgba(221, 208, 208, 0.26);" />
+        <ui:Button display-tooltip-when-elided="true" name="edit" class="story-button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-draw.png?fileID=2800000&amp;guid=cfc5706f8f9932ebfbf14f6796b4a7ae&amp;type=3#button-draw&apos;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.47);" />
+        <ui:Button display-tooltip-when-elided="true" name="delete" class="story-button" style="background-image: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Textures/icons/256x256/x.png?fileID=2800000&amp;guid=e839e6693c344ad40a5952853a891866&amp;type=3#x&apos;); -unity-background-image-tint-color: rgb(255, 0, 0); background-color: rgba(221, 208, 208, 0.26);" />
     </ui:VisualElement>
 </ui:UXML>

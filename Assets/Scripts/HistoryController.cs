@@ -61,7 +61,7 @@ public class HistoryController : MonoBehaviour
         Button edit = baseVE.Q<Button>("edit");
         edit.RegisterCallback<ClickEvent>(evt => {
             Debug.Log("Clicou no Edit");
-            VisualElement popup = EditNamePopup.Instantiate();
+            VisualElement popup = EditNamePopup.Instantiate().Q("root");
             _document.rootVisualElement.Add(popup);
             ConfigureEditPopup(popup, reportFolderName);
         });
@@ -72,7 +72,7 @@ public class HistoryController : MonoBehaviour
         Button delete = baseVE.Q<Button>("delete");
         delete.RegisterCallback<ClickEvent>(evt => {
             Debug.Log("Clicou no Delete");
-            VisualElement popup = DeleteItemPopup.Instantiate();
+            VisualElement popup = DeleteItemPopup.Instantiate().Q("root");
             _document.rootVisualElement.Add(popup);
             ConfigureDeletePopup(popup, reportFolderName);
         });
