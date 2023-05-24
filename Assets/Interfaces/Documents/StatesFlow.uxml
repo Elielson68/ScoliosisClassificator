@@ -1,5 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="Report" src="project://database/Assets/Interfaces/Documents/Report.uxml?fileID=9197481963319205126&amp;guid=6a7ecd9068d04144fbca01922f007065&amp;type=3#Report" />
     <Style src="project://database/Assets/Interfaces/Styles/PhotoFlow.uss?fileID=7433441132597879392&amp;guid=65a1ea2b9c905664585056929bc75e35&amp;type=3#PhotoFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
     <Style src="project://database/Assets/Interfaces/Styles/slide-toggle/slide-toggle.uss?fileID=7433441132597879392&amp;guid=1f42dd34834f0c251b7f69fab8c28bd1&amp;type=3#slide-toggle" />
@@ -29,10 +28,6 @@
                     <ui:VisualElement name="shadow-image-pencil" class="left-image" style="top: 0;" />
                     <ui:VisualElement name="shadow-image-edit" class="right-image" style="top: 0;" />
                 </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="report-flow" style="display: none; visibility: visible;">
-                <ui:Instance template="Report" name="Report" style="display: flex; position: relative;" />
-                <ui:Button display-tooltip-when-elided="true" name="back-initial" class="btn-insert-photo" style="background-image: url(&apos;project://database/Assets/Design/Icons/icone%20seta.png?fileID=21300000&amp;guid=0a077cdc7242cab47bca953921cd0a43&amp;type=3#icone seta&apos;); display: none;" />
             </ui:VisualElement>
             <ui:Button display-tooltip-when-elided="true" name="foward-button" class="btn-insert-photo button" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-forward.png?fileID=2800000&amp;guid=5631226a7e84da9308bb536d373b0239&amp;type=3#button-forward&apos;); background-color: rgba(88, 88, 88, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: none;" />
         </ui:VisualElement>

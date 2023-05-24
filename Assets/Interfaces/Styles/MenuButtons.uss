@@ -14,7 +14,7 @@
     -unity-font: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&guid=8d500f3fa9b759e9db38fd9ec1eb1166&type=3#Jura-VariableFont_wght');
     -unity-font-definition: none;
     -unity-font-style: bold;
-    font-size: 600%;
+    font-size: 60px;
     -unity-text-align: middle-center;
     margin-top: 30px;
     border-left-color: rgb(1, 121, 220);
@@ -39,7 +39,7 @@
     -unity-font: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&guid=8d500f3fa9b759e9db38fd9ec1eb1166&type=3#Jura-VariableFont_wght');
     -unity-font-definition: none;
     -unity-font-style: bold;
-    font-size: 600%;
+    font-size: 60px;
     -unity-text-align: middle-center;
     margin-top: 30px;
     border-left-color: rgb(1, 121, 220);

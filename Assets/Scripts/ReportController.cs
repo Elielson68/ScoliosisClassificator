@@ -5,132 +5,115 @@ using UnityEngine.UIElements;
 
 public class ReportController : MonoBehaviour
 {
-    private const string BackButton = "back-history";
-    private const string BackToInitialButton = "back-initial";
     public UIDocument document;
     private List<ClassificationData> _classifications;
-    public VisualElement ReportButtonsContent;
-    public VisualElement ReportButtonsContainer;
-    public Dictionary<States, RadioButton> radioButtons = new Dictionary<States, RadioButton>();
+    public VisualElement ReportContentRoot;
     public GameObject LineParent;
     public GameObject LinePrefab;
     public UnityEngine.UI.RawImage ReportImage;
     private ImageStateController imgStateController;
     private Button _backButton;
-    private Button _backToInitialButton;
+    private Button _previousClassification;
+    private Button _nextClassification;
     private Label _title;
+    private int _currentClassificationIndex;
+    private Screens _backToScreen;
+    private string _backToText;
+
     private void Start() {
         
     }
 
     public void StartReport()
     {
+        _currentClassificationIndex = 0;
         _classifications = FindObjectOfType<Classifications>()[0];
         imgStateController = FindObjectOfType<ImageStateController>();
-        ReportButtonsContent = document.rootVisualElement.Q("Report");
-        ReportButtonsContainer = document.rootVisualElement.Q("report-flow");
+        ReportContentRoot = document.rootVisualElement.Q("root");
         _title = document.rootVisualElement.Q<Label>("title");
-        _backButton = ReportButtonsContent.Q<Button>(BackButton);
-        _backToInitialButton = document.rootVisualElement.Q<Button>(BackToInitialButton);
-
-        if(radioButtons.Count == 0)
-        {
-            string[] states = Enum.GetNames(typeof(States));
-            for(int i=0; i<states.Length; i++)
-            {
-                radioButtons.Add(((States) i), ReportButtonsContent.Q<RadioButton>(states[i]));
-            }
-        }
+        _nextClassification = document.rootVisualElement.Q<Button>("button-side-forward");
+        _previousClassification = document.rootVisualElement.Q<Button>("button-side-back");
+        _backButton = document.rootVisualElement.Q<Button>("back-button");
         
+        _backButton.text = _backToText;
+
         imgStateController.SetStateImage(ReportImage);
 
-        _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
-        {
-            ClearLines();
-            radioButtons.Clear();
-            FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
-        });
+        UpdateClassificationReport();
+        UpdateTitle();
 
-        _title.style.display = DisplayStyle.None;
+        _nextClassification.RegisterCallback<ClickEvent>(NextClassificationImage);
+        _previousClassification.RegisterCallback<ClickEvent>(PreviousClassificationImage);
+        _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
     }
 
-    public void ShowReportButtons(bool exportJsonOnShowButtons = true)
+    public void SetBackToButton(string text, Screens screen)
     {
-        
-        imgStateController.SetToDefaultPositionAndScale();
-        ReportButtonsContainer.style.display = DisplayStyle.Flex;
+        _backToScreen = screen;
+        _backToText = text;
+    }
+
+    private void BackButtonAction(ClickEvent evt)
+    {
+        Exit();
+        FindObjectOfType<OptionController>().ChangeScreen(_backToScreen);
+    }
+
+    public void Exit()
+    {
+        ResetReport();
+        _nextClassification.UnregisterCallback<ClickEvent>(NextClassificationImage);
+        _previousClassification.UnregisterCallback<ClickEvent>(PreviousClassificationImage);
+        _backButton.UnregisterCallback<ClickEvent>(BackButtonAction);
+    }
+
+    private void NextClassificationImage(ClickEvent evt)
+    {
+        _currentClassificationIndex = (_currentClassificationIndex+1) % 4;
+        UpdateClassificationReport();
+    }
+
+    private void PreviousClassificationImage(ClickEvent evt)
+    {
+        _currentClassificationIndex -= 1;
+        if(_currentClassificationIndex < 0)
+            _currentClassificationIndex = 3;
+        UpdateClassificationReport();
+    }
+
+    private void UpdateClassificationReport()
+    {
+        ClassificationData classification = _classifications[_currentClassificationIndex];
+        imgStateController.UpdateImageToState(imgStateController.GetStateImage(classification.State));
+        DrawLine(classification.classification.Lines);
+        imgStateController.UpdatePositionAndScale(classification.classification.PositionImage, classification.classification.ScaleImage);
+    }
+
+    private void UpdateTitle()
+    {
+        ClassificationData classification = _classifications[_currentClassificationIndex];
+        ClassificationWithSacro clsSub = classification.classification as ClassificationWithSacro;
+        _title.text = clsSub.ClassificationCode;
+    }
+
+    public void ExportClassification()
+    {
         ClassificationFolder.GenerateFolderName();
+        _classifications = FindObjectOfType<Classifications>()[0];
         foreach(var classification in _classifications)
         {
-            radioButtons[classification.State].style.backgroundImage = new StyleBackground(imgStateController.GetStateImage(classification.State));
-            radioButtons[classification.State].RegisterCallback<ClickEvent>(UpdateTexturePanel);
-            radioButtons[classification.State].RegisterCallback<ClickEvent, List<Line>>(DrawLine, classification.classification.Lines);
-            radioButtons[classification.State].RegisterCallback<ClickEvent, Tuple<Vector3, Vector3>>(UpdatePositionAndScale, new Tuple<Vector3, Vector3>(classification.classification.PositionImage, classification.classification.ScaleImage));
-            
-            if(exportJsonOnShowButtons)
-            {
-                classification.classification.ExportJson();
-            }
-
-            if(classification.classification.SubState == SubStates.Sacro)
-            {
-                RadioButton sacroButton = ReportButtonsContent.Q<RadioButton>("Sacro");
-                sacroButton.style.backgroundImage = radioButtons[classification.State].style.backgroundImage;
-                ClassificationWithSacro clsSub = classification.classification as ClassificationWithSacro;
-                _title.text = clsSub.ClassificationCode;
-                sacroButton.RegisterCallback<ClickEvent>(UpdateTexturePanel);
-                sacroButton.RegisterCallback<ClickEvent, List<Line>>(DrawLine, clsSub.SubLines);
-                sacroButton.RegisterCallback<ClickEvent>(SetToDefaultPositionAndScale);
-            }
+            classification.classification.ExportJson();
         }
-        imgStateController.UpdateImageToState(States.Front);
     }
 
-    public void DisplayBackButton(bool show)
+    public void ResetReport()
     {
-        _backButton.style.display = show ? DisplayStyle.Flex:DisplayStyle.None;
-        _backToInitialButton.style.display = show is false ? DisplayStyle.Flex:DisplayStyle.None;
-    }
-
-    public void ShowImageReport()
-    {
-        imgStateController.SetToDefaultPositionAndScale();
-        ReportImage.gameObject.SetActive(true);
-        _title.style.display = DisplayStyle.Flex;
-    }
-
-    public void HideReportScreen()
-    {
-        ReportButtonsContainer.style.display = DisplayStyle.None;
         ReportImage.gameObject.SetActive(false);
         imgStateController.SetToDefaultPositionAndScale();
         ClearLines();
-        _title.style.display = DisplayStyle.None;
     }
 
-    public void ShowTitle()
-    {
-        _title.style.display = DisplayStyle.Flex;
-    }
-
-    public void UpdateTexturePanel(ClickEvent evt)
-    {
-        RadioButton button = evt.currentTarget as RadioButton;
-        imgStateController.UpdateImageToState(button.style.backgroundImage.value.texture);
-    }
-
-    public void UpdatePositionAndScale(ClickEvent evt, Tuple<Vector3, Vector3> param)
-    {
-        RadioButton button = evt.currentTarget as RadioButton;
-        imgStateController.UpdatePositionAndScale(param.Item1, param.Item2);
-    }
-
-    public void SetToDefaultPositionAndScale(ClickEvent evt)
-    {
-        imgStateController.SetToDefaultPositionAndScale();
-    }
-
-    public void DrawLine(ClickEvent evt, List<Line> lines)
+    public void DrawLine(List<Line> lines)
     {
         ClearLines();
         foreach(Line line in lines)

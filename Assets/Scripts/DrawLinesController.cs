@@ -71,6 +71,8 @@ public class DrawLinesController : MonoBehaviour
 
         _drawModeToggle.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
         _drawModeToggle.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
+
+        FindObjectOfType<ReportController>().SetBackToButton("BACK INITIAL", Screens.Initial);
     }
 
     

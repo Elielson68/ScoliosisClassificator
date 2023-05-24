@@ -6,6 +6,7 @@ public class OptionController : MonoBehaviour
     public ScreenAsset InitialScreen;
     public ScreenAsset StatesFlow;
     public ScreenAsset HistoryScreen;
+    public ScreenAsset ReportScreen;
 
     private VisualElement _root;
     private VisualElement _currentOpenScreen;
@@ -35,7 +36,16 @@ public class OptionController : MonoBehaviour
             InstantiateScreen(HistoryScreen.Screen);
             HistoryScreen.OnOpenScreen?.Invoke();
             break;
+
+            case Screens.Report:
+            InstantiateScreen(ReportScreen.Screen);
+            ReportScreen.OnOpenScreen?.Invoke();
+            break;
         }
+    }
+    public void ChangeScreen(int screens)
+    {
+        ChangeScreen((Screens) screens);
     }
 
     private void InstantiateScreen(VisualTreeAsset screen)

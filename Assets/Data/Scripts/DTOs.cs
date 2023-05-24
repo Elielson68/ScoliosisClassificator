@@ -29,11 +29,13 @@ public struct EnterNewFileExecute
     public UnityEvent Execute;
 }
 
+[System.Serializable]
 public enum Screens
 {
     Initial,
     States,
-    History
+    History,
+    Report
 }
 
 [System.Serializable]

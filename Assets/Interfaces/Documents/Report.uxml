@@ -1,17 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Interfaces/Styles/StateFlow.uss?fileID=7433441132597879392&amp;guid=3dea0f3af7b5a8145a566659638b1f06&amp;type=3#StateFlow" />
-    <Style src="project://database/Assets/Interfaces/Styles/ReportButtons.uss?fileID=7433441132597879392&amp;guid=0a8acdbcb7a2fc32086700ed3838626e&amp;type=3#ReportButtons" />
     <Style src="project://database/Assets/Interfaces/Styles/MenuButtons.uss?fileID=7433441132597879392&amp;guid=c3105985d017b727ea1a3c0145c9ca4b&amp;type=3#MenuButtons" />
-    <ui:VisualElement name="root" style="width: 100%; height: 100%; position: absolute;">
+    <Style src="project://database/Assets/Interfaces/Styles/ReportButtons.uss?fileID=7433441132597879392&amp;guid=0a8acdbcb7a2fc32086700ed3838626e&amp;type=3#ReportButtons" />
+    <ui:VisualElement name="root" style="width: 100%; height: 1920px; position: relative;">
         <ui:VisualElement name="header" style="width: 100%; height: 20%; align-items: center; justify-content: center;">
-            <ui:Label text="00N-1" display-tooltip-when-elided="true" style="font-size: 92px; -unity-font-style: bold; -unity-font-definition: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght%20SDF.asset?fileID=11400000&amp;guid=430ce0eaef5e72bce9619371d36be62b&amp;type=2#Jura-VariableFont_wght SDF&apos;); -unity-text-align: middle-center;" />
+            <ui:Label text="00N-1" display-tooltip-when-elided="true" name="title" style="font-size: 92px; -unity-font-style: bold; -unity-font-definition: url(&apos;project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght%20SDF.asset?fileID=11400000&amp;guid=430ce0eaef5e72bce9619371d36be62b&amp;type=2#Jura-VariableFont_wght SDF&apos;); -unity-text-align: middle-center;" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="width: 100%; height: 60%; flex-direction: row; justify-content: space-between; align-items: center; padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px;">
             <ui:Button display-tooltip-when-elided="true" name="button-side-back" class="button-side" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-back.png?fileID=2800000&amp;guid=525d823e3dcd552adbcf4962f8c80a68&amp;type=3#button-back&apos;);" />
             <ui:Button display-tooltip-when-elided="true" name="button-side-forward" class="button-side" style="background-image: url(&apos;project://database/Assets/Design/Icons/button-back.png?fileID=2800000&amp;guid=525d823e3dcd552adbcf4962f8c80a68&amp;type=3#button-back&apos;); scale: -1 1;" />
         </ui:VisualElement>
         <ui:VisualElement name="foot" style="width: 100%; height: 20%; align-items: center; justify-content: center;">
-            <ui:Button display-tooltip-when-elided="true" name="back-history" text="Menu Inicial" class="button-side menu-buttons" style="height: 40%;" />
+            <ui:Button display-tooltip-when-elided="true" name="back-button" text="Menu Inicial" class="menu-buttons" style="height: 40%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

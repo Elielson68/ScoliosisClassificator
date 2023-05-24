@@ -11,14 +11,11 @@ public class HistoryController : MonoBehaviour
     private List<ClassificationData> _classifications;
 
     private const string HistoryContent = "history-content";
-    private const string BackHistoryButton = "back-history";
     private const string BackInitialButton = "back-initial";
-    private const string ReportTitleStyle = "report-title-label";
 
     private ReportController _reportController;
     private UIDocument _document;
     private VisualElement HistoryContentVE;
-    private Button _backToHistoryButton;
     private Button _backToInitialButton;
 
     private void Start()
@@ -32,15 +29,14 @@ public class HistoryController : MonoBehaviour
         _document = FindObjectOfType<UIDocument>();
         _reportController = GetComponent<ReportController>();
         HistoryContentVE = _document.rootVisualElement.Q(HistoryContent);
-        _backToHistoryButton = _document.rootVisualElement.Q<Button>(BackHistoryButton);
         _backToInitialButton = _document.rootVisualElement.Q<Button>(BackInitialButton);
 
-        _backToHistoryButton.RegisterCallback<ClickEvent>(BackButtonAction);
         _backToInitialButton.RegisterCallback<ClickEvent>(evt =>
         {
             FindObjectOfType<OptionController>().ChangeScreen(Screens.Initial);
         });
 
+        _reportController.SetBackToButton("BACK", Screens.History);
         CreateStoryItens();
     }
 
@@ -155,14 +151,6 @@ public class HistoryController : MonoBehaviour
         {
             cls.classification.ImportJson(label.text);
         }
-        _reportController.ShowReportButtons(exportJsonOnShowButtons: false);
-        _reportController.ShowImageReport();
-        HistoryContentVE.style.display = DisplayStyle.None; 
-    }
-
-    private void BackButtonAction(ClickEvent evt)
-    {
-        HistoryContentVE.style.display = DisplayStyle.Flex;
-        _reportController.HideReportScreen();
+        FindObjectOfType<OptionController>().ChangeScreen(Screens.Report);
     }
 }
