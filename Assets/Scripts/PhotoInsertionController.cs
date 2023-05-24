@@ -26,7 +26,7 @@ public class PhotoInsertionController : MonoBehaviour
 
         UploadImage.OnCompletedUploadImage +=  StateControll.ShowFowardButton;
         UploadImage.OnChangeImage += WriteImage;
-        
+        VisualElementInteraction.IsVisualElementFocus = false;
     }
 
     public void HiddenButtons()

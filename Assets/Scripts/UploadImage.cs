@@ -21,7 +21,7 @@ public class UploadImage : MonoBehaviour
         PhotoInsertionController.OnUploadButtonClick += Init;
     }
 
-    IEnumerator Upload()
+    private IEnumerator Upload()
     {
         StateImage.rectTransform.localEulerAngles = new Vector3(0, 0, 0);
         
@@ -52,7 +52,7 @@ public class UploadImage : MonoBehaviour
 
     public void Init()
     {
-        if(VisualElementInteraction.IsVisualElementFocus && _uploadRoutine is not null) 
+        if(VisualElementInteraction.IsVisualElementFocus || _uploadRoutine is not null) 
         {
             return;
         }
