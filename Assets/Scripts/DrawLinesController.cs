@@ -65,6 +65,12 @@ public class DrawLinesController : MonoBehaviour
         _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside);
         _drawModeToggle.RegisterCallback<ChangeEvent<bool>>(DrawModeAction);
         ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
+
+        _dropsideContainer.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _dropsideContainer.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
+
+        _drawModeToggle.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _drawModeToggle.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     
@@ -82,6 +88,12 @@ public class DrawLinesController : MonoBehaviour
         _dropside.UnregisterCallback<ChangeEvent<bool>>(Dropside);
         _drawModeToggle.UnregisterCallback<ChangeEvent<bool>>(DrawModeAction);
         BlockCreationLineGlobal = false;
+
+        _dropsideContainer.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _dropsideContainer.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
+
+        _drawModeToggle.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _drawModeToggle.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     private void DrawModeAction(ChangeEvent<bool> evt)

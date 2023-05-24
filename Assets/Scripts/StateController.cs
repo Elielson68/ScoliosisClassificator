@@ -46,12 +46,17 @@ public class StateController : MonoBehaviour
 
         ExecuteOnStart?.Invoke();
         HideFowardButton();
+
+        fowardButton.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true, TrickleDown.TrickleDown);
+        fowardButton.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     private void OnDisable()
     {
         OnFowardButtonClick -= UpdateState;
         fowardButton.UnregisterCallback<ClickEvent>(FowardButton);
+        fowardButton.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        fowardButton.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     public void UpdateState()

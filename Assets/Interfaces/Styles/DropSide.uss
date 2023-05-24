@@ -4,7 +4,9 @@
     transition-property: width, background-color;
     transition-duration: 1s, 1s;
     background-color: rgba(255, 255, 255, 0.71);
-    font-size: 1px;
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-items: stretch;
 }
 
 .dropside-expanded {
@@ -14,11 +16,8 @@
     background-color: rgba(255, 255, 255, 0.71);
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-}
-
-.dropside > VisualElement {
-    font-size: 1px;
-    color: rgba(255, 0, 0, 255);
+    -unity-text-align: middle-center;
+    justify-content: center;
 }
 
 .toggle-dropside {
@@ -33,4 +32,16 @@
 
 #unity-checkmark {
     visibility: hidden;
+}
+
+.dropside > Label {
+    font-size: 1px;
+    transition-property: font-size;
+    transition-duration: 0.8s;
+}
+
+.dropside-expanded > Label {
+    font-size: 32px;
+    transition-property: font-size;
+    transition-duration: 0.8s;
 }
