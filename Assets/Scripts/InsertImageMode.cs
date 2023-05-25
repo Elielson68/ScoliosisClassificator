@@ -55,6 +55,12 @@ public class InsertImageMode : MonoBehaviour
         _text.gameObject.SetActive(true);
         _image.texture = BlankTexture;
         _image.material.mainTexture = BlankTexture;
+        
+        var size = _image.rectTransform.sizeDelta;
+        size.x = 810;
+        size.y = 1440;
+        _image.rectTransform.sizeDelta = size;
+        _image.transform.localPosition = Vector3.zero;
     }
     
 }

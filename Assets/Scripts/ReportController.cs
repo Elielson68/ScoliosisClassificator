@@ -116,6 +116,7 @@ public class ReportController : MonoBehaviour
     {
         TinyClassification classification = _classificationsToShow[_currentClassificationIndex];
         imgStateController.UpdateImageToState(classification.Image);
+        imgStateController.UpdateWidthAndHeight();
         imgStateController.UpdatePositionAndScale(classification.PositionImage, classification.ScaleImage, classification.UseLocalPosition);
         DrawLine(classification.Lines);
     }
