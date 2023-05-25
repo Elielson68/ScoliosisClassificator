@@ -1,2 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Report" src="project://database/Assets/Interfaces/Documents/Report.uxml?fileID=9197481963319205126&amp;guid=6a7ecd9068d04144fbca01922f007065&amp;type=3#Report" />
+    <ui:Instance template="Report" name="Report" />
 </ui:UXML>
