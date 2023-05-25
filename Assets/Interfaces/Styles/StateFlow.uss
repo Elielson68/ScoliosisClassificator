@@ -107,3 +107,28 @@
     width: 10%;
     height: 50%;
 }
+
+.list-proportions {
+    -unity-text-align: middle-center;
+    font-size: 230%;
+    -unity-font-style: bold;
+    color: rgba(0, 50, 90, 255);
+    background-color: rgba(255, 255, 255, 255);
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
