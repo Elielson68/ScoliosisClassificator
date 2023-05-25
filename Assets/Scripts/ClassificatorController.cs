@@ -73,8 +73,6 @@ public static class ClassificatorController
             contents = new List<string>(){ clsSacro.ClassificationCode }
         };
         List<StateInfo> serializeInfo = new List<StateInfo>() { stateInfo };
-        string serialized = JsonConvert.SerializeObject(serializeInfo, Formatting.Indented);
-        File.WriteAllText($"{ClassificationFolder.SaveDataFolder}/StatesFiles/Report.json", serialized);
         Debug.Log($"classifição: {tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}");
     }
 

@@ -24,13 +24,17 @@ public class ImageManipulation : MonoBehaviour
         _classifications = FindObjectOfType<Classifications>()[0];
         _stateController = FindObjectOfType<StateController>();
         _editModeToggle = FindObjectOfType<UIDocument>().rootVisualElement.Q<SlideToggle>();
-        _editModeToggle.RegisterCallback<ChangeEvent<bool>>(EditImageAction);
-        _editModeToggle.RegisterCallback<FocusInEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = true;
-        });
-        _editModeToggle.RegisterCallback<FocusOutEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = false;
-        });
+        if(_editModeToggle is not null)
+        {
+            _editModeToggle.RegisterCallback<ChangeEvent<bool>>(EditImageAction);
+            _editModeToggle.RegisterCallback<FocusInEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = true;
+            });
+            _editModeToggle.RegisterCallback<FocusOutEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = false;
+            });
+        }
+        
         DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
 
         StateController.OnBeforeUpdateState += UpdatePositionAndScaleImageState;
@@ -38,18 +42,26 @@ public class ImageManipulation : MonoBehaviour
 
     private void OnDisable()
     {
-        _editModeToggle.UnregisterCallback<ChangeEvent<bool>>(EditImageAction);
-        _editModeToggle.UnregisterCallback<FocusInEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = true;
-        });
-        _editModeToggle.UnregisterCallback<FocusOutEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = false;
-        });
+        if(_editModeToggle is not null)
+        {
+            _editModeToggle.UnregisterCallback<ChangeEvent<bool>>(EditImageAction);
+            _editModeToggle.UnregisterCallback<FocusInEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = true;
+            });
+            _editModeToggle.UnregisterCallback<FocusOutEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = false;
+            });
+        }
         StateController.OnBeforeUpdateState -= UpdatePositionAndScaleImageState;
         DrawLinesController.OnDrawModeActive -= () => DisableImageManipulation = true;
         DisableImageManipulation = true;
     }
 
+    public void SetImage(UnityEngine.UI.RawImage img)
+    {
+        imagem = img;
+    }
+    
     public void ShowEditModeButton()
     {
         //_editModeButton.style.display = DisplayStyle.Flex;

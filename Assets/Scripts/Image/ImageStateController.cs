@@ -17,6 +17,7 @@ public class ImageStateController : MonoBehaviour
     public void UpdateImageOnChangeState()
     {
         UpdateImageToState(StateController.CurrentState);
+        UpdateWidthAndHeight();
     }
 
     public void UpdateImageToState(States state)
@@ -30,7 +31,12 @@ public class ImageStateController : MonoBehaviour
     {
         _rawImageController.UpdateTexturePanel(img);
     }
-    
+
+    public void UpdateWidthAndHeight()
+    {
+        _rawImageController.Image.SetNativeSize();
+    }
+
     public void UpdatePositionAndScale(Vector3 pos, Vector3 scal, bool useLocalPosition=false)
     {
         _rawImageController.UpdatePositionAndScale(pos, scal, useLocalPosition);
