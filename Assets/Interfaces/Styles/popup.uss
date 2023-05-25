@@ -4,9 +4,7 @@
 }
 
 .edit-name-button {
-    width: 150px;
-    height: 50px;
-    font-size: 25px;
+    font-size: 72px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     border-left-width: 3px;
@@ -21,4 +19,7 @@
     border-bottom-left-radius: 3px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    -unity-text-align: middle-center;
+    align-items: center;
+    justify-content: center;
 }
