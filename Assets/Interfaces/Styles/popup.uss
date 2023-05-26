@@ -1,7 +1,7 @@
 #name > #unity-text-input {
     color: rgb(0, 50, 90);
     -unity-text-align: middle-center;
-    background-color: rgba(200, 200, 200, 255);
+    background-color: rgb(200, 200, 200);
     font-size: 100%;
 }
 
@@ -15,7 +15,7 @@
 
 .edit-name-button {
     width: 30%;
-    height: 60%;
+    height: 80%;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -27,13 +27,13 @@
     margin-top: 20px;
     margin-bottom: 20px;
     color: rgb(0, 50, 90);
-    border-left-color: rgba(1, 121, 220, 255);
-    border-right-color: rgba(1, 121, 220, 255);
-    border-top-color: rgba(1, 121, 220, 255);
-    border-bottom-color: rgba(1, 121, 220, 255);
+    border-left-color: rgb(1, 121, 220);
+    border-right-color: rgb(1, 121, 220);
+    border-top-color: rgb(1, 121, 220);
+    border-bottom-color: rgb(1, 121, 220);
 }
 
-.edit-name-button:hover {
+.edit-name-button:active {
     width: 30%;
     height: 60%;
     border-top-left-radius: 20px;
