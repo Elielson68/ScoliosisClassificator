@@ -23,7 +23,7 @@
                 <ui:DropdownField index="0" choices="A linha sacral está...,Entre os pedículos,Tocando um dos pedículos,Ultrapassando os pedículos" name="sacro-dropdown" style="width: 100%; height: 50%; align-items: stretch; -unity-font-style: bold; font-size: 80%; -unity-text-align: middle-center; display: flex; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 30px; background-color: rgb(255, 255, 255); color: rgba(0, 0, 0, 0); padding-right: 30px;" />
             </ui:VisualElement>
             <ui:VisualElement name="draw-lines-flow" style="display: none; visibility: visible; overflow: visible; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
-                <ui:VisualElement name="slide-toggle-container" focusable="true" style="min-width: auto; min-height: auto; scale: 0.9 0.9;">
+                <ui:VisualElement name="slide-toggle-container" focusable="true" style="min-width: auto; min-height: auto; scale: 0.8 0.8;">
                     <MyUILibrary.SlideToggle style="width: auto; height: auto; align-items: center; justify-content: center; margin-left: 40px;" />
                     <ui:VisualElement name="shadow-image-pencil" picking-mode="Ignore" class="left-image" style="top: 0;" />
                     <ui:VisualElement name="shadow-image-edit" picking-mode="Ignore" class="right-image" style="top: 0;" />
