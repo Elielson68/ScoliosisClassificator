@@ -270,7 +270,7 @@ public class DrawLinesController : MonoBehaviour
         }
         if(Down is not null)
         {
-            float degree = GetDegreeBetweenLines(ActualMoved, Down);
+            float degree = GetDegreeBetweenLines(Down, ActualMoved);
             moveLineStruct.DegreeBetweenActualAndDown = degree;
             if(moveLineStruct.ScreenDegreeDown is not null)
                 moveLineStruct.ScreenDegreeDown.text = System.Math.Round(degree, 2).ToString();
