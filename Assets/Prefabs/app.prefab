@@ -461,7 +461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
@@ -474,6 +474,10 @@ PrefabInstance:
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -507,6 +511,10 @@ PrefabInstance:
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 7797118153503956153}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Target
+      value: 
+      objectReference: {fileID: 258125621272784999}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
       value: 6
@@ -556,8 +564,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
       value: SetImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
@@ -604,6 +620,10 @@ PrefabInstance:
       value: ImageManipulation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: ImageManipulation, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -626,6 +646,10 @@ PrefabInstance:
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
@@ -666,6 +690,10 @@ PrefabInstance:
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.UI.RawImage, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
+      propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName

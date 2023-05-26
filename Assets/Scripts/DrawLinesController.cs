@@ -57,14 +57,16 @@ public class DrawLinesController : MonoBehaviour
         StateController.OnFowardButtonClick += () => _dropsideArea.Clear();
         StateController.OnFowardButtonClick += () => _drawModeToggle.value = false;
         StateController.OnBeforeUpdateState += AddLinesToStateOnFinishState;
+        ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
+        PointController.OnDragPoint += UpdateDegreeExtreme;
 
         _imgStateController.SetStateImage(Image);
         _imgStateController.UpdateImageOnChangeState();
 
-        PointController.OnDragPoint += UpdateDegreeExtreme;
+        
         _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside);
         _drawModeToggle.RegisterCallback<ChangeEvent<bool>>(DrawModeAction);
-        ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
+        
 
         _dropsideContainer.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
         _dropsideContainer.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
@@ -82,7 +84,6 @@ public class DrawLinesController : MonoBehaviour
         PointController.OnDragPoint -= UpdateDegreeExtreme;
         StateController.OnBeforeUpdateState -= AddLinesToStateOnFinishState;
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
-        StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
         StateController.OnFowardButtonClick -= () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick -= () => _dropsideArea.Clear();
