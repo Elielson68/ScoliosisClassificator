@@ -17,6 +17,8 @@ public class ReportController : MonoBehaviour
     private Button _nextClassification;
     private Label _title;
     private VisualElement _classificationSelectedContainer;
+    private VisualElement _dropsideArea;
+    private Toggle _dropside;
     private int _currentClassificationIndex;
     private Screens _backToScreen;
     private string _backToText;
@@ -37,6 +39,9 @@ public class ReportController : MonoBehaviour
         _previousClassification = document.rootVisualElement.Q<Button>("button-side-back");
         _backButton = document.rootVisualElement.Q<Button>("back-button");
         _classificationSelectedContainer = document.rootVisualElement.Q("steps-area");
+        _dropsideArea = document.rootVisualElement.Q("dropside-area");
+        _dropside = document.rootVisualElement.Q<Toggle>("dropside");
+        
 
         _backButton.text = _backToText;
 
@@ -50,6 +55,19 @@ public class ReportController : MonoBehaviour
         _nextClassification.RegisterCallback<ClickEvent>(NextClassificationImage);
         _previousClassification.RegisterCallback<ClickEvent>(PreviousClassificationImage);
         _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
+        _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside);
+    }
+
+    public void Dropside(ChangeEvent<bool> evt)
+    {
+        if (evt.newValue)
+        {
+            _dropsideArea.AddToClassList("dropside-expanded");
+        }
+        else
+        {
+            _dropsideArea.RemoveFromClassList("dropside-expanded");
+        }
     }
 
     public void SetBackToButton(string text, Screens screen)
@@ -70,6 +88,7 @@ public class ReportController : MonoBehaviour
         _nextClassification.UnregisterCallback<ClickEvent>(NextClassificationImage);
         _previousClassification.UnregisterCallback<ClickEvent>(PreviousClassificationImage);
         _backButton.UnregisterCallback<ClickEvent>(BackButtonAction);
+        _dropside.UnregisterCallback<ChangeEvent<bool>>(Dropside);
         _classificationsToShow.Clear();
     }
 
@@ -99,7 +118,8 @@ public class ReportController : MonoBehaviour
                     Lines = clsSacro.SubLines,
                     PositionImage = ImageManipulation.DefaultPositionImage,
                     ScaleImage = ImageManipulation.DefaultScaleImage,
-                    UseLocalPosition = true
+                    UseLocalPosition = true,
+                    Degrees = new List<float>()
                 };
                 _classificationsToShow.Add(tinySacro);
             }
@@ -108,7 +128,8 @@ public class ReportController : MonoBehaviour
                 Image = imgStateController.GetStateImage(cls.State),
                 Lines = cls.classification.Lines,
                 PositionImage = cls.classification.PositionImage,
-                ScaleImage = cls.classification.ScaleImage
+                ScaleImage = cls.classification.ScaleImage,
+                Degrees = cls.classification.Degrees
             };
             _classificationsToShow.Add(tinyCls);
         }
@@ -128,6 +149,13 @@ public class ReportController : MonoBehaviour
             {
                 child.AddToClassList("classification-selected");
             }
+        }
+        _dropsideArea.Clear();
+        foreach(float degree in classification.Degrees)
+        {
+            Label degreeLabel = new Label(System.Math.Round(degree, 2).ToString());
+            degreeLabel.AddToClassList("degree-label");
+            _dropsideArea.Add(degreeLabel);
         }
     }
 

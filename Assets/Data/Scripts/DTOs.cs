@@ -90,4 +90,5 @@ public struct TinyClassification
     public Vector3 PositionImage;
     public Vector3 ScaleImage;
     public bool UseLocalPosition;
+    public List<float> Degrees;
 }
