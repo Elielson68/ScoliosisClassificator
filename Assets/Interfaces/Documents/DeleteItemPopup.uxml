@@ -3,9 +3,9 @@
     <ui:VisualElement name="root" style="width: 100%; height: 1920px; position: absolute; background-color: rgba(55, 55, 55, 0.67);">
         <ui:VisualElement name="popup-container" style="position: absolute; width: 700px; height: 300px; left: 9%; justify-content: space-around; align-items: stretch; border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgb(1, 121, 220); border-right-color: rgb(1, 121, 220); border-top-color: rgb(1, 121, 220); border-bottom-color: rgb(1, 121, 220); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; background-color: rgb(255, 255, 255); margin-left: 35px; margin-right: 35px; bottom: 50%;">
             <ui:Label text="Tem certeza que&#10;deseja deleta este item?" display-tooltip-when-elided="true" name="title" style="-unity-text-align: middle-center; font-size: 50px; -unity-font-style: bold; color: rgb(0, 50, 90);" />
-            <ui:VisualElement name="button-container">
-                <ui:Button text="Button" display-tooltip-when-elided="true" class="edit-name-button" />
-                <ui:Button text="Button" display-tooltip-when-elided="true" class="edit-name-button" />
+            <ui:VisualElement name="button-container" style="width: 100%; height: 30%; align-items: center; justify-content: center; flex-direction: row;">
+                <ui:Button text="Não" display-tooltip-when-elided="true" class="edit-name-button" style="background-color: rgb(207, 0, 0); color: rgb(255, 255, 255);" />
+                <ui:Button text="Sim" display-tooltip-when-elided="true" class="edit-name-button" style="background-color: rgba(200, 200, 200, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -10,7 +10,7 @@
     width: 50%;
     height: 20%;
     background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
+    color: rgb(0, 40, 72);
     -unity-font: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&guid=8d500f3fa9b759e9db38fd9ec1eb1166&type=3#Jura-VariableFont_wght');
     -unity-font-definition: none;
     -unity-font-style: bold;

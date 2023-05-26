@@ -1,25 +1,57 @@
 #name > #unity-text-input {
-    color: rgb(0, 0, 0);
+    color: rgb(0, 50, 90);
     -unity-text-align: middle-center;
+    background-color: rgba(200, 200, 200, 255);
+    font-size: 100%;
+}
+
+#name > Label {
+    color: rgb(0, 50, 90);
+    -unity-text-align: middle-center;
+    -unity-font-definition: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght%20SDF.asset?fileID=11400000&guid=430ce0eaef5e72bce9619371d36be62b&type=2#Jura-VariableFont_wght SDF');
+    -unity-font-style: bold;
+    font-size: 120%;
 }
 
 .edit-name-button {
-    font-size: 72px;
-    color: rgb(255, 255, 255);
+    width: 30%;
+    height: 60%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 150%;
     -unity-font-style: bold;
-    border-left-width: 3px;
-    border-right-width: 3px;
-    border-top-width: 3px;
-    border-bottom-width: 3px;
-    border-left-color: rgba(147, 147, 147, 0.37);
-    border-right-color: rgba(147, 147, 147, 0.37);
-    border-top-color: rgba(147, 147, 147, 0.37);
-    border-bottom-color: rgba(147, 147, 147, 0.37);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    -unity-text-align: middle-center;
-    align-items: center;
-    justify-content: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: rgb(0, 50, 90);
+    border-left-color: rgba(1, 121, 220, 255);
+    border-right-color: rgba(1, 121, 220, 255);
+    border-top-color: rgba(1, 121, 220, 255);
+    border-bottom-color: rgba(1, 121, 220, 255);
+}
+
+.edit-name-button:hover {
+    width: 30%;
+    height: 60%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 150%;
+    -unity-font-style: bold;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: rgb(0, 50, 90);
+    border-left-color: rgb(1, 121, 220);
+    border-right-color: rgb(1, 121, 220);
+    border-top-color: rgb(1, 121, 220);
+    border-bottom-color: rgb(1, 121, 220);
+    scale: 1.05 1.05;
+    transition-property: scale;
+    transition-duration: 0s;
 }
