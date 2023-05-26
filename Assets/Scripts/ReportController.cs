@@ -16,6 +16,7 @@ public class ReportController : MonoBehaviour
     private Button _previousClassification;
     private Button _nextClassification;
     private Label _title;
+    private VisualElement _classificationSelectedContainer;
     private int _currentClassificationIndex;
     private Screens _backToScreen;
     private string _backToText;
@@ -35,7 +36,8 @@ public class ReportController : MonoBehaviour
         _nextClassification = document.rootVisualElement.Q<Button>("button-side-forward");
         _previousClassification = document.rootVisualElement.Q<Button>("button-side-back");
         _backButton = document.rootVisualElement.Q<Button>("back-button");
-        
+        _classificationSelectedContainer = document.rootVisualElement.Q("steps-area");
+
         _backButton.text = _backToText;
 
         InitializeClassificationsToShow();
@@ -119,6 +121,14 @@ public class ReportController : MonoBehaviour
         imgStateController.UpdateWidthAndHeight();
         imgStateController.UpdatePositionAndScale(classification.PositionImage, classification.ScaleImage, classification.UseLocalPosition);
         DrawLine(classification.Lines);
+        foreach(var child in _classificationSelectedContainer.Children())
+        {
+            child.RemoveFromClassList("classification-selected");
+            if(_classificationSelectedContainer.IndexOf(child) == _currentClassificationIndex)
+            {
+                child.AddToClassList("classification-selected");
+            }
+        }
     }
 
     private void UpdateTitle()

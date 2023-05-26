@@ -465,7 +465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: HistoryScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.size
@@ -485,7 +485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
@@ -522,11 +522,11 @@ PrefabInstance:
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 3988675539081463233}
+      objectReference: {fileID: 258125621272784999}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 258125621272784999}
+      objectReference: {fileID: 7797118153503956153}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -585,11 +585,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: StartReport
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: set_DisableImageManipulation
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
@@ -613,11 +613,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: ReportController, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: ImageManipulation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
@@ -645,7 +645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: ReportScreen.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4610354548067418629, guid: 3a3eb931d8c047c47a675550e2a44f93, type: 3}
       propertyPath: StatesFlow.OnOpenScreen.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgument
