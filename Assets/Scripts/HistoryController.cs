@@ -45,21 +45,30 @@ public class HistoryController : MonoBehaviour
 
     private void CreateStoryItens(string find = "")
     {
+        int counter = 1;
         foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
         {
             string name = (new DirectoryInfo(dir)).Name;
+            _classifications[0].classification.ImportJson(name);
+            string code = (_classifications[0].classification as ClassificationWithSacro).ClassificationCode;
 
-            if(string.IsNullOrEmpty(find) is false && name.ToLower().Contains(find.ToLower()) is false) continue;
+            if(string.IsNullOrEmpty(find) is false && name.ToLower().Contains(find.ToLower()) is false && code.ToLower().Contains(find.ToLower()) is false) continue;
 
             VisualElement baseVE = ItemStory.Instantiate();
+            
+
             HistoryContentVE.Add(baseVE);
 
             Label reportFolder = baseVE.Q<Label>("item");
             reportFolder.text = name;
             reportFolder.RegisterCallback<ClickEvent>(SetReportData);
 
+            baseVE.Q<Label>("classification").text = code;
+            baseVE.Q<Label>("number").text = counter.ToString("00");
+
             ConfigureEditButton(baseVE, reportFolder.text);
             ConfigureDeleteButton(baseVE, reportFolder.text);
+            counter++;
         }
     }
 
