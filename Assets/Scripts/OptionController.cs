@@ -16,6 +16,7 @@ public class OptionController : MonoBehaviour
         _root = FindObjectOfType<UIDocument>().rootVisualElement;
         ChangeScreen(Screens.Initial);
         ClassificationFolder.ConfigureFoldersOnAndroid();
+        ClassificatorController.LoadCodeClassifications();
     }
 
     public void ChangeScreen(Screens screens)

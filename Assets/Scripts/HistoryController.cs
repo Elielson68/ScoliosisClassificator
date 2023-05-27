@@ -46,11 +46,9 @@ public class HistoryController : MonoBehaviour
     private void CreateStoryItens(string find = "")
     {
         int counter = 1;
-        foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
+        foreach(string name in ClassificatorController.CodeClassifications.Keys)
         {
-            string name = (new DirectoryInfo(dir)).Name;
-            _classifications[0].classification.ImportJson(name);
-            string code = (_classifications[0].classification as ClassificationWithSacro).ClassificationCode;
+            string code = ClassificatorController.CodeClassifications[name];
 
             if(string.IsNullOrEmpty(find) is false && name.ToLower().Contains(find.ToLower()) is false && code.ToLower().Contains(find.ToLower()) is false) continue;
 
@@ -66,8 +64,8 @@ public class HistoryController : MonoBehaviour
             baseVE.Q<Label>("classification").text = code;
             baseVE.Q<Label>("number").text = counter.ToString("00");
 
-            ConfigureEditButton(baseVE, reportFolder.text);
-            ConfigureDeleteButton(baseVE, reportFolder.text);
+            ConfigureEditButton(baseVE, reportFolder);
+            ConfigureDeleteButton(baseVE, reportFolder);
             counter++;
         }
     }
@@ -78,32 +76,32 @@ public class HistoryController : MonoBehaviour
         CreateStoryItens(evt.newValue);
     }
 
-    private void ConfigureEditButton(VisualElement baseVE, string reportFolderName)
+    private void ConfigureEditButton(VisualElement baseVE, Label currentLabel)
     {
         Button edit = baseVE.Q<Button>("edit");
         edit.RegisterCallback<ClickEvent>(evt => {
             Debug.Log("Clicou no Edit");
             VisualElement popup = EditNamePopup.Instantiate().Q("root");
             _document.rootVisualElement.Add(popup);
-            ConfigureEditPopup(popup, reportFolderName);
+            ConfigureEditPopup(popup, currentLabel);
         });
     }
 
-    private void ConfigureDeleteButton(VisualElement baseVE, string reportFolderName)
+    private void ConfigureDeleteButton(VisualElement baseVE, Label currentLabel)
     {
         Button delete = baseVE.Q<Button>("delete");
         delete.RegisterCallback<ClickEvent>(evt => {
             Debug.Log("Clicou no Delete");
             VisualElement popup = DeleteItemPopup.Instantiate().Q("root");
             _document.rootVisualElement.Add(popup);
-            ConfigureDeletePopup(popup, reportFolderName);
+            ConfigureDeletePopup(popup, currentLabel);
         });
     }
 
-    private void ConfigureEditPopup(VisualElement popup, string oldName)
+    private void ConfigureEditPopup(VisualElement popup, Label oldNameLabel)
     {
         TextField name = popup.Q<TextField>("name");
-        name.SetValueWithoutNotify(oldName);
+        name.SetValueWithoutNotify(oldNameLabel.text);
         Button cancel = popup.Q<Button>("cancel");
         cancel.RegisterCallback<ClickEvent>(evt => 
         {
@@ -115,12 +113,16 @@ public class HistoryController : MonoBehaviour
         save.RegisterCallback<ClickEvent>(evt =>
         {  
             Debug.Log($"Salvou o novo nome! {name.value}");
-            ChangeNameItem(oldName, name.value);
+            string code = ClassificatorController.CodeClassifications[oldNameLabel.text];
+            ClassificatorController.CodeClassifications.Remove(oldNameLabel.text);
+            ClassificatorController.CodeClassifications.Add(name.value, code);
             _document.rootVisualElement.Remove(popup);
+            ChangeNameItem(oldNameLabel.text, name.value);
+            oldNameLabel.text = name.value;
         });
     }
 
-    private void ConfigureDeletePopup(VisualElement popup, string name)
+    private void ConfigureDeletePopup(VisualElement popup, Label nameLabel)
     {
         Button cancel = popup.Q<Button>("cancel");
         cancel.RegisterCallback<ClickEvent>(evt => 
@@ -132,8 +134,9 @@ public class HistoryController : MonoBehaviour
         Button save = popup.Q<Button>("save");
         save.RegisterCallback<ClickEvent>(evt =>
         {  
-            Debug.Log($"Vai tentar deletar o {name}");
-            DeleteItem(name);
+            Debug.Log($"Vai tentar deletar o {nameLabel.text}");
+            ClassificatorController.CodeClassifications.Remove(nameLabel.text);
+            DeleteItem(nameLabel.text);
             _document.rootVisualElement.Remove(popup);
         });
     }
@@ -143,8 +146,6 @@ public class HistoryController : MonoBehaviour
         try
         {
             Directory.Move(string.Format(ClassificationFolder.PathFolderFile, oldName), string.Format(ClassificationFolder.PathFolderFile, newName));
-            HistoryContentVE.Clear();
-            CreateStoryItens();
         }
         catch(System.Exception e)
         {
@@ -173,6 +174,7 @@ public class HistoryController : MonoBehaviour
         {
             cls.classification.ImportJson(label.text);
         }
+        _reportController.FolderClassification = label.text;
         FindObjectOfType<OptionController>().ChangeScreen(Screens.Report);
     }
 }

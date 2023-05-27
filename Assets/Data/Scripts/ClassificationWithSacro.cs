@@ -7,7 +7,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ClassificationWithSacro", menuName = "EscolioseClassificator/ClassificationWithSacro", order = 0)]
 public class ClassificationWithSacro : Classification
 {
-    public string ClassificationCode;
     public List<Line> SubLines;
     public Sacro Sacro;
 
@@ -23,12 +22,10 @@ public class ClassificationWithSacro : Classification
         ClassificationWithSacro obj = JsonConvert.DeserializeObject<ClassificationWithSacro>(file);
         State = obj.State;
         Lines = obj.Lines;
-        Image = obj.Image;
         SubLines = obj.SubLines;
         Sacro = obj.Sacro;
         PositionImage = obj.PositionImage;
         ScaleImage = obj.ScaleImage;
-        ClassificationCode = obj.ClassificationCode;
     }
 
     [ContextMenu("Reset Values")]

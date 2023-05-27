@@ -13,9 +13,14 @@ public static class ClassificationFolder
     public static string DefinedFolderFilePath => string.Format(PathFolderFile, FolderName);
     public static string DefinedFilePath => string.Format(FileName, FolderName);  
     private static string[] _filesStates = {"DrawImageInfo.json", "InsetImageInfo.json", "Report.json", "SacroType.json"};
-    public static void GenerateFolderName()
+    
+    public static void GenerateFolder()
     {
         FolderName = DateTime.Now.ToString("dd-MM-yyyy_HH.mm");
+        if(Directory.Exists(ClassificationFolder.DefinedFolderFilePath) is false)
+        {
+            Directory.CreateDirectory(ClassificationFolder.DefinedFolderFilePath);
+        }
     }
 
     public static void ConfigureFoldersOnAndroid()

@@ -18,37 +18,21 @@ public class PhotoInsertionController : MonoBehaviour
     public void StartClass()
     {
         _classifications = FindObjectOfType<Classifications>()[0];
-        //uploadButton = document.rootVisualElement.Q<Button>("upload-button");
-
-        //uploadButton.RegisterCallback<ClickEvent>(UploadButton);
         InsertImageMode.OnClickImage += UploadButton;
-        StateController.OnUpdateState += UpdateTextOnChangeState;
 
         UploadImage.OnCompletedUploadImage +=  StateControll.ShowFowardButton;
         UploadImage.OnChangeImage += WriteImage;
         VisualElementInteraction.IsVisualElementFocus = false;
+        ClassificationFolder.GenerateFolder();
     }
 
     public void HiddenButtons()
     {
-        //uploadButton.AddToClassList("element-hidden");
-        //document.rootVisualElement.Q<Button>("picture-button").AddToClassList("element-hidden");
 
-        //uploadButton.UnregisterCallback<ClickEvent>(UploadButton);
-        StateController.OnUpdateState -= UpdateTextOnChangeState;
         UploadImage.OnCompletedUploadImage -=  StateControll.ShowFowardButton;
         UploadImage.OnChangeImage -= WriteImage;
         InsertImageMode.OnClickImage -= UploadButton;
     }
-
-    // public void ShowButtons()
-    // {
-    //     uploadButton.RemoveFromClassList("element-hidden");
-    //     document.rootVisualElement.Q<Button>("picture-button").RemoveFromClassList("element-hidden");
-
-    //     uploadButton.style.display = DisplayStyle.Flex;
-    //     document.rootVisualElement.Q<Button>("picture-button").style.display = DisplayStyle.Flex;
-    // }
 
     private void UploadButton(ClickEvent evt)
     {
@@ -60,30 +44,8 @@ public class PhotoInsertionController : MonoBehaviour
         OnUploadButtonClick?.Invoke();
     }
 
-    private void UpdateTextOnChangeState(States state)
-    {
-        foreach(ClassificationData cd in _classifications)
-        {
-            if(cd.State == state)
-            {
-                UploadImage.OnChangeImage += cd.classification.SetImage;
-            }
-            else
-            {
-                UploadImage.OnChangeImage -= cd.classification.SetImage;
-            }
-        }
-    }
-
     private void WriteImage(byte[] txt)
     {
-        foreach(ClassificationData cd in _classifications)
-        {
-            if(cd.State == StateController.CurrentState)
-            {
-                cd.classification.SetImage(txt);
-                break;
-            }
-        }
+        _classifications[(int) StateController.CurrentState].classification.SetImage(txt);
     }
 }

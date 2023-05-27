@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class ClassificatorController
 {
+    public static Dictionary<string, string> CodeClassifications = new Dictionary<string, string>();
     /// <summary>
     /// 0 = NÃO POSSUI ÂNGULO ACIMA DE 25
     /// 1 = POSSUI ÂNGULO ACIMA DE 25
@@ -66,14 +67,28 @@ public static class ClassificatorController
         string modificadorSagitalToracico = modificadorToracicoSagital < 10f ? "-" : (modificadorToracicoSagital >= 10f && modificadorToracicoSagital <= 40f) ? "N" : "+";
         ClassificationWithSacro clsSacro = classifications[(int)States.Front].classification as ClassificationWithSacro;
         string sacro = clsSacro.Sacro.ToString();
-        clsSacro.ClassificationCode = $"{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
-        StateInfo stateInfo = new StateInfo()
-        {
-            title = "Classificação",
-            contents = new List<string>(){ clsSacro.ClassificationCode }
-        };
-        List<StateInfo> serializeInfo = new List<StateInfo>() { stateInfo };
+
+        string code = $"{tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}";
+        SaveClassificationCode(code);
         Debug.Log($"classifição: {tipoCurva.Tipo}{sacro}{modificadorSagitalToracico}");
     }
 
+    private static void SaveClassificationCode(string code)
+    {
+        File.WriteAllText($"{ClassificationFolder.DefinedFolderFilePath}/classification_code", code, System.Text.Encoding.UTF8);
+        ClassificatorController.CodeClassifications.Add(ClassificationFolder.FolderName, code);
+    }
+
+    public static void LoadCodeClassifications()
+    {
+        foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
+        {
+            string file = $"{dir}/classification_code";
+            if(File.Exists(file))
+            {
+                string code = File.ReadAllText(file);
+                CodeClassifications.Add((new DirectoryInfo(dir)).Name, code);
+            }
+        }
+    }
 }
