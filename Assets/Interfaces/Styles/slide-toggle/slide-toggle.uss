@@ -5,31 +5,27 @@
     border-top-right-radius: 80px;
     border-bottom-right-radius: 80px;
     overflow: visible;
-    border-left-width: 2px;
-    border-right-width: 2px;
-    border-top-width: 2px;
-    border-bottom-width: 2px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
     border-right-color: var(--unity-colors-slider_thumb-border);
     border-top-color: var(--unity-colors-slider_thumb-border);
     border-bottom-color: var(--unity-colors-slider_thumb-border);
-    margin-top: 0;
     border-left-color: var(--unity-colors-slider_thumb-border);
     transition-property: background-color;
     transition-duration: 0.5s;
-    width: 600px;
-    height: 200px;
+    width: 400px;
+    height: 150px;
     justify-content: center;
 }
 
 .slide-toggle__input-knob {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     background-color: rgba(255, 255, 255, 0);
-    position: absolute;
-    top: -1px;
     transition-property: translate, background-color;
     transition-duration: 0.5s, 0.5s;
-    translate: -1px 0;
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
@@ -42,38 +38,34 @@
 }
 
 .left-image {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     background-color: rgba(255, 255, 255, 0);
     position: absolute;
-    top: 48px;
-    transition-property: translate, background-color;
-    transition-duration: 0.5s, 0.5s;
-    translate: -1px 0;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    top: 2px;
+    translate: 5px 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
     border-left-color: rgba(255, 255, 255, 0);
     border-right-color: rgba(255, 255, 255, 0);
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
     background-image: url('project://database/Assets/Design/Icons/button-draw.png?fileID=2800000&guid=cfc5706f8f9932ebfbf14f6796b4a7ae&type=3#button-draw');
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.39);
-    left: 42px;
+    left: -1px;
 }
 
 .right-image {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     background-color: rgba(255, 255, 255, 0);
-    transition-property: translate, background-color;
-    transition-duration: 0.5s, 0.5s;
-    translate: -1px 0;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    translate: 0 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
     border-left-color: rgba(255, 255, 255, 0);
     border-right-color: rgba(255, 255, 255, 0);
     border-top-color: rgba(255, 255, 255, 0);
@@ -81,8 +73,8 @@
     background-image: url('project://database/Assets/Design/Icons/button-zoom.png?fileID=2800000&guid=6e210c453d413e4309f3792a39fc2731&type=3#button-zoom');
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.39);
     position: absolute;
-    left: 442px;
-    top: 48px;
+    left: 254px;
+    top: 2px;
 }
 
 .slide-toggle__input--checked {
@@ -90,9 +82,10 @@
 }
 
 .slide-toggle__input--checked > .slide-toggle__input-knob {
-    translate: 400px 0;
-    margin-right: 0;
+    translate: 250px 0;
     background-image: url('project://database/Assets/Design/Icons/button-zoom.png?fileID=2800000&guid=6e210c453d413e4309f3792a39fc2731&type=3#button-zoom');
+    width: 150px;
+    height: 150px;
 }
 
 .slide-toggle:focus .slide-toggle__input-knob {

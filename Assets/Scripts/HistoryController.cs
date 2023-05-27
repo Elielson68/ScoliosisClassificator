@@ -49,8 +49,9 @@ public class HistoryController : MonoBehaviour
         foreach(string dir in Directory.GetDirectories(ClassificationFolder.SaveDataFolder+"/Reports/"))
         {
             string name = (new DirectoryInfo(dir)).Name;
-            _classifications[0].classification.ImportJson(name);
-            string code = (_classifications[0].classification as ClassificationWithSacro).ClassificationCode;
+            //_classifications[0].classification.ImportJson(name);
+            //string code = (_classifications[0].classification as ClassificationWithSacro).ClassificationCode;
+            string code = "";
 
             if(string.IsNullOrEmpty(find) is false && name.ToLower().Contains(find.ToLower()) is false && code.ToLower().Contains(find.ToLower()) is false) continue;
 
