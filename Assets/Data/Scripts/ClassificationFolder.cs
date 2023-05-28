@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
 
 public static class ClassificationFolder
 {
@@ -19,6 +20,12 @@ public static class ClassificationFolder
         FolderName = DateTime.Now.ToString("dd-MM-yyyy_HH.mm");
         if(Directory.Exists(ClassificationFolder.DefinedFolderFilePath) is false)
         {
+            Directory.CreateDirectory(ClassificationFolder.DefinedFolderFilePath);
+        }
+        else if(ClassificatorController.CodeClassifications.ContainsKey(FolderName))
+        {
+            int countKey = ClassificatorController.CodeClassifications.Count(x => x.Key.Contains(FolderName));
+            FolderName = $"{FolderName}_{countKey}";
             Directory.CreateDirectory(ClassificationFolder.DefinedFolderFilePath);
         }
     }

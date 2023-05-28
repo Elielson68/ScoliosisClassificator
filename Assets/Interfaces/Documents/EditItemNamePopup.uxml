@@ -7,6 +7,7 @@
                 <ui:Button text="CANCELAR" display-tooltip-when-elided="true" name="cancel" class="edit-name-button" style="background-color: rgb(156, 11, 11); color: rgb(255, 255, 255);" />
                 <ui:Button text="SALVAR" display-tooltip-when-elided="true" name="save" class="edit-name-button" style="color: rgb(0, 50, 90); background-color: rgb(200, 200, 200);" />
             </ui:VisualElement>
+            <ui:Label text="Esse nome já existe!" display-tooltip-when-elided="true" name="warning" style="font-size: 35px; -unity-font-style: bold; color: rgb(255, 0, 5); -unity-text-align: middle-center; background-color: rgb(255, 227, 0); display: none;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

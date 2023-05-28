@@ -40,8 +40,8 @@ public class DrawLinesController : MonoBehaviour
     {
         UIDocument document = FindObjectOfType<UIDocument>();
 
-        _collider = GetComponent<BoxCollider2D>();
-        _collider.size = new Vector2(Screen.width, Screen.height);
+        //_collider = GetComponent<BoxCollider2D>();
+        //_collider.size = new Vector2(Screen.width, Screen.height);
         _classifications = FindObjectOfType<Classifications>()[0];
         _imgStateController = FindObjectOfType<ImageStateController>();
         _dropside = document.rootVisualElement.Q<Toggle>("dropside");

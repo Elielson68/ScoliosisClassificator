@@ -112,13 +112,26 @@ public class HistoryController : MonoBehaviour
         Button save = popup.Q<Button>("save");
         save.RegisterCallback<ClickEvent>(evt =>
         {  
+            if(name.value.ToLower() == oldNameLabel.text.ToLower())
+            {
+                _document.rootVisualElement.Remove(popup);
+                return;
+            }
+            else if(ClassificatorController.CodeClassifications.ContainsKey(name.value.ToLower()))
+            {
+                Debug.Log($"Nome já existe!");
+                popup.Q<Label>("warning").style.display = DisplayStyle.Flex;
+                return;
+            }
+            
             Debug.Log($"Salvou o novo nome! {name.value}");
             string code = ClassificatorController.CodeClassifications[oldNameLabel.text];
             ClassificatorController.CodeClassifications.Remove(oldNameLabel.text);
-            ClassificatorController.CodeClassifications.Add(name.value, code);
+            ClassificatorController.CodeClassifications.Add(name.value.ToLower(), code);
             _document.rootVisualElement.Remove(popup);
-            ChangeNameItem(oldNameLabel.text, name.value);
-            oldNameLabel.text = name.value;
+            ChangeNameItem(oldNameLabel.text, name.value.ToLower());
+            oldNameLabel.text = name.value.ToLower();
+            popup.Q<Label>("warning").style.display = DisplayStyle.None;
         });
     }
 
