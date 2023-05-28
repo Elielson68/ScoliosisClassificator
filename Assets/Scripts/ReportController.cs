@@ -11,7 +11,6 @@ public class ReportController : MonoBehaviour
     public GameObject LineParent;
     public GameObject LinePrefab;
     public UnityEngine.UI.RawImage ReportImage;
-    public string FolderClassification;
     private ImageStateController imgStateController;
     private Button _backButton;
     private Button _previousClassification;
@@ -162,7 +161,7 @@ public class ReportController : MonoBehaviour
 
     private void UpdateTitle()
     {
-        _title.text = ClassificatorController.CodeClassifications[FolderClassification];
+        _title.text = ClassificatorController.CodeClassifications[ClassificationFolder.FolderName];
     }
 
     public void ExportClassification()
@@ -172,7 +171,6 @@ public class ReportController : MonoBehaviour
         {
             classification.classification.ExportJson();
         }
-        FolderClassification = ClassificationFolder.FolderName;
     }
 
     public void ResetReport()

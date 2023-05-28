@@ -169,12 +169,12 @@ public class HistoryController : MonoBehaviour
 
     private void SetReportData(ClickEvent evt)
     {
-        Label label = evt.target as Label;
+        Label label = evt.currentTarget as Label;
         foreach(var cls in _classifications)
         {
             cls.classification.ImportJson(label.text);
         }
-        _reportController.FolderClassification = label.text;
+        ClassificationFolder.FolderName = label.text;
         FindObjectOfType<OptionController>().ChangeScreen(Screens.Report);
     }
 }
