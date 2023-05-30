@@ -41,6 +41,11 @@ public class ImageStateController : MonoBehaviour
     {
         _rawImageController.UpdatePositionAndScale(pos, scal, useLocalPosition);
     }
+
+     public void UpdatePosition(Vector3 pos, bool useLocalPosition=false)
+    {
+        _rawImageController.UpdatePosition(pos, useLocalPosition);
+    }
     
     public void SetToDefaultPositionAndScale()
     {

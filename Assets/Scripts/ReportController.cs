@@ -53,7 +53,14 @@ public class ReportController : MonoBehaviour
         UpdateTitle();
 
         _nextClassification.RegisterCallback<ClickEvent>(NextClassificationImage);
+        _nextClassification.RegisterCallback<FocusInEvent>(OnVisualElementFocus);
+        _nextClassification.RegisterCallback<FocusOutEvent>(OnVisualElementFocusOut);
+
         _previousClassification.RegisterCallback<ClickEvent>(PreviousClassificationImage);
+        _previousClassification.RegisterCallback<FocusInEvent>(OnVisualElementFocus);
+        _previousClassification.RegisterCallback<FocusOutEvent>(OnVisualElementFocusOut);
+
+
         _backButton.RegisterCallback<ClickEvent>(BackButtonAction);
         _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside);
     }
@@ -68,6 +75,16 @@ public class ReportController : MonoBehaviour
         {
             _dropsideArea.RemoveFromClassList("dropside-expanded");
         }
+    }
+
+    private void OnVisualElementFocus(FocusInEvent evt)
+    {
+        VisualElementInteraction.IsVisualElementFocus = true;
+    }
+
+    private void OnVisualElementFocusOut(FocusOutEvent evt)
+    {
+        VisualElementInteraction.IsVisualElementFocus = false;
     }
 
     public void SetBackToButton(string text, Screens screen)
@@ -86,9 +103,16 @@ public class ReportController : MonoBehaviour
     {
         ResetReport();
         _nextClassification.UnregisterCallback<ClickEvent>(NextClassificationImage);
+        _nextClassification.UnregisterCallback<FocusInEvent>(OnVisualElementFocus);
+        _nextClassification.UnregisterCallback<FocusOutEvent>(OnVisualElementFocusOut);
+        
         _previousClassification.UnregisterCallback<ClickEvent>(PreviousClassificationImage);
+        _previousClassification.UnregisterCallback<FocusInEvent>(OnVisualElementFocus);
+        _previousClassification.UnregisterCallback<FocusOutEvent>(OnVisualElementFocusOut);
+
         _backButton.UnregisterCallback<ClickEvent>(BackButtonAction);
         _dropside.UnregisterCallback<ChangeEvent<bool>>(Dropside);
+        
         _classificationsToShow.Clear();
     }
 
@@ -157,6 +181,7 @@ public class ReportController : MonoBehaviour
             degreeLabel.AddToClassList("degree-label");
             _dropsideArea.Add(degreeLabel);
         }
+        imgStateController.UpdatePosition(Vector3.zero, classification.UseLocalPosition);
     }
 
     private void UpdateTitle()

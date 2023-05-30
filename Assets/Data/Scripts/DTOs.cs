@@ -58,6 +58,7 @@ public struct TipoCurva
     public int ToracicaProximal;
     public int ToraricaPrincipal;
     public int ToracoLombar;
+    public bool PrincipalIsPrincipal;
 }
 
 public struct LinePair
