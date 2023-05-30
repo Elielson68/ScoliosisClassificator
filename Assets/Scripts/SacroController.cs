@@ -6,6 +6,7 @@ public class SacroController : MonoBehaviour
 {
     private const string SacroDropdown = "sacro-dropdown";
     private DropdownField _dropdown;
+    private VisualElement _sacroTypeContainer;
     private StateController _stateCotrol;
     private ClassificationWithSacro _sacro;
     private GameObject _sacroLine;
@@ -19,11 +20,12 @@ public class SacroController : MonoBehaviour
         ImageStateController imgStateController = FindObjectOfType<ImageStateController>();
         _stateCotrol = FindObjectOfType<StateController>();
         _dropdown = FindObjectOfType<UIDocument>().rootVisualElement.Q<DropdownField>();
+        _sacroTypeContainer = FindObjectOfType<UIDocument>().rootVisualElement.Q("sacro-type-flow");
 
         imgStateController.SetStateImage(Image);
         imgStateController.UpdateImageOnChangeState();
         
-        _dropdown.style.display = DisplayStyle.Flex;
+        _sacroTypeContainer.style.display = DisplayStyle.Flex;
         _dropdown.RegisterValueChangedCallback(OnChooseOption);
 
         _sacro = FindObjectOfType<Classifications>()[0][0].classification as ClassificationWithSacro;
@@ -38,7 +40,7 @@ public class SacroController : MonoBehaviour
 
     public void HideDropdown()
     {
-        _dropdown.style.display = DisplayStyle.None;
+        _sacroTypeContainer.style.display = DisplayStyle.None;
         foreach(Transform child in LineParent.transform)
         {
             Destroy(child.gameObject);

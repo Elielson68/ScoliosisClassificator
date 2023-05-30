@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using MyUILibrary;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ImageManipulation : MonoBehaviour
 {
-    public readonly static Vector3 DefaultPositionImage = new Vector3(-3.1f, 78.5f, 10f);
+    public readonly static Vector3 DefaultPositionImage = new Vector3(0, -69.9f, 10f);
     public readonly static Vector3 DefaultScaleImage = Vector3.one;
     public static System.Action OnEditImageActive;
+    public static System.Action<float> OnZoomImage;
     public float DistanciaMatriz;
     public float Zoom;
     public UnityEngine.UI.RawImage imagem;
@@ -14,7 +16,7 @@ public class ImageManipulation : MonoBehaviour
     public bool MovingImage;
     public bool Zooming;
     public static bool DisableImageManipulation {get; set;} = true;
-    private RadioButton _editModeButton;
+    private SlideToggle _editModeToggle;
     private List<ClassificationData> _classifications;
     private StateController _stateController;
 
@@ -22,14 +24,18 @@ public class ImageManipulation : MonoBehaviour
     {
         _classifications = FindObjectOfType<Classifications>()[0];
         _stateController = FindObjectOfType<StateController>();
-        _editModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>("move-mode");
-        _editModeButton.RegisterCallback<ClickEvent>(EditImageAction);
-        _editModeButton.RegisterCallback<FocusInEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = true;
-        });
-        _editModeButton.RegisterCallback<FocusOutEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = false;
-        });
+        _editModeToggle = FindObjectOfType<UIDocument>().rootVisualElement.Q<SlideToggle>();
+        if(_editModeToggle is not null)
+        {
+            _editModeToggle.RegisterCallback<ChangeEvent<bool>>(EditImageAction);
+            _editModeToggle.RegisterCallback<FocusInEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = true;
+            });
+            _editModeToggle.RegisterCallback<FocusOutEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = false;
+            });
+        }
+        
         DrawLinesController.OnDrawModeActive += () => DisableImageManipulation = true;
 
         StateController.OnBeforeUpdateState += UpdatePositionAndScaleImageState;
@@ -37,37 +43,44 @@ public class ImageManipulation : MonoBehaviour
 
     private void OnDisable()
     {
-        _editModeButton.UnregisterCallback<ClickEvent>(EditImageAction);
-        _editModeButton.UnregisterCallback<FocusInEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = true;
-        });
-        _editModeButton.UnregisterCallback<FocusOutEvent>(evt => {
-            VisualElementInteraction.IsVisualElementFocus = false;
-        });
+        if(_editModeToggle is not null)
+        {
+            _editModeToggle.UnregisterCallback<ChangeEvent<bool>>(EditImageAction);
+            _editModeToggle.UnregisterCallback<FocusInEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = true;
+            });
+            _editModeToggle.UnregisterCallback<FocusOutEvent>(evt => {
+                VisualElementInteraction.IsVisualElementFocus = false;
+            });
+        }
         StateController.OnBeforeUpdateState -= UpdatePositionAndScaleImageState;
         DrawLinesController.OnDrawModeActive -= () => DisableImageManipulation = true;
         DisableImageManipulation = true;
     }
 
-    public void ShowEditModeButton()
+    public void SetImage(UnityEngine.UI.RawImage img)
     {
-        _editModeButton.style.display = DisplayStyle.Flex;
+        imagem = img;
     }
-
-    public void HideEditModeButton()
+    
+    public void EnableManipulation()
     {
-        _editModeButton.style.display = DisplayStyle.None;
-    }
-
-    private void EditImageAction(ClickEvent evt)
-    {
-        OnEditImageActive?.Invoke();
         DisableImageManipulation = false;
+        VisualElementInteraction.IsVisualElementFocus = false;
+    }
+
+    private void EditImageAction(ChangeEvent<bool> evt)
+    {
+        if(evt.newValue)
+        {
+            OnEditImageActive?.Invoke();
+            DisableImageManipulation = false;
+        }
     }
 
     private void Update()
     {
-        if(DisableImageManipulation) return;
+        if(DisableImageManipulation || VisualElementInteraction.IsVisualElementFocus) return;
 
         if (Input.touchCount > 1)
         {
@@ -98,6 +111,7 @@ public class ImageManipulation : MonoBehaviour
             DistanciaMatriz = Vector3.Distance(pos_touch_1, pos_touch_2);
             imagem.transform.localScale += ((Vector3.one * Zoom)/10);
             _classifications[(int)StateController.CurrentState].classification.ScaleImage = imagem.transform.localScale;
+            OnZoomImage?.Invoke(imagem.transform.localScale.x);
         }
 
         if(imagem.transform.localScale.x < 0)
@@ -115,16 +129,29 @@ public class ImageManipulation : MonoBehaviour
         pos_touch_1.z = 91;
         float distance = 0;
 
+        
         if(Input.GetTouch(0).phase is TouchPhase.Began || Input.GetTouch(0).phase is TouchPhase.Ended)
+        {
             OneTouchPosition = pos_touch_1;
+            if(Input.GetTouch(0).tapCount == 2)
+            {
+                imagem.transform.position = pos_touch_1;
+                _classifications[(int)StateController.CurrentState].classification.PositionImage = pos_touch_1;
+            }
+        }
+            
         else
             distance = Vector3.Distance(OneTouchPosition, pos_touch_1);
 
-        if(distance > 1)
-            MovingImage = true;
 
-        if(MovingImage)
-            imagem.transform.position = _classifications[(int)StateController.CurrentState].classification.PositionImage = pos_touch_1;
+        if(Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            var move = OneTouchPosition - pos_touch_1;
+            imagem.transform.position -= move;
+            OneTouchPosition = pos_touch_1;
+            _classifications[(int)StateController.CurrentState].classification.PositionImage = imagem.transform.position;
+        }
+            
     }
 
     private void UpdatePositionAndScaleImageState()

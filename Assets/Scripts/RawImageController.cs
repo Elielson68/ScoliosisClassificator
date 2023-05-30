@@ -15,16 +15,22 @@ public class RawImageController
 
     public Texture2D GetTexture2D(ClassificationData cls)
     {
-        Texture2D text = new Texture2D(2, 2);
-        text.LoadImage(cls.classification.Image);
-        text.Apply();
-        return text;
+        string imageFolder = $"{ClassificationFolder.DefinedFolderFilePath}/{cls.State}.jpg";
+        return NativeGallery.LoadImageAtPath(imageFolder);
     }
 
-    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal)
+    public void UpdatePositionAndScale(Vector3 pos, Vector3 scal, bool useLocalPosition=false)
     {
-        Image.transform.position = pos;
+        UpdatePosition(pos, useLocalPosition);
         Image.transform.localScale = scal;
+    }
+
+    public void UpdatePosition(Vector3 pos, bool useLocalPosition=false)
+    {
+        if(useLocalPosition)
+            Image.transform.localPosition = pos;
+        else
+            Image.transform.position = pos;
     }
 
     public void SetToDefaultPositionAndScale()

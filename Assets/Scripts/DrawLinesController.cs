@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MyUILibrary;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,8 +18,9 @@ public class DrawLinesController : MonoBehaviour
 
     private const string DegreeLabelStyle = "degree-label";
     private const string ShowDegreeButton = "show-degree";
-    private const string DrawModeButton = "draw-mode";
+    private const string DrawModeContainer = "draw-lines-flow";
     private const string ShowDegreeContent = "degree-content";
+
     private LineController _auxLine;
     private BoxCollider2D _collider;
     private bool _firstPointCreated = false;
@@ -26,90 +28,118 @@ public class DrawLinesController : MonoBehaviour
     private ImageStateController _imgStateController;
     private LineRenderer _lastPointCreated;
     private Dictionary<LineRenderer, LinePair> _lineDegrees = new Dictionary<LineRenderer, LinePair>();
-    private ScrollView _contentDegree;
-    private Button _showDegreeButton;
-    private RadioButton _drawModeButton;
+    
+    private Toggle _dropside;
+    private VisualElement _dropsideArea;
+    private SlideToggle _drawModeToggle;
+    private VisualElement _dropsideContainer;
+    private VisualElement _drawModeContainer;
     private bool _isShowingContentDegree;
     
     private void OnEnable()
     {
-        _collider = GetComponent<BoxCollider2D>();
-        _collider.size = new Vector2(Screen.width, Screen.height);
+        UIDocument document = FindObjectOfType<UIDocument>();
+
+        //_collider = GetComponent<BoxCollider2D>();
+        //_collider.size = new Vector2(Screen.width, Screen.height);
         _classifications = FindObjectOfType<Classifications>()[0];
         _imgStateController = FindObjectOfType<ImageStateController>();
-
+        _dropside = document.rootVisualElement.Q<Toggle>("dropside");
+        _dropsideArea = document.rootVisualElement.Q("dropside-area");
+        _dropsideContainer = document.rootVisualElement.Q("dropside-container");
+        _drawModeToggle = document.rootVisualElement.Q<SlideToggle>();
+        _drawModeContainer = document.rootVisualElement.Q(DrawModeContainer);
         _classifications.ForEach(c => { c.classification.CurrentRule = 0; });
 
         StateController.OnFowardButtonClick += () => BlockCreationLineGlobal = false;
         StateController.OnFowardButtonClick += () => BlockCreationLineFinishState = false;
         StateController.OnFowardButtonClick += _imgStateController.UpdateImageOnChangeState;
-        StateController.OnFowardButtonClick += () => _contentDegree.Clear();
-        
+        StateController.OnFowardButtonClick += () => _dropsideArea.Clear();
+        StateController.OnFowardButtonClick += () => _drawModeToggle.value = false;
         StateController.OnBeforeUpdateState += AddLinesToStateOnFinishState;
+        ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
+        PointController.OnDragPoint += UpdateDegreeExtreme;
 
         _imgStateController.SetStateImage(Image);
         _imgStateController.UpdateImageOnChangeState();
 
-        PointController.OnDragPoint += UpdateDegreeExtreme;
+        
+        _dropside.RegisterCallback<ChangeEvent<bool>>(Dropside);
+        _drawModeToggle.RegisterCallback<ChangeEvent<bool>>(DrawModeAction);
+        
 
-        _contentDegree = FindObjectOfType<UIDocument>().rootVisualElement.Q<ScrollView>(ShowDegreeContent);
-        _showDegreeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<Button>(ShowDegreeButton);
-        _drawModeButton = FindObjectOfType<UIDocument>().rootVisualElement.Q<RadioButton>(DrawModeButton);
+        _dropsideContainer.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _dropsideContainer.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
 
-        _showDegreeButton.RegisterCallback<ClickEvent>(ToggleContentDegree);
-        _drawModeButton.RegisterCallback<ClickEvent>(DrawModeAction);
+        _drawModeToggle.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _drawModeToggle.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
 
-        ImageManipulation.OnEditImageActive += () => BlockCreationLineGlobal = true;
+        FindObjectOfType<ReportController>().SetBackToButton("BACK INITIAL", Screens.Initial);
     }
 
+    
 
     private void OnDisable()
     {
         PointController.OnDragPoint -= UpdateDegreeExtreme;
         StateController.OnBeforeUpdateState -= AddLinesToStateOnFinishState;
         StateController.OnFowardButtonClick -= _imgStateController.UpdateImageOnChangeState;
-        StateController.OnFowardButtonClick -= ClearLines;
         StateController.OnFowardButtonClick -= () => BlockCreationLineGlobal = false;
         StateController.OnFowardButtonClick -= () => BlockCreationLineFinishState = false;
-        StateController.OnFowardButtonClick -= () => _contentDegree.Clear();
+        StateController.OnFowardButtonClick -= () => _dropsideArea.Clear();
+        StateController.OnFowardButtonClick -= () => _drawModeToggle.value = false;
         ImageManipulation.OnEditImageActive -= () => BlockCreationLineGlobal = true;
-        _showDegreeButton.UnregisterCallback<ClickEvent>(ToggleContentDegree);
-        _drawModeButton.UnregisterCallback<ClickEvent>(DrawModeAction);
+        _dropside.UnregisterCallback<ChangeEvent<bool>>(Dropside);
+        _drawModeToggle.UnregisterCallback<ChangeEvent<bool>>(DrawModeAction);
         BlockCreationLineGlobal = false;
+
+        _dropsideContainer.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _dropsideContainer.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
+
+        _drawModeToggle.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        _drawModeToggle.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
-    private void DrawModeAction(ClickEvent evt)
+    private void DrawModeAction(ChangeEvent<bool> evt)
     {
-        OnDrawModeActive?.Invoke();
-        BlockCreationLineGlobal = false;
+        if(evt.newValue is false)
+        {
+            OnDrawModeActive?.Invoke();
+            BlockCreationLineGlobal = false;
+        }
+        
     }
 
     public void ShowDrawModeButton()
     {
-        _drawModeButton.style.display = DisplayStyle.Flex;
+        _drawModeContainer.style.display = DisplayStyle.Flex;
     }
 
     public void HideDrawModeButton()
     {
-        _drawModeButton.style.display = DisplayStyle.None;
+        _drawModeContainer.style.display = DisplayStyle.None;
     }
 
-    private void ToggleContentDegree(ClickEvent evt)
+    public void Dropside(ChangeEvent<bool> evt)
     {
-        _isShowingContentDegree = !_isShowingContentDegree;
-        _contentDegree.style.display = _isShowingContentDegree ?  DisplayStyle.Flex : DisplayStyle.None;
+        if (evt.newValue)
+        {
+            _dropsideArea.AddToClassList("dropside-expanded");
+        }
+        else
+        {
+            _dropsideArea.RemoveFromClassList("dropside-expanded");
+        }
     }
     
     public void ShowContentAndButtonDegree()
     {
-        _contentDegree.style.display = DisplayStyle.Flex;
-        _showDegreeButton.style.display = DisplayStyle.Flex;
+        _dropsideContainer.style.display = DisplayStyle.Flex;
     }
 
     public void HideContentAndButtonDegree()
     {
-        _contentDegree.style.display = DisplayStyle.None;
-        _showDegreeButton.style.display = DisplayStyle.None;
+        _dropsideContainer.style.display = DisplayStyle.None;
     }
 
     private void Update()
@@ -238,14 +268,14 @@ public class DrawLinesController : MonoBehaviour
             float degree = GetDegreeBetweenLines(ActualMoved, Up);
             moveLineStruct.DegreeBetweenActualAndUp = degree;
             if(moveLineStruct.ScreenDegreeUp is not null)
-                moveLineStruct.ScreenDegreeUp.text = degree.ToString();
+                moveLineStruct.ScreenDegreeUp.text = System.Math.Round(degree, 2).ToString();
         }
         if(Down is not null)
         {
-            float degree = GetDegreeBetweenLines(ActualMoved, Down);
+            float degree = GetDegreeBetweenLines(Down, ActualMoved);
             moveLineStruct.DegreeBetweenActualAndDown = degree;
             if(moveLineStruct.ScreenDegreeDown is not null)
-                moveLineStruct.ScreenDegreeDown.text = degree.ToString();
+                moveLineStruct.ScreenDegreeDown.text = System.Math.Round(degree, 2).ToString();
         }
         _lineDegrees[movedLine] = moveLineStruct;
     }
@@ -277,7 +307,7 @@ public class DrawLinesController : MonoBehaviour
         if(rule.TotalLines == _lineDegrees.Keys.Count)
         {
             cd.CurrentRule++;
-            _contentDegree.Add(_lineDegrees[_lastPointCreated].ScreenDegreeUp);
+            _dropsideArea.Add(_lineDegrees[_lastPointCreated].ScreenDegreeUp);
             UpdateDegreeExtreme(_lastPointCreated);
             if(cd.CurrentRule > cd.Rules.Count - 1)
             {

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Interfaces/Styles/Step.uss?fileID=7433441132597879392&amp;guid=41be05664c755c64e97832e8b33fb241&amp;type=3#Step" />
+    <ui:VisualElement name="step" focusable="true" class="steps">
+        <ui:VisualElement name="step-complete" focusable="true" class="steps step-incomplete" />
+    </ui:VisualElement>
+</ui:UXML>

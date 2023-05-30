@@ -1,0 +1,47 @@
+.dropside {
+    width: 10px;
+    height: 100%;
+    transition-property: width, background-color;
+    transition-duration: 1s, 1s;
+    background-color: rgba(255, 255, 255, 0.71);
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.dropside-expanded {
+    width: 200px;
+    transition-property: width, background-color;
+    transition-duration: 1s, 1s;
+    background-color: rgba(255, 255, 255, 0.71);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -unity-text-align: middle-center;
+    justify-content: center;
+}
+
+.toggle-dropside {
+    background-image: url('project://database/Assets/Design/Icons/button-dropside-left.png?fileID=2800000&guid=26b1dd9aa084360b38b673ae638721cc&type=3#button-dropside-left');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.toggle-dropside:checked {
+    background-image: url('project://database/Assets/Design/Icons/button-dropside-right.png?fileID=2800000&guid=ddc655d85664cd72eae52e67ccb4e692&type=3#button-dropside-right');
+    translate: 0 0;
+}
+
+#unity-checkmark {
+    visibility: hidden;
+}
+
+.dropside > Label {
+    font-size: 1px;
+    transition-property: font-size;
+    transition-duration: 0.8s;
+}
+
+.dropside-expanded > Label {
+    font-size: 32px;
+    transition-property: font-size;
+    transition-duration: 0.8s;
+}

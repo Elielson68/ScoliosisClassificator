@@ -18,14 +18,17 @@ public class PointController : MonoBehaviour
         retaController = FindObjectOfType<DrawLinesController>();
     }
 
-    void Update()
+    private void Update()
     {
         if (IsSacralPoint is false)
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = DisableMove is false;
             gameObject.GetComponent<BoxCollider2D>().enabled = DisableMove is false;
         }
-
+        if (IsSacralPoint)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
     }
 
     private void OnEnable()
@@ -36,12 +39,13 @@ public class PointController : MonoBehaviour
             DrawLinesController.OnDrawModeActive += () => DisableMove = false;
             IsRegistered = true;
         }
-        
+        ImageManipulation.OnZoomImage += OnImageChangeScale;
         DisableMove = IsSacralPoint;
     }
 
     private void OnDisable()
     {
+        ImageManipulation.OnZoomImage -= OnImageChangeScale;
         ImageManipulation.OnEditImageActive -= () => DisableMove = true;
         DrawLinesController.OnDrawModeActive -= () => DisableMove = false;
         IsRegistered = false;
@@ -49,14 +53,18 @@ public class PointController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        VisualElementInteraction.IsVisualElementFocus = true;
         if (DrawLinesController.IsLineCompleted || IsSacralPoint)
             IsMouseOnPoint = true;
     }
+
     private void OnMouseUp()
     {
+        VisualElementInteraction.IsVisualElementFocus = false;
         if (DrawLinesController.IsLineCompleted || IsSacralPoint)
             IsMouseOnPoint = false;
     }
+
     private void OnMouseDrag()
     {
         if (DrawLinesController.IsLineCompleted || IsSacralPoint)
@@ -75,5 +83,10 @@ public class PointController : MonoBehaviour
 
             OnDragPoint?.Invoke(GetComponentInParent<LineRenderer>());
         }
+    }
+
+    private void OnImageChangeScale(float scaleFactor)
+    {
+        transform.localScale = (Vector3.one * (IsSacralPoint ? 4 : 2)) / scaleFactor;
     }
 }

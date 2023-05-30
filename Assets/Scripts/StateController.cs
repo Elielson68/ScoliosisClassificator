@@ -7,7 +7,11 @@ using UnityEngine.UIElements;
 
 public class StateController : MonoBehaviour
 {
+    private const string _stepIncomplete = "step-incomplete";
+    private const string _stepComplete = "step-complete";
+
     public UIDocument document;
+    public VisualTreeAsset StepAsset;
     public List<string> StateFileList;
     public static States CurrentState = States.Front;
     public int CurrentStep;
@@ -21,25 +25,38 @@ public class StateController : MonoBehaviour
     public static System.Action OnFowardButtonClick;
     public static System.Action OnBeforeUpdateState;
     private Label content;
+    private VisualElement _footerButtonsContainer;
+    private VisualElement _stepContainer;
+    
+    private List<VisualElement> _StepsVE = new List<VisualElement>();
 
     private void OnEnable()
     {
         CurrentStep = 0;
         CurrentStateFile = 0;
+        _footerButtonsContainer = document.rootVisualElement.Q("insert-image-flow");
         fowardButton = document.rootVisualElement.Q<Button>("foward-button");
-        content = document.rootVisualElement.Q<Label>("content");
+        content = document.rootVisualElement.Q<Label>("title");
+        _stepContainer = document.rootVisualElement.Q("steps-area");
+
         OnFowardButtonClick += UpdateState;
         fowardButton.RegisterCallback<ClickEvent>(FowardButton);
 
         ResetStateController();
 
         ExecuteOnStart?.Invoke();
+        HideFowardButton();
+
+        fowardButton.RegisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true, TrickleDown.TrickleDown);
+        fowardButton.RegisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     private void OnDisable()
     {
         OnFowardButtonClick -= UpdateState;
         fowardButton.UnregisterCallback<ClickEvent>(FowardButton);
+        fowardButton.UnregisterCallback<FocusInEvent>(evt => VisualElementInteraction.IsVisualElementFocus = true);
+        fowardButton.UnregisterCallback<FocusOutEvent>(evt => VisualElementInteraction.IsVisualElementFocus = false);
     }
 
     public void UpdateState()
@@ -75,6 +92,7 @@ public class StateController : MonoBehaviour
 
         OnUpdateState?.Invoke(CurrentState);
         content.text = Data[(int)CurrentState].contents[CurrentStep];
+        
         CurrentStep++;
     }
 
@@ -87,6 +105,7 @@ public class StateController : MonoBehaviour
         OnUpdateState?.Invoke(CurrentState);
         content.text = Data[(int)CurrentState].contents[CurrentStep];
         CurrentStep++;
+        UpdateStepVisualElements();
     }
     
     private void UpdateStateFile()
@@ -94,6 +113,18 @@ public class StateController : MonoBehaviour
         CurrentStateFile++;
         CurrentState = States.Front;
         UpdateFile();
+        UpdateStepVisualElements();
+    }
+
+    private void UpdateStepVisualElements()
+    {
+        ClearStepsVisualElements();
+        for(int i=0; i < Data.Count; i++)
+        {
+            VisualElement step = StepAsset.Instantiate().Q("step");
+            _stepContainer.Add(step);
+            _StepsVE.Add(step.Q(_stepComplete));
+        }
     }
 
     private void UpdateFile()
@@ -107,15 +138,20 @@ public class StateController : MonoBehaviour
         OnFowardButtonClick?.Invoke();
         HideFowardButton();
     }
-
+    public void ClearStepsVisualElements()
+    {
+        _StepsVE.Clear();
+        _stepContainer.Clear();
+    }
     public void ShowFowardButton()
     {
-        fowardButton.RemoveFromClassList("element-hidden");
+        fowardButton.style.display = DisplayStyle.Flex;
+        _StepsVE[(int)CurrentState].AddToClassList(_stepComplete);
     }
 
     public void HideFowardButton()
     {
-        fowardButton.AddToClassList("element-hidden");
+        fowardButton.style.display = DisplayStyle.None;
     }
 
     private bool IsAllStatesDone => (int)CurrentState == Data.Count-1;

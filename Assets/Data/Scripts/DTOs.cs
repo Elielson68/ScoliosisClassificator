@@ -29,11 +29,13 @@ public struct EnterNewFileExecute
     public UnityEvent Execute;
 }
 
+[System.Serializable]
 public enum Screens
 {
     Initial,
     States,
-    History
+    History,
+    Report
 }
 
 [System.Serializable]
@@ -56,6 +58,7 @@ public struct TipoCurva
     public int ToracicaProximal;
     public int ToraricaPrincipal;
     public int ToracoLombar;
+    public bool PrincipalIsPrincipal;
 }
 
 public struct LinePair
@@ -80,3 +83,13 @@ public struct LinePair
         ScreenDegreeUp = null;
     }
 } 
+
+public struct TinyClassification
+{
+    public Texture2D Image;
+    public List<Line> Lines;
+    public Vector3 PositionImage;
+    public Vector3 ScaleImage;
+    public bool UseLocalPosition;
+    public List<float> Degrees;
+}

@@ -1,0 +1,19 @@
+#unity-text-input {
+    color: rgba(0, 50, 90, 255);
+    -unity-font-style: bold;
+    -unity-font-definition: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght%20SDF.asset?fileID=11400000&guid=430ce0eaef5e72bce9619371d36be62b&type=2#Jura-VariableFont_wght SDF');
+    -unity-font: url('project://database/Assets/Design/TWD/FreeButtonSet/Fonts/Jura-VariableFont_wght.ttf?fileID=12800000&guid=8d500f3fa9b759e9db38fd9ec1eb1166&type=3#Jura-VariableFont_wght');
+    -unity-text-align: middle-center;
+    border-left-width: 0;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgb(255, 255, 255);
+    font-size: 65%;
+}

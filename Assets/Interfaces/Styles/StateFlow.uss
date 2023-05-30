@@ -1,0 +1,134 @@
+.element-hidden {
+    visibility: hidden;
+}
+
+.report-button {
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.report-title-label {
+    font-size: 60px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    border-left-color: rgb(125, 112, 112);
+    border-right-color: rgb(125, 112, 112);
+    border-top-color: rgb(125, 112, 112);
+    border-bottom-color: rgb(125, 112, 112);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(77, 62, 62);
+    width: 620px;
+    height: 100%;
+}
+
+.report-title-label:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+.report-title-label:active {
+    background-color: rgb(255, 0, 0);
+}
+
+.report-title-label:focus {
+    background-color: rgb(255, 0, 0);
+}
+
+.degree-label {
+    -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#Arial');
+    -unity-font-style: bold;
+    white-space: scale;
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(19, 19, 19);
+    border-right-color: rgb(19, 19, 19);
+    border-top-color: rgb(19, 19, 19);
+    border-bottom-color: rgb(19, 19, 19);
+    color: rgb(0, 0, 0);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-left: 10px;
+    margin-top: 5px;
+    -unity-text-align: middle-center;
+}
+
+#degree-content {
+    width: 252px;
+    height: 248px;
+}
+
+.story-button {
+    width: 130px;
+    height: 100%;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+}
+
+#sacro-dropdown > VisualElement {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+#sacro-dropdown > VisualElement > PopupTextElement {
+    color: rgb(0, 50, 90);
+}
+
+#sacro-dropdown > VisualElement > VisualElement {
+    color: rgb(0, 50, 90);
+    width: 10%;
+    height: 50%;
+}
+
+.list-proportions {
+    -unity-text-align: middle-center;
+    font-size: 230%;
+    -unity-font-style: bold;
+    color: rgba(0, 50, 90, 255);
+    background-color: rgba(255, 255, 255, 255);
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
